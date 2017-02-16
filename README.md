@@ -41,4 +41,3 @@ It will fit your needs in any site you wish to build, as it is the most flexible
 » Imagemagick (Optional - Installed by default on most the servers).
 » FFMPEG (optional, but needed to allow video uploads and use full capabilities of automagick)
 » mod_h264_streaming (optional, but needed for pseudostreaming to work. Very recommended.)
-
