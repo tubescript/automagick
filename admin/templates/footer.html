@@ -1,0 +1,23 @@
+    </td>
+    <td background="images/mtbl_r.png" width="12"></td>
+  </tr>
+</table>
+<table width="1002" align="center" cellpadding="0" cellspacing="0">
+  <tr height="75">
+    <td background="images/mtbl_bl.png" width="19"></td>
+    <td background="images/mtbl_bm.png" align="center" valign="bottom" style="padding-bottom:8px;"><b>.:: &copy; Copyright 2008-2013 - Automagick Tube Script - All Rights Reserved ::.</b></td>
+    <td background="images/mtbl_br.png" width="19"></td>
+  </tr>
+</table><br><br>
+
+{literal}
+<script type="text/javascript">
+//<![CDATA[
+document.observe('dom:loaded', function(){
+  $$('.draggable').each(function(element){
+    new Draggable(element,{handle:'draggable_handle', scroll: window});
+  });
+});
+//]]>
+</script>
+{/literal}

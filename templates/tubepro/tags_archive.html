@@ -1,0 +1,43 @@
+<div class="left rounded3 container_box" style="padding:0px;">
+  <div class="bar rounded3 title_text m3" style="text-align:left;">{$aLabels.tags_archive|capitalize}</div>
+  <div style="padding:20px;">
+	{* colors array *}
+	{php}
+	$colors=array(
+		"#151B54",
+		"#2B60DE",
+		"#8D38C9",
+		"#41627E",
+		"#F52887",
+		"#7D053F",
+		"#FF00FF",
+		"#6A287E",
+		"#7E587E",
+		"#C6AEC7",
+		"#00FFFF",
+		"#3B9C9C",
+		"#348781",
+		"#617C58",
+		"#254117",
+		"#347C17",
+		"#4CC417",
+		"#B1FB17",
+		"#FFFC17",
+		"#E9AB17",
+		"#E9AB17",
+		"#7E2217",
+		"#C11B17",
+	);
+	$this->assign("colors", $colors);
+	{/php}
+	<div style="text-align:justify; line-height:25px;">
+	{foreach from=$array_tags key="i" item="tag"}
+	  {assign var='rdm' value=0|rand:23} {* 23 is the amount of colors above. change if you add or remove colors. *}
+	  <b><a href="tag/{$tag|replace:'"':'&quot;'}" style="font-size:{$size}pt; color:{$colors[$rdm]}">{$tag}</a></b>
+	  &nbsp;-&nbsp;
+	{/foreach}
+	</div>
+
+  </div>
+</div>
+<br>

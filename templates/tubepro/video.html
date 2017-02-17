@@ -1,0 +1,233 @@
+<div class="left" style="width:{$aSettings.player_width+10}px; padding:0px;">
+
+  <div class="left rounded3 container_box" style="padding:0px; margin-bottom:10px;">
+    <div class="bar rounded3 title_text m3" style="text-align:left;">{if $language==$default_language}{$video.title}{elseif $video.translations.$language.title}{$video.translations.$language.title}{else}{$video.title}{/if}</div>
+	<div class="m5">
+	  <div style="width:{$aSettings.player_width}px;" class="thumb_box">
+		{if $aSettings.force_account_creation==1 && !$smarty.session.user_logged}
+		  <a href="javascript:void(0);" onclick="OpenLayer('register_layer');"><img src="templates/{$template}/images/create_account.jpg"></a>
+		{elseif $aSettings.premium_force_all_players==1 && $video.premium==1 && $video.player_id!=1 && !$user_premium}
+		  <a href="javascript:void(0);" onclick="{$aSettings.premium_postroll_link}"><img src="{$aSettings.premium_postroll_image}"></a>
+		{else}
+		  {$video.player_code}
+		{/if}		
+	  </div>
+	  
+    </div>
+  </div>
+  
+  <div class="left rounded3 container_box" style="width:100%; padding:0px; margin-bottom:10px;">
+    <div class="bar rounded3 title_text m3" style="text-align:left;">{$aLabels.sponsored_by}</div>
+	<div class="m5">
+		{php}$spot=3;include("modules/banner.php");{/php}
+    </div>
+  </div>
+   
+  <div class="left rounded3 container_box" style="width:100%; padding:0px; margin-bottom:10px;">
+	<div class="m5" style="min-height:13px; overflow:hidden; line-height:18px;" id="info_collapsed">
+	
+		<a href="javascript:void(0);" onclick="$('info_collapsed').hide(); $('info_expanded').show();" title="{$aLabels.more|capitalize}"><div class="expand_button right"></div></a>
+		<div style="padding:5px;">
+		{if $video.description}  	
+		   {if $mb_available}
+			{if $language==$default_language or !$video.translations.$language.description}
+				{$video.description|mb_truncate:100:"...":"UTF-8":true}
+			{else}
+				{$video.translations.$language.description|mb_truncate:100:"...":"UTF-8":true}
+			{/if}
+		  {else}
+			{if ($language==$default_language or !$video.translations.$language.title)}
+				{$video.description|truncate:100:"...":true}
+			{else}
+				{$video.translations.$language.description|truncate:100:"...":true}
+			{/if}
+		  {/if}
+		  <a href="javascript:void(0);" onclick="$('info_collapsed').hide(); $('info_expanded').show();">{$aLabels.more}</a>
+		{else}
+		  {$aLabels.no_video_decription}
+		{/if}
+		</div>
+	</div> 
+	
+	<div class="m5" style="min-height:13px; max-height:100px; overflow:hidden; display:none; line-height:18px;" id="info_expanded">
+		<a href="javascript:void(0);" onclick="$('info_expanded').hide(); $('info_collapsed').show();" title="{$aLabels.less|capitalize}"><div class="collapse_button right"></div></a>
+		<div style="padding:5px;">
+		  {if $video.description}
+			{$video.description}
+			<a href="javascript:void(0);" onclick="$('info_expanded').hide(); $('info_collapsed').show();">{$aLabels.less}</a> 
+		  {else}
+			{$aLabels.no_video_decription}
+		  {/if}
+		</div>
+    </div>	
+	
+  </div>
+
+  
+  
+  <div class="left rounded3 container_box" style="width:464px; min-height:55px; padding:0px; margin-bottom:10px;">
+    <div class="bar rounded3 title_text m3" style="text-align:left;">{$aLabels.tags}</div>
+	<div class="m5" style="text-align:left;">
+	  {foreach from=$video.tags item=tag_ name=tags}
+	    <a href="tag/{$tag_|replace:'"':'&quot;'}/"><b>{$tag_}</b></a>{if !$smarty.foreach.tags.last}, {/if}
+	  {/foreach}
+	</div>
+  </div>  
+  
+  <div class="left rounded3 container_box ml5" style="width:80px; text-align:center; min-height:55px; padding:0px; margin-bottom:10px;">
+	<div class="m5" style="margin-top:5px;">
+      <b>{$aLabels.viewed}</b><br>
+      <b class="big_number">{if $video.views>0}{$video.views}{else}0{/if}</b>
+	</div>
+  </div>
+  
+  <div class="left rounded3 container_box ml5" style="width:90px; text-align:center; min-height:55px; padding:0px; margin-bottom:10px;">
+    <center style="margin-top:5px;">
+    <b><span id="rate_label">{$aLabels.rate_video}</span></b>
+    <br><br style="line-height:6px;">
+	<div style="width:90px; padding:0px; background:url(templates/{$template}/images/star_image_big_{$video.star_image}.png); background-repeat:no-repeat; background-position:center center;" title="{$video.rating_formated}" id="rating_info">
+	  <table cellpadding="0" cellspacing="0" width="80" height="16" align="center"  style="border-collapse:collapse;" onmouseout="ResetStars();">
+	    <tr>
+		  <td align="center" id="star1" width="10" onmouseover="StarsTo(1);" onclick="Rate({$video.id},1);"></td>
+		  <td align="center" id="star2" width="10" onmouseover="StarsTo(2);" onclick="Rate({$video.id},2);"></td>
+		  <td align="center" id="star3" width="10" onmouseover="StarsTo(3);" onclick="Rate({$video.id},3);"></td>
+		  <td align="center" id="star4" width="10" onmouseover="StarsTo(4);" onclick="Rate({$video.id},4);"></td>
+		  <td align="center" id="star5" width="10" onmouseover="StarsTo(5);" onclick="Rate({$video.id},5);"></td>
+	    </tr>
+	  </table>
+	</div>
+	</center>
+  </div>
+     
+  <div class="left rounded3 container_box" style="width:100%; padding:0px; margin-bottom:10px;">
+    <div class="bar rounded3 title_text m3" style="text-align:left;">
+	  <a class="left title" style="border:0px; padding-left:0px;" href="javascript:void(0);" onclick="HideByClassName('.info_div'); $('info_layer').show(); $('report_video_link').show();">{$aLabels.video_info|capitalize}</a>
+	  <div class="left separator" style="height:20px;"></div>
+	  <a class="left title" style="border:0px;" href="javascript:void(0);" onclick="HideByClassName('.info_div'); $('share_layer').show();">{$aLabels.share|capitalize}</a>
+	  <div class="left separator" style="height:20px;"></div>
+	  <a class="left title" style="border:0px;" href="javascript:void(0);" onclick="HideByClassName('.info_div'); $('favorite_layer').show();">{$aLabels.favorite|capitalize}</a>
+	  <div class="left separator" style="height:20px;"></div>
+	  <a class="left title" style="border:0px;" href="javascript:void(0);" onclick="HideByClassName('.info_div'); $('comments_layer').show();">{$aLabels.comments|capitalize}</a>
+	</div>
+	<div class="m5">
+	
+		<div class="left info_div" id="info_layer" style="text-align:left; padding:5px; line-height:20px;">
+			<b class="link">{$aLabels.uploaded}:</b> {$video.activation_date|date_format}<br>
+			{if $video.user_name}<b class="link">{$aLabels.uploaded_by}:</b> <a href="profile/{$video.user_id}/{$video.user_name}/">{$video.user_name}</a><br>{/if}
+			<b class="link">{$aLabels.viewed}:</b> {$video.views} {$aLabels.times}<br>
+			<b class="link">{$aLabels.favorited}:</b> {$video.favorited} {$aLabels.times}<br>
+			
+			<b class="link">{$aLabels.categories}:</b>
+			{foreach from=$video.categories item=categ_id name=categs}
+			  <a href="categ/{$categ_id}/{$array_categories[$categ_id].name|lower|replace:' ':'-'}/">{$array_categories[$categ_id].name}</a>{if !$smarty.foreach.categs.last}, {/if}
+			{/foreach}<br>
+			
+			<b class="link">{$aLabels.channels}:</b>
+			{foreach from=$video.channels item=channel_id name=channels}
+			  <a href="channel/{$channel_id}/{$array_channels[$channel_id].name|lower|replace:' ':'-'}/">{$array_channels[$channel_id].name}</a>{if !$smarty.foreach.channels.last}, {/if}
+			{/foreach}<br>
+		</div>
+		<div class="right info_div" id="report_video_link" style="padding:5px;">
+		  <a class="button_small rounded3 right mr5" onclick="$('report_options').toggle();">{$aLabels.report_this_video}</a>
+		</div>
+		<div class="right info_div" id="report_options" style="display:none; clear:right; margin-top:6px;">
+		  <input type="hidden" id="report_ts" value="{$ts}">
+		  <input type="hidden" id="report_sk" value="{$sk}">
+		  <select id="report_reason" class="input-text text">
+			<option value="1">{$aLabels.report_reason_1}</option>
+			<option value="2">{$aLabels.report_reason_2}</option>
+			<option value="3">{$aLabels.report_reason_3}</option>
+			<option value="4">{$aLabels.report_reason_4}</option>
+			<option value="5">{$aLabels.report_reason_5}</option>
+		  </select>
+		  <br>
+		  <a href="javascript:void(0);" style="margin-top:8px;" class="right" onclick="ReportVideo({$video.id},$('report_reason').value);" id="report_video_button"><div class="input-button-long"><b>{$aLabels.report_this_video}</b></div></a>
+		  <br style="clear:right; line-height:10px;">
+		  <div class="right" id="report_video_message" style="display:none;"></div>
+		</div>
+	
+
+		<div class="left info_div" id="share_layer" style="text-align:left; padding:5px; line-height:20px; display:none;">
+		  <b class="link">{$aLabels.share_url}:</b> <input type="input" readonly class="rounded3 text"  style="width:404px;" value="{$base_url}video/{$video.id}/{$video.rewrite_title}"><br><br class="break">
+		  <b class="link">{$aLabels.embed_code}:</b><br> <textarea style="min-height:120px; width:500px; line-height:18px;" class="textarea text rounded5 container_box">{$video.player_code|escape:'htmlall'}</textarea>
+		</div>
+		
+		<div class="info_div" id="favorite_layer" style="padding:5px; display:none;">
+		  {if $smarty.session.user_logged}
+			<a href="javascript:void(0);" onclick="FavRemoveVideo({$video.id});" {if !in_array($video.id,$array_favorites)}style="display:none;"{/if} id="favstar_on_{$video.id}"><img src="templates/{$template}/images/star_on.png"> {$aLabels.remove_favorite}</a>
+		    <a href="javascript:void(0);" onclick="FavAddVideo({$video.id});" {if in_array($video.id,$array_favorites)}style="display:none;"{/if} id="favstar_off_{$video.id}"><img src="templates/{$template}/images/star_off.png"> {$aLabels.add_favorite}</a>
+		  {else}
+		    <div id="login_info_msg" class="warning" style="text-align:center; width:250px;"><img src="templates/{$template}/images/warning.png"> <b>{$aLabels.login_info_msg}</b></div>
+		    <a class="button_small rounded3 mr5" onclick=" $('register_layer').hide(); $('login_layer').show();">{$aLabels.login|capitalize}</a>
+		    {$aLabels.or}
+		    <a class="button_small rounded3 mr5" onclick="$('login_layer').hide(); $('register_layer').show();">{$aLabels.create_account|capitalize}</a>
+		  {/if}
+		</div>
+		
+		{if $aSettings.comments_allowed}
+		  <div class="info_div" id="comments_layer" style="width:100%; padding:5px; margin-bottom:10px; display:none;">
+			{include file="comments.html" cache_id=$cache_id}
+		  </div>
+		{/if}
+	
+	</div>	
+  </div>
+</div>
+
+{* CHANNEL BANNER *}
+{if $video.user_id}
+  <div class="right rounded3 container_box" style="width:310px; padding:0px; margin-bottom:10px;">
+	<div class="bar rounded3 title_text m3" style="text-align:left;">{$aLabels.uploaded_by|capitalize}</div>
+    <center>
+    <b class="link">Uploaded By:</b> <a href="profile/{$video.user_id}/{$video.user_name}/">{$video.user_name}</a>
+    <br><br class="break">
+    <div class="avatar" align="center">
+	  <a href="profile/{$video.user_id}/{$video.user_name}/"><img src="{$video.user_avatar}"></a>
+	</div>
+	</center>
+	<br class="break">
+	<a href="profile/{$video.user_id}/{$video.user_name}/" class="link">{$aLabels.watch_more_of} {$video.user_name}</a>
+  </div>
+{elseif $video.channel}
+  <div class="right rounded3 container_box" style="width:310px; padding:0px; margin-bottom:10px;">
+    <a href="{$array_channels[$video.channel].url}">
+	  <div class="bar rounded3 title_text m3" style="text-align:left;">{$aLabels.channel|capitalize}</div>
+      <img src="{$array_channels[$video.channel].thumb}" class="border"><br>
+      {$array_channels[$video.channel].text}
+    </a><br><br>
+    <a href="channel/{$video.channel}/{$array_channels[$video.channel].name|lower|replace:' ':'-'}/" class="link">{$aLabels.watch_more_of} {$aLabels.channel} {$array_channels[$video.channel].name}</a>
+  </div>
+{/if}
+
+
+<div class="right rounded3 container_box" style="padding:0px; margin-bottom:10px;">
+  <div class="bar rounded3 title_text m3" style="text-align:left;">{$aLabels.sponsored_by|capitalize}</div>
+  <div style="padding:2px 5px 5px 5px;">{php}$spot=2; include("modules/banner.php");{/php}</div>
+</div>
+
+<div class="right rounded3 container_box" style="width:310px; padding:0px; margin-bottom:10px; clear:right">
+  <div class="bar rounded3 title_text m3" style="text-align:left;">{$aLabels.related_videos|capitalize}</div>
+  <div id="related_videos_contents" style="text-align:center; padding:5px;"></div>
+</div>
+
+<br class="clear">
+<br><br>
+
+
+<script language="javascript">
+GetRelatedVideos({$video.id});
+</script>
+
+{* DON'T REMOVE THIS PIECE OF CODE *}
+{if $smarty.cookies.voted[$video.id]==1}
+<script>
+  DisableRatingSystem();
+  $('rate_label').innerHTML='{$aLabels.already_voted}';
+</script>
+{elseif !$aSettings.ratings_anonymus_allowed && !$smarty.session.user_logged}
+<script>
+  DisableRatingSystem();
+  $('rate_label').innerHTML='{$aLabels.register_link|replace:"'":"\'"}';
+</script>
+{/if}
+{* ------------------------------- *}

@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>{$aSettings.site_title} - {if $title_string}{$title_string}{else}{$aLabels.meta_title}{/if}</title>
+<meta name="title" content="{$aSettings.site_title} - {if {$aLabels.meta_title}{$aLabels.meta_title}{else}{$title_string}{/if}">
+<meta name="description" content="{$aLabels.meta_description}">
+<meta name="keywords" content="{$aLabels.meta_keywords}">
+<meta name="viewport" content="width=device-width" />
+<base href="{$base_url}"></base>
+
+<link rel="stylesheet" href="templates/{$template}/{if $aSettings.mobile_style_name!=""}{$aSettings.mobile_style_name}{else}dark_style{/if}.css" type="text/css" />
+
+
+<style>
+{* styles with colors of settings *}
+body {ldelim}
+	background:#{$aSettings.mobile_body_bgcolor};
+	color:#{$aSettings.mobile_font_color};
+	margin:0px;
+	padding:0px;
+	font-family:tahoma,verdana,arial;
+	font-size:8pt;
+	height:100%;
+{rdelim}
+
+a {ldelim}
+	font-size:10pt;
+	color:#{$aSettings.mobile_links_color};
+	text-decoration:none;
+{rdelim}
+
+a:hover {ldelim}
+	text-decoration:underline;
+{rdelim}
+
+a.menu_link {ldelim}
+	font-size:10pt;
+	color:#{$aSettings.mobile_menu_links_color};
+	text-decoration:none;
+{rdelim}
+
+a.menu_link:hover {ldelim}
+	text-decoration:underline;
+{rdelim}
+
+.text2 {ldelim}
+	color: #{$aSettings.mobile_font_color_2};
+{rdelim}
+
+</style>
+</head>
+
+<body>
+
+{* Header Logo & Search form *}
+<div class="header_bg" style="background-color:#{$aSettings.mobile_header_bgcolor}; width:100%; display:table;">
+  <div style="padding-left:10px; padding-right:10px; padding-top:5px;">
+	<div class="left header_logo" style="padding-left:10px;"></div>
+	<div class="right" style="margin-top:20px;">
+	  <form name="search_form" id="search_form" method="post" action="index.php?module=videos&force_mobile=1">
+	    <div class="search_button right text2" style="cursor:pointer;" onclick="document.search_form.submit();"></div>
+	    <input class="search_field right" name="tag" id="tag">
+	  </form>
+	</div>
+  </div>
+</div>
+
+{* Bar & Buttons *}
+<div class="bar_bg" style="background-color:#{$aSettings.mobile_bar_bgcolor}; width:100%; display:table;">
+  <div class="button"><a href="index.html" class="menu_link"><b>{$aLabels.last_added}</b></a></div>
+  <div class="button"><a href="top-rated/" class="menu_link"><b>{$aLabels.top_rated}</b></a></div>
+  <div class="button"><a href="most-popular/" class="menu_link"><b>{$aLabels.most_popular}</b></a></div>
+</div>

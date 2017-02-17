@@ -1,0 +1,405 @@
+{if !$onlymod}
+<div id="preview_layer" style="display:none;" class="floating_layer">
+<table cellpadding="0" cellspacing="0" align="center" width="100%" height="100%">
+  <tr><td align="center">
+  
+     <table cellpadding="0" cellspacing="0" class="draggable">
+       <tr class="draggable_handle" style="cursor:pointer;">
+         <td background="images/modalbox/otl.png" width="8" height="25"></td>
+         <td background="images/modalbox/ot.png" height="25" valign="bottom">
+           <span class="modalbox_title">Preview</span>
+           <span class="modalbox_buttons">
+             &nbsp;
+             <a href="javascript:void(0);" onclick="PreviewSpot($('spot_id').value);" id="spot_preview_refresh_icon"><img src="images/icons/modal_refresh.png" onmouseover="this.src='images/icons/modal_refresh_on.png';" onmouseout="this.src='images/icons/modal_refresh.png';"></a>
+             <a href="javascript:void(0);" onclick="CloseLayer('preview_layer');"><img src="images/icons/close_big.png" onmouseover="this.src='images/icons/close_big_on.png';" onmouseout="this.src='images/icons/close_big.png';"></a>
+           </span>
+         </td>
+         <td background="images/modalbox/otr.png" width="8" height="25"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/ol.png" width="8"></td>
+         <td>
+           <table cellpadding="0" cellspacing="0">
+	         <tr>
+	           <td background="images/modalbox/itl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/it.png" height="10"></td>
+	           <td background="images/modalbox/itr.png" width="10" height="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/il.png" width="10"></td>
+	           <td bgcolor="#C9CDD0" class="modal_text" style="width:auto;">
+	           
+	             <input type="hidden" id="spot_id" value="">
+	             <div id="preview_contents" style="padding-top:15px; padding-left:15px; margin-right:15px; margin-bottom:15px; background:url(images/banner_ruler.gif);"></div>
+	             
+	           </td>
+	           <td background="images/modalbox/ir.png" width="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/ibl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/ib.png" height="10"></td>
+	           <td background="images/modalbox/ibr.png" width="10" height="10"></td>
+	         </tr>
+	       </table>         
+         </td>
+         <td background="images/modalbox/or.png" width="8"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/obl.png" width="8" height="11"></td>
+         <td background="images/modalbox/ob.png" height="11"></td>
+         <td background="images/modalbox/obr.png" width="8" height="1"></td>
+       </tr>
+     </table>
+  </td></tr>
+</table>
+</div>
+
+
+<div id="edit_banner_layer" style="display:none;" class="floating_layer">
+<table cellpadding="0" cellspacing="0" align="center" width="100%" height="100%">
+  <tr><td align="center">
+  
+     <table cellpadding="0" cellspacing="0" class="draggable">
+       <tr class="draggable_handle" style="cursor:pointer;">
+         <td background="images/modalbox/otl.png" width="8" height="25"></td>
+         <td background="images/modalbox/ot.png" height="25" valign="bottom">
+           <span class="modalbox_title">Edit Banner</span>
+           <span class="modalbox_buttons">
+             &nbsp;
+             <a href="javascript:void(0);" onclick="CloseLayer('edit_banner_layer');"><img src="images/icons/close_big.png" onmouseover="this.src='images/icons/close_big_on.png';" onmouseout="this.src='images/icons/close_big.png';"></a>
+           </span>
+         </td>
+         <td background="images/modalbox/otr.png" width="8" height="25"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/ol.png" width="8"></td>
+         <td>
+           <table cellpadding="0" cellspacing="0">
+	         <tr>
+	           <td background="images/modalbox/itl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/it.png" height="10"></td>
+	           <td background="images/modalbox/itr.png" width="10" height="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/il.png" width="10"></td>
+	           <td bgcolor="#C9CDD0" class="modal_text" style="width:auto;">
+            
+	             <form name="edit_banner_form" id="edit_banner_form" action="actions/ads/edit_banner.php" method="POST" target="edit_banner_iframe" enctype="multipart/form-data">
+	             <input type="hidden" id="edit_banner_id" name="edit_banner_id" value="">
+	             
+	             <table cellpadding="4" cellspacing="1" style="border:1px solid #AAAAAA;" bgcolor="#EEEEEE" width="100%">
+	             <tr bgcolor="#D1D1D1">
+				   <td width="120" align="right"><b class="red">*</b> <b>Banner Name:</b></td>
+				   <td width="250">
+				     <input type="text" name="edit_banner_name" id="edit_banner_name" maxlength="30" style="width:200px;" tabindex="1">
+				     <a href="javascript:void(0);" rel="<b>Banner Name</b><br>Up to 30 chars."><img src="images/icons/help.png"></a>
+				   </td>
+				 </tr>
+				 <tr bgcolor="#C9C9C9">
+				   <td align="right"><b>Banner Description:</b></td>
+				   <td>
+				     <textarea name="edit_banner_description" id="edit_banner_description" style="width:200px;" tabindex="1"></textarea>
+				     <a href="javascript:void(0);" rel="<b>Banner Description</b><br>Enter a short description of this banner."><img src="images/icons/help.png"></a>
+				   </td>
+				 </tr>
+				 <tr bgcolor="#D1D1D1">
+				   <td align="right"><b>Move to Spot:</b></td>
+				   <td>
+				     <select id="edit_banner_spot" name="edit_banner_spot">
+				     {foreach from=$aSpots item=spot}
+				       <option value="{$spot.id}" id="spot_option_{$spot.id}">{$spot.name}</option>
+				     {/foreach}
+				     </select>
+				     <a href="javascript:void(0);" rel="<b>Banner Spot</b><br>Select the banner spot.<br>If you change it, it will be moved."><img src="images/icons/help.png"></a>
+				   </td>
+				 </tr>
+				 <tr bgcolor="#C9C9C9">
+				   <td align="right"><b>Image Method:</b></td>
+				   <td>
+				     <select id="image_method" name="image_method" onchange="{literal}if(this.value==1){$('method_hotlink').hide(); $('method_upload').show();} else { $('method_upload').hide(); $('method_hotlink').show();}{/literal}" tabindex="1">
+				       <option value="1">File Upload</option>
+				       <option value="2">Hotlink Image</option>
+				     </select>
+				   </td>
+				 </tr>
+				 <tr bgcolor="#D1D1D1">
+				   <td align="right"><b class="red">*</b> <b>Banner Image:</b></td>
+				   <td>
+				     <div id="method_upload">
+			           <label class="cabinet left ml5">
+			             <span><img src="images/icons/upload.png"></span>
+			             <span>Browse...</span>
+			             <input type="file" name="edit_banner_image" id="edit_banner_image" class="file" tabindex="1">
+			           </label>
+					   <a href="javascript:void(0);" class="ml5" rel="<b>Banner Image</b><br>Allowed Formats JPG, GIF and PNG.<br>Leave emtpy if you don't want to edit it."><img src="images/icons/help.png"></a>
+				     </div>
+				     <div id="method_hotlink" style="display:none;">
+				       <input type="text" name="edit_banner_hotlinked_image" id="edit_banner_hotlinked_image" maxlength="255">
+				       <a href="javascript:void(0);" rel="<b>Banner Image</b><br>The url of the image you want to hotlink."><img src="images/icons/help.png"></a>
+				     <div>
+				   </td>
+				 </tr>
+				 <tr bgcolor="#C9C9C9">
+				   <td align="right"><b class="red">*</b> <b>Banner URL:</b></td>
+				   <td>
+				     <input type="text" name="edit_banner_link" id="edit_banner_link" maxlength="255" style="width:200px;" tabindex="1">
+				     <a href="javascript:void(0);" rel="<b>Banner URL</b><br>The url of the site you want this banner to link with."><img src="images/icons/help.png"></a>
+				   </td>
+				 </tr>
+				 <tr bgcolor="#D1D1D1">
+				   <td align="right"><b>Custom HTML:</b></td>
+				   <td>
+				     <textarea name="edit_banner_custom_html" id="edit_banner_custom_html" style="width:200px;" tabindex="1"></textarea>
+				     <a href="javascript:void(0);" rel="<b>Custom HTML</b><br>You can add an html banner or an iframe, or any content you wish.<br>If completed, it will override the Banner Image and URL."><img src="images/icons/help.png"></a>
+				   </td>
+				 </tr>
+				 </table>
+				 <br>
+				 <table cellpadding="0" cellspacing="0" align="center"><tr>
+				   <td align="center"><a class="button" href="javascript:void(0);" onclick="EditBanner();" tabindex="1"><span><img src="images/icons/save.png" id="save_banner_icon"> Save Banner Info</span></a></td>
+				 </tr></table>
+
+				 <iframe id="edit_banner_iframe" name="edit_banner_iframe" src="" style="display:none;"></iframe>
+				 </form>
+	           </td>
+	           <td background="images/modalbox/ir.png" width="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/ibl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/ib.png" height="10"></td>
+	           <td background="images/modalbox/ibr.png" width="10" height="10"></td>
+	         </tr>
+	       </table>         
+         </td>
+         <td background="images/modalbox/or.png" width="8"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/obl.png" width="8" height="11"></td>
+         <td background="images/modalbox/ob.png" height="11"></td>
+         <td background="images/modalbox/obr.png" width="8" height="1"></td>
+       </tr>
+     </table>
+  </td></tr>
+</table>
+</div>
+
+
+<div id="edit_spot_layer" style="display:none;" class="floating_layer">
+<table cellpadding="0" cellspacing="0" align="center" width="100%" height="100%">
+  <tr><td align="center">
+  
+     <table cellpadding="0" cellspacing="0" class="draggable">
+       <tr class="draggable_handle" style="cursor:pointer;">
+         <td background="images/modalbox/otl.png" width="8" height="25"></td>
+         <td background="images/modalbox/ot.png" height="25" valign="bottom">
+           <span class="modalbox_title">Edit Spot</span>
+           <span class="modalbox_buttons">
+             &nbsp;
+             <a href="javascript:void(0);" onclick="CloseLayer('edit_spot_layer');"><img src="images/icons/close_big.png" onmouseover="this.src='images/icons/close_big_on.png';" onmouseout="this.src='images/icons/close_big.png';"></a>
+           </span>
+         </td>
+         <td background="images/modalbox/otr.png" width="8" height="25"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/ol.png" width="8"></td>
+         <td>
+           <table cellpadding="0" cellspacing="0">
+	         <tr>
+	           <td background="images/modalbox/itl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/it.png" height="10"></td>
+	           <td background="images/modalbox/itr.png" width="10" height="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/il.png" width="10"></td>
+	           <td bgcolor="#C9CDD0" class="modal_text" style="width:auto;">
+            
+	             <form name="edit_spot_form" id="edit_spot_form" action="actions/ads/edit_spot.php" method="POST">
+	             <input type="hidden" id="edit_spot_id" name="edit_spot_id" value="">
+	             
+	             <table cellpadding="4" cellspacing="1" style="border:1px solid #AAAAAA;" bgcolor="#EEEEEE" width="100%">
+	             <tr bgcolor="#D1D1D1">
+				   <td width="120" align="right"><b class="red">*</b> <b>Spot Name:</b></td>
+				   <td width="250">
+				     <input type="text" name="edit_spot_name" id="edit_spot_name" maxlength="30" style="width:200px;" tabindex="1">
+				     <a href="javascript:void(0);" rel="<b>Spot Name</b><br>Up to 40 chars."><img src="images/icons/help.png"></a>
+				   </td>
+				 </tr>
+				 <tr bgcolor="#C9C9C9">
+				   <td align="right"><b>Spot Description:</b></td>
+				   <td>
+				     <textarea name="edit_spot_description" id="edit_spot_description" style="width:200px;" tabindex="1"></textarea>
+				     <a href="javascript:void(0);" rel="<b>Spot Description</b><br>Enter a short description of this spot."><img src="images/icons/help.png"></a>
+				   </td>
+				 </tr>
+				 </table>
+				 <br>
+				 <table cellpadding="0" cellspacing="0" align="center"><tr>
+				   <td align="center"><a class="button" href="javascript:void(0);" onclick="EditSpot();" tabindex="1"><span><img src="images/icons/save.png" id="save_spot_icon"> Save Spot Info</span></a></td>
+				 </tr></table>
+				 </form>
+	           </td>
+	           <td background="images/modalbox/ir.png" width="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/ibl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/ib.png" height="10"></td>
+	           <td background="images/modalbox/ibr.png" width="10" height="10"></td>
+	         </tr>
+	       </table>         
+         </td>
+         <td background="images/modalbox/or.png" width="8"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/obl.png" width="8" height="11"></td>
+         <td background="images/modalbox/ob.png" height="11"></td>
+         <td background="images/modalbox/obr.png" width="8" height="1"></td>
+       </tr>
+     </table>
+  </td></tr>
+</table>
+</div>
+
+
+<br>
+<fieldset>
+  <legend><b> Spots & Banners </b></legend>
+  <div class="bottom">
+
+    <br> 
+	<table cellpadding="0" cellspacing="0" width="90%"><tr>
+	  <td align="left" width="1"><a class="button" href="javascript:void(0);" onclick="AddSpot();"><span><img src="images/icons/add-tiny.png" id="add_spot_icon"> Add Banner Spot</span></a></td>
+	  <td align="center"></td>
+	  <td align="right" width="1"><a class="button" href="javascript:void(0);" onclick="Refresh();"><span><img src="images/icons/refresh.png"> Refresh</span></a></td>
+	</tr></table><br>
+  	
+	<div id="ads_contents">
+{/if}
+
+	{foreach from=$aSpots item=spot name=spots}
+	<div id="spot_{$spot.id}" class="spot_table">
+	<table cellpadding="0" cellspacing="0">
+	  <tr>
+		<td background="images/modalbox/otl.png" width="8" height="25"></td>
+		<td background="images/modalbox/ot.png" height="25" valign="bottom">
+		  <span class="modalbox_title">{$spot.name}</span>
+		  <span class="modalbox_buttons">
+		  &nbsp;
+		  <a href="javascript:void(0);" onclick="ToggleFold('spot_inner_table_{$spot.id}','spots[{$spot.id}]', 'spot_minimize_{$spot.id}', 'spot_maximize_{$spot.id}');" rel="Collapse Table" {if $smarty.cookies.spots[$spot.id]}style="display:none;"{/if} id="spot_minimize_{$spot.id}"><img src="images/icons/minimize.png" onmouseover="this.src='images/icons/minimize_on.png';" onmouseout="this.src='images/icons/minimize.png';"></a>
+		  <a href="javascript:void(0);" onclick="ToggleFold('spot_inner_table_{$spot.id}','spots[{$spot.id}]', 'spot_minimize_{$spot.id}', 'spot_maximize_{$spot.id}');" rel="Expand Table" {if !$smarty.cookies.spots[$spot.id]}style="display:none;"{/if} id="spot_maximize_{$spot.id}"><img src="images/icons/maximize.png" onmouseover="this.src='images/icons/maximize_on.png';" onmouseout="this.src='images/icons/maximize.png';"></a>
+		  </span>
+		</td>
+		<td background="images/modalbox/otr.png" width="8" height="25"></td>
+	  </tr>
+	  <tr>
+		<td background="images/modalbox/ol.png" width="8"></td>
+		<td>
+		   <table cellpadding="0" cellspacing="0">
+	         <tr>
+	           <td background="images/modalbox/itl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/it.png" height="10"></td>
+	           <td background="images/modalbox/itr.png" width="10" height="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/il.png" width="10"></td>
+	           <td bgcolor="#C9CDD0" width="780" class="modal_text">
+	           	  <table cellpadding="0" cellspacing="0" width="100%"><tr>
+					<td align="left">{$spot.description|regex_replace:"/[\r\n]/":"<br>"}</td>
+					<td align="right" width="390" valign="bottom">
+					  <a class="small_button" href="javascript:void(0);" onclick="PreviewSpot({$spot.id});"><span><img src="images/icons/view-tiny.png" id="preview_spot_icon_{$spot.id}" class="mw12"> Preview Spot</span></a>
+					  <a class="small_button ml5" href="javascript:void(0);" onclick="AddBanner({$spot.id});"><span><img src="images/icons/add-tiny.png" id="add_banner_icon_{$spot.id}" class="mw12"> Add Banner</span></a>
+					  <a class="small_button ml5" href="javascript:void(0);" onclick="OpenEditSpot({$spot.id});"><span><img src="images/icons/edit-tiny.png" id="edit_spot_icon_{$spot.id}" class="mw12"> Edit Spot</span></a>
+					  <a class="small_button ml5" href="javascript:void(0);" onclick="DeleteSpot({$spot.id});"><span class="red_button"><img src="images/icons/delete-tiny.png" id="delete_spot_icon_{$spot.id}" class="mw12"> Delete Spot</span></a>
+					</td>
+				  </tr></table>
+				  <div id="spot_inner_table_{$spot.id}" {if $smarty.cookies.spots[$spot.id]}style="display:none;"{/if}>
+				  <br>
+				  <table cellpadding="4" cellspacing="1" style="border:1px solid #AAAAAA;" bgcolor="#EEEEEE" width="100%">
+				    <tr background="images/menu_bar_red.gif" align="center"  style="background-position:center -1px;">
+			     	  <td><b class="white">Name</b></td>
+			     	  <td><b class="white">Description</b></td>
+			     	  <td><b class="white">Options</td>
+			     	  <td>
+			     	    <b class="white">Weight & Percentage</b>
+			     	    <a href="javascript:void(0);" rel="<b>Weight & Percentage</b><br>"><img src="images/icons/help.png"></a>
+			     	  </td>
+			     	</tr>
+					{foreach from=$spot.banners item=banner name="banners"}
+	  				  {if $smarty.foreach.banners.index%2==0}
+					  	{assign var="bgcolor" value="#D1D1D1"}
+					  {else}
+					  	{assign var="bgcolor" value="#C9C9C9"}
+					  {/if}
+					  <tr bgcolor="{$bgcolor}" class="banner_row" id="banner_{$banner.id}">
+						<td width="150">
+						  <input type="hidden" id="banner_id_{$banner.id}" value="{$banner.id}" class="spot_{$spot.id}_banner">
+						  <input type="hidden" id="banner_status_{$banner.id}" value="{$banner.status}">
+						  <input type="hidden" id="banner_weight_{$banner.id}" value="{$banner.weight}">
+						  <input type="hidden" id="banner_old_weight_{$banner.id}" value="{$banner.weight}">
+						  <b id="banner_name_{$banner.id}" {if $banner.status==0}class="red"{/if}>{$banner.name}</b>
+						</td>
+						<td width="250"><span class="left"><b>{$banner.description|truncate:40:"...":true|regex_replace:"/[\r\n]/":"<br>"}</b></span><span class="right pt3"><a href="javascript:void(0);" {if $banner.description}rel="{$banner.description|regex_replace:"/[\r\n]/":"<br>"}{else}class="disabled"{/if}"><img src="images/icons/info.png"></a></td>
+						<td>
+						  <div class="option_button right ml3 pt3"><a href="javascript:void(0);" onclick="DeleteBanner({$banner.id});" rel="Delete this banner"><span class="red_button"><img src="images/icons/delete.png" id="delete_banner_icon_{$banner.id}"></a></div>
+						  <div class="option_button right ml3 pt3"><a href="javascript:void(0);" onclick="OpenEditBanner({$banner.id});" rel="Edit this banner"><img src="images/icons/edit.png" id="edit_banner_icon_{$banner.id}"></a></div>
+						  <div class="option_button right ml3 pt3" {if $banner.status==0}style="display:none;"{/if} id="active_status_option_{$banner.id}"><a href="javascript:void(0);" onclick="SetStatus({$banner.id},'banner',0);" rel="Deactivate this banner"><img id="active_banner_icon_{$banner.id}" src="images/icons/active.png"  onmouseover="this.src='images/icons/stop.png';" onmouseout="this.src='images/icons/active.png';"></a></div>
+			              <div class="option_button right ml3 pt3" {if $banner.status==1}style="display:none;"{/if} id="inactive_status_option_{$banner.id}"><a href="javascript:void(0);" onclick="SetStatus({$banner.id},'banner',1);" rel="Activate this banner"><img id="inactive_banner_icon_{$banner.id}" src="images/icons/inactive.png" onmouseover="this.src='images/icons/go.png';" onmouseout="this.src='images/icons/inactive.png';"></div>
+						  <div class="option_button right ml3 pt3"><a href="javascript:void(0);" onclick="PreviewBanner({$banner.id});" rel="Preview this banner"><img src="images/icons/view.png" id="preview_banner_icon_{$banner.id}"></a></div>
+						</td>
+						<td width="195" align="center">
+						  <div class="left" style="margin:8px; margin-bottom:0px;">
+						    <div id="weight_slider_{$banner.id}" style="width:101px; background:url(images/sliderbg.gif); height:2px;" {if $banner.status==0}class="disabled"{/if}><div id="weight_pointer_{$banner.id}" class="slider_pointer" style="margin-left:0px;"></div></div>
+						  </div>
+						  <div class="right {if $banner.status==0}disabled{/if}" id="spinner_{$banner.id}">
+							<input type="text" id="banner_weight_pct_{$banner.id}" {if $banner.status==0}readonly{/if} name="banner_weight_pct_{$banner.id}" style="width:46px; height:14px; text-align:right; float:left; margin-right:-1px;" tabindex="1">
+							<div style="float:left; border:1px solid #999999;">
+							  <div class="spinner_up" id="banner_weight_pct_{$banner.id}_up"></div>
+							  <div class="spinner_down" id="banner_weight_pct_{$banner.id}_down"></div>
+							</div>
+						  </div>
+						</td>
+					  </tr>
+					{foreachelse}
+					  <tr bgcolor="#D1D1D1" align="center"><td colspan="6"><b>No banners added to this spot.</b></td></tr>
+					{/foreach}
+				  </table>
+				  <div style="text-align:center">
+				    <br>
+				    <b>Banner Code: </b>
+				    <span style="width:400px; padding:5px;" class="input_text" rows="1">{ldelim}php{rdelim}$spot={$spot.id};include("modules/banner.php");{ldelim}/php{rdelim}</span>
+				    <a href="javascript:void(0);" rel="{ldelim}&quot;title&quot;:&quot;Banner Code&quot;,&quot;value&quot;:&quot;Copy-Paste this code on the template you want,<br>and the active spot\'s banners will be shown.&quot;{rdelim}"><img src="images/icons/help.png"></a>
+				  </div>
+			   </td>
+	           <td background="images/modalbox/ir.png" width="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/ibl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/ib.png" height="10"></td>
+	           <td background="images/modalbox/ibr.png" width="10" height="10"></td>
+	         </tr>
+	       </table>	
+	    </div>
+		</td>
+        <td background="images/modalbox/or.png" width="8"></td>
+	  </tr>
+	  <tr>
+		<td background="images/modalbox/obl.png" width="8" height="11"></td>
+		<td background="images/modalbox/ob.png" height="11"></td>
+		<td background="images/modalbox/obr.png" width="8" height="1"></td>
+	  </tr>
+	</table><br>
+	</div>
+	{/foreach}
+  
+	</div>
+
+{if !$onlymod} 
+  </div>
+</fieldset>
+<script>
+LoadSliders();
+ReTip();
+</script>
+
+<br><br>
+<div id="spots_bottom""></div>
+{/if}

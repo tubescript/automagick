@@ -1,0 +1,36 @@
+<div class="left" style="width:780px; padding:0px;">
+
+	<div style="text-align:left; padding-left:20px;">
+	  <b class="title"><h1>{$aLabels.rss_feeds_title|capitalize}</h1></b>
+	</div>
+	
+	<div style="text-align:left; padding:20px; text-align:justify;">
+	  {$aLabels.rss_feeds_text}
+	</div><br>
+	
+	{if $aSettings.rss_status==1}
+	    <div style="line-height:20px; font-size:10pt; padding-left:50px;">
+		{if $aSettings.rss_categories==1}
+			{foreach from=$array_categories item=category name=categ}
+			  {if $category.status==1}
+			    {if $language==$default_language or !$category.translations.$language.name}
+					<a href="rss/{$category.id}/{$category.name|regex_replace:'/[ \/"]/':'-'}.rss"><img src="templates/{$template}/images/rss.png"> <b>{$aLabels.new} {$category.name} {$aLabels.videos} {$aLabels.rss_feed}</b></a><br>
+				{else}
+					<a href="rss/{$category.id}/{$category.translations.$language.name|regex_replace:'/[ \/"]/':'-'}.rss"><img src="templates/{$template}/images/rss.png"> <b>{$aLabels.new} {$category.translations.$language.name} {$aLabels.videos} {$aLabels.rss_feed}</b></a><br>
+				{/if}
+			  {/if}
+			{/foreach}
+		{else}
+			<a href="rss/videos.rss"><img src="templates/{$template}/images/rss.png"> <b>{$aLabels.new} {$aLabels.videos} {$aLabels.rss_feed}</b></a>
+		{/if}
+		</div>
+	{/if}
+	
+</div>
+
+<div class="right" style="width:200px;">
+ <br>
+{php}$spot=1; include("modules/banner.php");{/php}
+</div>
+<br class="clear">
+<br><br>

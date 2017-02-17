@@ -1,0 +1,527 @@
+{if !$onlymod}
+<div id="edit_user_layer" style="display:none;" class="floating_layer">
+<table cellpadding="0" cellspacing="0" align="center" width="100%" height="100%">
+  <tr><td align="center">
+  
+     <table cellpadding="0" cellspacing="0" class="draggable">
+       <tr class="draggable_handle" style="cursor:pointer;">
+         <td background="images/modalbox/otl.png" width="8" height="25"></td>
+         <td background="images/modalbox/ot.png" height="25" valign="bottom">
+           <span class="modalbox_title" id="edit_user_title">Edit User</span>
+           <span class="modalbox_buttons">
+             &nbsp;
+             <a href="javascript:void(0);" onclick="CloseLayer('edit_user_layer');"><img src="images/icons/close_big.png" onmouseover="this.src='images/icons/close_big_on.png';" onmouseout="this.src='images/icons/close_big.png';"></a>
+           </span>
+         </td>
+         <td background="images/modalbox/otr.png" width="8" height="25"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/ol.png" width="8"></td>
+         <td>
+           <table cellpadding="0" cellspacing="0">
+	         <tr>
+	           <td background="images/modalbox/itl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/it.png" height="10"></td>
+	           <td background="images/modalbox/itr.png" width="10" height="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/il.png" width="10"></td>
+	           <td bgcolor="#C9CDD0" width="380" class="modal_text">
+	           
+	           		<form name="edit_user_form" id="edit_user_form" action="actions/users/edit_user.php" method="POST">
+	           		<input type="hidden" name="mode" id="mode" value="">
+	           		<input type="hidden" name="edit_user_id" id="edit_user_id" value="">
+	           
+	             	<table cellpadding="4" cellspacing="1" style="border:1px solid #AAAAAA;" bgcolor="#EEEEEE" width="100%">
+                      <tr bgcolor="#D1D1D1" valign="top">
+                        <td align="right" width="120"><b class="mandatory">*</b> <b>Username:</b></td>
+                        <td>
+                          <input type="text" name="edit_user_username" id="edit_user_username" value="" maxlength="25" style="width:150px;" tabindex="1">
+                          <a href="javascript:void(0);" rel="<b>Username:</b><br>Can't use an already picked name.<br>Up to 25 chars."><img src="images/icons/help.png"></a>
+                        </td>
+                      </tr>
+                      <tr bgcolor="#C9C9C9" valign="top">
+                        <td align="right" width="120"><b class="mandatory" id="pass_mandatory">*</b> <b>Password:</b></td>
+                        <td>
+                          <input type="text" class="left" name="edit_user_password" id="edit_user_password" value="" maxlength="25" style="width:150px;" tabindex="2">
+                          <div class="option_button left ml5 pt3" style="padding-top:3px; margin-bottom:-3px;"><a href="javascript:void(0);" onclick="GenerateRandomPassword('edit_user_password');" rel="Generate Random Password"><img src="images/icons/generate_pass.png"></a></div>
+                          <a href="javascript:void(0);" class="left ml5 pt3" rel="<b>Password:</b><br>Leave this field empty if you don't want to edit the password."><img src="images/icons/help.png"></a>
+                        </td>
+                      </tr>
+                      <tr bgcolor="#D1D1D1" valign="top">
+                        <td align="right"><b class="mandatory">*</b> <b>E-Mail:</b></td>
+                        <td>
+                          <input type="text" name="edit_user_email" id="edit_user_email" value="" maxlength="255" style="width:150px;" tabindex="3">
+                          <a href="javascript:void(0);" rel="<b>E-Mail:</b><br>Can't use an already picked email.<br>Up to 255 chars."><img src="images/icons/help.png"></a>
+                        </td>
+                      </tr>
+                      <tr bgcolor="#C9C9C9" valign="top">
+                        <td align="right" width="100"><b>Registration Date:</b></td>
+                        <td>
+                          <input type="text" name="edit_user_date_added_formated" id="edit_user_date_added_formated" value="" style="width:60px;" tabindex="4">
+                          <a href="javascript:void(0);" rel="Click to pick a date"><img src="images/icons/calendar.png" id="edit_user_date_added_img"></a>
+                          {literal}<script type="text/javascript">Calendar.setup({inputField: "edit_user_date_added_formated", button: "edit_user_date_added_img", ifFormat:"%Y-%m-%d %H:%M:%S", showsTime:true, align: "Tr"});</script>{/literal}
+                          <a href="javascript:void(0);" rel="<b>Registration date:</b><br>Date the user has registered.<br>If left empty, the current date will be used."><img src="images/icons/help.png"></a>
+                        </td>
+                      </tr>
+                      <tr bgcolor="#D1D1D1" valign="top">
+                        <td align="right"><b>Country:</b></td>
+                        <td>
+                          <select name="edit_user_country" id="edit_user_country" tabindex="5">
+                            <option value="0">No country Selected</option>
+                          {foreach from=$aCountries item=country}
+                            <option value="{$country.id}">{$country.name}</option>
+                          {/foreach}
+                          </select>
+                        </td>
+                        <tr bgcolor="#C9C9C9" valign="top">
+                        <td align="right"><b>Gender:</b></td>
+                        <td>
+                          <select name="edit_user_gender" id="edit_user_gender" tabindex="6">
+                            <option value="0">Male</option>
+                            <option value="1">Female</option>
+                          </select>
+                        </td>
+                      </tr>
+                      <tr bgcolor="#D1D1D1" valign="top">
+                        <td align="right" width="100"><b>Birth Date:</b></td>
+                        <td>
+                          <input type="text" name="edit_user_birthdate_formated" id="edit_user_birthdate_formated" value="" style="width:60px;" tabindex="7">
+                          <a href="javascript:void(0);" rel="Click to pick a date"><img src="images/icons/calendar.png" id="edit_user_birthdate_img"></a>
+                          {literal}<script type="text/javascript">Calendar.setup({inputField: "edit_user_birthdate_formated", button: "edit_user_birthdate_img", ifFormat:"%Y-%m-%d", showsTime:false, align: "Tr"});</script>{/literal}
+                          <a href="javascript:void(0);" rel="<b>User Birthdate</b>"><img src="images/icons/help.png"></a>
+                        </td>
+                      </tr>
+                      <tr bgcolor="#C9C9C9" valign="top">
+                        <td align="right" width="100"><b>Premium Start Date:</b></td>
+                        <td>
+                          <input type="text" name="edit_user_premium_from_date_formated" id="edit_user_premium_from_date_formated" value="" style="width:60px;" tabindex="8">
+                          <a href="javascript:void(0);" rel="Click to pick a date"><img src="images/icons/calendar.png" id="edit_user_premium_from_date_img"></a>
+                          {literal}<script type="text/javascript">Calendar.setup({inputField: "edit_user_premium_from_date_formated", button: "edit_user_premium_from_date_img", ifFormat:"%Y-%m-%d %H:%M:%S", showsTime:true, align: "Tr"});</script>{/literal}
+                          <a href="javascript:void(0);" rel="<b>Registration date:</b><br>Date the user has started his premium access.<br>If both fields are left empty, no premium access will be set."><img src="images/icons/help.png"></a>
+                        </td>
+                      </tr>
+                      <tr bgcolor="#D1D1D1" valign="top">
+                        <td align="right" width="100"><b>Premium End Date:</b></td>
+                        <td>
+                          <input type="text" name="edit_user_premium_to_date_formated" id="edit_user_premium_to_date_formated" value="" style="width:60px;" tabindex="9">
+                          <a href="javascript:void(0);" rel="Click to pick a date"><img src="images/icons/calendar.png" id="edit_user_premium_to_date_img"></a>
+                          {literal}<script type="text/javascript">Calendar.setup({inputField: "edit_user_premium_to_date_formated", button: "edit_user_premium_to_date_img", ifFormat:"%Y-%m-%d %H:%M:%S", showsTime:true, align: "Tr"});</script>{/literal}
+                          <a href="javascript:void(0);" rel="<b>Premium End Date:</b><br>Date the user will his premium access.<br>If both fields are left empty, no premium access will be set."><img src="images/icons/help.png"></a>
+                        </td>
+                      </tr>
+                      <tr bgcolor="#C9C9C9" valign="top">
+                        <td align="right"><b class="mandatory">*</b> <b>Status:</b></td>
+                        <td>
+                          <select name="edit_user_status" id="edit_user_status" tabindex="10">
+                            <option value="0">Inactive</option>
+                            <option value="1">Active</option>
+                            <option value="2">Banned</option>
+                          </select>
+                          <a href="javascript:void(0);" rel="<b>Status:</b><br>Select whether you want this user to be Inactive, Active or Banned..<br>The user will only be able to login to his profile if he is active."><img src="images/icons/help.png"></a>
+                        </td>
+                      </tr>
+                    </table><br>
+                    
+                    <table align="center"><tr><td>
+                      <a class="button" href="javascript:void(0);" onclick="AddEditUser();" tabindex="11"><span><img src="images/icons/edit.png" id="edit_button_icon"> <b id="edit_button_label">Edit User</b></span></a>
+                    </td></tr></table>
+
+                    </form>
+                                        
+	           </td>
+	           <td background="images/modalbox/ir.png" width="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/ibl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/ib.png" height="10"></td>
+	           <td background="images/modalbox/ibr.png" width="10" height="10"></td>
+	         </tr>
+	       </table>         
+         </td>
+         <td background="images/modalbox/or.png" width="8"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/obl.png" width="8" height="11"></td>
+         <td background="images/modalbox/ob.png" height="11"></td>
+         <td background="images/modalbox/obr.png" width="8" height="1"></td>
+       </tr>
+     </table>
+  </td></tr>
+</table>
+</div>
+
+
+<div id="user_profile_layer" style="display:none;" class="floating_layer">
+<table cellpadding="0" cellspacing="0" align="center" width="100%" height="100%">
+  <tr><td align="center">
+  
+     <table cellpadding="0" cellspacing="0" class="draggable">
+       <tr class="draggable_handle" style="cursor:pointer;">
+         <td background="images/modalbox/otl.png" width="8" height="25"></td>
+         <td background="images/modalbox/ot.png" height="25" valign="bottom">
+           <span class="modalbox_title" id="edit_user_title">User Profile</span>
+           <span class="modalbox_buttons">
+             &nbsp;
+             <a href="javascript:void(0);" onclick="CloseLayer('user_profile_layer');"><img src="images/icons/close_big.png" onmouseover="this.src='images/icons/close_big_on.png';" onmouseout="this.src='images/icons/close_big.png';"></a>
+           </span>
+         </td>
+         <td background="images/modalbox/otr.png" width="8" height="25"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/ol.png" width="8"></td>
+         <td>
+           <table cellpadding="0" cellspacing="0">
+	         <tr>
+	           <td background="images/modalbox/itl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/it.png" height="10"></td>
+	           <td background="images/modalbox/itr.png" width="10" height="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/il.png" width="10"></td>
+	           <td bgcolor="#C9CDD0" width="430" class="modal_text">
+	           
+	             <fieldset class="fieldset3 left" style="width:150px;">
+	               <div class="bottom">
+	             
+		             <table celpadding="3" cellspacing="2" width="140">
+		               <tr><td><img src="images/icons/user.png" class="ml5"> <b><span id="profile_username"></span></b></td></tr>
+		               <tr><td><span id="profile_avatar"></span></td></tr>
+		               <tr><td><img src="images/icons/add-tiny.png" class="ml5"> <b><span id="profile_date_added_formated"></span></b></td></tr>
+		               <tr><td><img src="" id="profile_country_flag" class="ml5"> <b><span id="profile_country_name"></span></b></td></tr>
+		               <tr><td><img src="" id="profile_gender_icon" class="ml5"> <b><span id="profile_gender_name"></span></b></td></tr>
+		               <tr><td><img src="images/icons/cake.png" class="ml5"> <b><span id="profile_birthdate_formated"></span></b></td></tr>
+		               <tr><td><span id="profile_premium_access" class="ml5"></span></td></tr>
+		             </table>
+		             
+	               </div>
+	             </fieldset>
+	             
+	             <fieldset class="fieldset3 left ml5" style="width:250px;">
+	               <div class="bottom">
+	             
+	                 <img src="images/icons/stats.png"> <b>User Statistics</b><br><br class="br">
+	                 <div class="hr"></div>
+	                 
+		             <table celpadding="3" cellspacing="2">
+		               <tr><td align="right"><b>Last Visit:</b></td><td><span id="profile_last_visit_formated"></span></td></tr>
+		               <tr><td align="right"><b>Uploaded:</b></td><td><span id="profile_uploaded_videos"></span> videos</td></tr>
+		               <tr><td align="right"><b>Favotired:</b></td><td><span id="profile_favorited_videos"></span> videos</td></tr>		               
+		               <tr><td align="right"><b>Comments:</b></td><td><span id="profile_comments"></span></td></tr>
+		             </table>
+		             
+	               </div>
+	             </fieldset>
+	           
+	           </td>
+	           <td background="images/modalbox/ir.png" width="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/ibl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/ib.png" height="10"></td>
+	           <td background="images/modalbox/ibr.png" width="10" height="10"></td>
+	         </tr>
+	       </table>         
+         </td>
+         <td background="images/modalbox/or.png" width="8"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/obl.png" width="8" height="11"></td>
+         <td background="images/modalbox/ob.png" height="11"></td>
+         <td background="images/modalbox/obr.png" width="8" height="1"></td>
+       </tr>
+     </table>
+  </td></tr>
+</table>
+</div>
+
+<div id="user_avatar_layer" style="display:none;" class="floating_layer">
+<table cellpadding="0" cellspacing="0" align="center" width="100%" height="100%">
+  <tr><td align="center">
+  
+     <table cellpadding="0" cellspacing="0" class="draggable">
+       <tr class="draggable_handle" style="cursor:pointer;">
+         <td background="images/modalbox/otl.png" width="8" height="25"></td>
+         <td background="images/modalbox/ot.png" height="25" valign="bottom">
+           <span class="modalbox_title" id="edit_user_title">Avatar Upload</span>
+           <span class="modalbox_buttons">
+             &nbsp;
+             <a href="javascript:void(0);" onclick="CloseLayer('user_avatar_layer');"><img src="images/icons/close_big.png" onmouseover="this.src='images/icons/close_big_on.png';" onmouseout="this.src='images/icons/close_big.png';"></a>
+           </span>
+         </td>
+         <td background="images/modalbox/otr.png" width="8" height="25"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/ol.png" width="8"></td>
+         <td>
+           <table cellpadding="0" cellspacing="0">
+	         <tr>
+	           <td background="images/modalbox/itl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/it.png" height="10"></td>
+	           <td background="images/modalbox/itr.png" width="10" height="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/il.png" width="10"></td>
+	           <td bgcolor="#C9CDD0" class="modal_text" align="center">
+	             <br>
+	           	 
+	           	 <form id="avatar_upload_form" name="avatar_upload_form" action="actions/users/avatar_upload.php" enctype="multipart/form-data" method="post" target="avatar_upload_iframe">
+	           	 <fieldset class="fieldset2" id="file_upload_fieldset" style="width:100%;">
+	           	 <legend class="legend2"><b>File Upload</b></legend>
+	           	 <div class="bottom">
+	           	   <input type="hidden" name="avatar_user_id" id="avatar_user_id">
+	           	   <b class="left">Upload Image:</b>
+	           	   <input type="text" name="user_avatar_filename" id="user_avatar_filename" value="" class="left ml5" readonly>
+	           	   <label class="cabinet left ml5">
+	                 <span><img src="images/icons/upload.png"></span>
+	                 <span>Browse...</span>
+	                 <input type="file" name="user_avatar" id="user_avatar" class="file" onchange="$('user_avatar_filename').value=this.value; CheckUploadButton(this.value);">
+	               </label>
+	               <a class="small_button left ml5" href="javascript:void(0);" onclick="AvatarUpload();" id="avatar_upload_button" style="display:none;"><span>Upload</span></a>
+	               <a class="small_button left ml5 disabled" href="javascript:void(0);" id="avatar_upload_button_disabled"><span>Upload</span></a>
+	               
+	               <br><br>
+	               <table align="center" style="margin-left:64px;">
+	                 <tr>
+	                   <td><b>Or:</b></td>
+	                   <td>
+	                     <a class="small_button" href="javascript:void(0);" onclick="DeleteAvatar();"><span><img src="images/icons/delete-tiny.png" id="delete_avatar_icon"> Delete Avatar</span></a>
+	                   </td>
+	                 </tr>
+	               </table>
+	           	 </div>
+	           	 <iframe src="" id="avatar_upload_iframe" name="avatar_upload_iframe" style="display:none;"></iframe>
+	           	 </fieldset>
+	           	 </form>
+	           	 	           	 
+	           	 <fieldset class="fieldset2 left" id="image_crop_fieldset" style="width:520px;">
+	           	   <legend class="legend2"><b>Crop Avatar</b></legend>
+	           	   <div class="bottom">
+	           	     <div style="width:auto; height:auto; max-width:530px; max-height:400px; overflow-y:auto; overflow-x: hidden; border:1px solid #999999; padding:1px;" id="uploaded_avatar_container">
+		           	     <img src="" border="0" id="uploaded_avatar" rel="">
+		           	     <input type="hidden" id="cropped_x1" value="">
+						 <input type="hidden" id="cropped_y1" value="">
+						 <input type="hidden" id="cropped_x2" value="">
+						 <input type="hidden" id="cropped_y2" value="">
+						 <input type="hidden" id="cropped_width" value="">
+						 <input type="hidden" id="cropped_height" value="">					 
+						 <input type="hidden" id="real_width" value="">
+						 <input type="hidden" id="real_height" value="">					 
+					 </div>
+	           	   <br>
+					<table cellpadding="0" cellspacing="0" width="60%" align="center"><tr>
+					  <td align="left" width="1"><a class="button" href="javascript:void(0);" onclick="CropAvatar();"><span><img src="images/icons/save.png" id="save_avatar_icon"> Crop & Save</span></a></td>
+					  <td align="center"></td>
+					  <td align="right" width="1"><a class="button" href="javascript:void(0);" onclick="OpenEditAvatar($('avatar_user_id').value); cropper.remove(); cropper=null;"><span class="red_button"><img src="images/icons/delete.png"> Cancel</span></a></td>
+					</tr></table>
+				  </div>
+	           	 </fieldset>
+	           	 
+	           	 <fieldset class="fieldset2 left ml5" id="image_preview_fieldset" style="width:150px; display:none;">
+	           	 <legend class="legend2"><b>Crop Preview</b></legend>
+	           	   <div class="bottom" style="text-align:center;">
+	           	     <div class="avatar" style="padding:0px;">
+           	           <div id="avatar_preview"></div>
+	           	     </div>
+	           	   </div>
+	           	 </fieldset>
+           
+	           </td>
+	           <td background="images/modalbox/ir.png" width="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/ibl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/ib.png" height="10"></td>
+	           <td background="images/modalbox/ibr.png" width="10" height="10"></td>
+	         </tr>
+	       </table>         
+         </td>
+         <td background="images/modalbox/or.png" width="8"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/obl.png" width="8" height="11"></td>
+         <td background="images/modalbox/ob.png" height="11"></td>
+         <td background="images/modalbox/obr.png" width="8" height="1"></td>
+       </tr>
+     </table>
+  </td></tr>
+</table>
+</div>
+
+<fieldset class="fieldset">
+  <legend class="legend"> <b>Filters and Options</b>&nbsp;</legend>
+  <div class="bottom" style="padding:10px;">
+	
+    <table width="100%">
+      <tr>
+        <td>
+          <select id="filter_type">
+            <option value="1">By Username</option>
+            <option value="2">By E-mail</option>
+          </select>
+	      <input type="text" name="filter_value" id="filter_value">
+        </td>
+        <td>
+          <b>By Status:</b>
+          <select id="status">
+            <option value="">All</option>
+            <option value="1">Active</option>
+            <option value="0">Inactive</option>            
+            <option value="2">Banned</option>
+          </select>
+        </td>
+        <td>
+          <b>By Premium Access:</b>
+          <select id="premium_access">
+            <option value="">All</option>
+            <option value="1">Active</option>
+            <option value="0">Inactive</option>
+          </select>
+        </td>
+        
+        <td width="50"></td>
+        
+        <td width="150">
+          <b>Show:</b>
+          <select id="amount">
+            <option value="10">10 Users/Page</option>
+            <option value="25">25 Users/Page</option>
+            <option value="50">50 Users/Page</option>
+            <option value="75">75 Users/Page</option>
+            <option value="100">100 Users/Page</option>
+          </select>
+        </td>
+        <td width="80">
+          <a class="small_button" href="javascript:void(0);" onclick="Paginate(1);"><span>Apply Filters</span></a>
+        </td>
+      </tr>
+    </table>
+	
+
+    {literal}
+    <script type="text/javascript">
+	var ac=new Autocomplete('filter_value', { 
+		serviceUrl: 'actions/users/search_users.php',
+		type: $('filter_type'),
+		minChars:3,
+		width:200,
+		deferRequestBy:300
+	});
+	</script>
+	{/literal}
+  </div>
+</fieldset>
+
+<br><br>
+
+<input type="hidden" id="order" value="1">
+<input type="hidden" id="sort" value="-1">
+<div id="users_contents">
+{/if}
+
+<input type="hidden" id="page" value="{$page}">
+
+<table cellpadding="0" cellspacing="0" width="850"><tr>
+  <td align="left" width="1"><a class="button" href="javascript:void(0);" onclick="OpenEditUser();"><span><img src="images/icons/add-tiny.png"> Add New User</span></a></td>
+  <td align="center">{$pagination}</td>
+  <td align="right" width="1"><a class="button" href="javascript:void(0);" onclick="Paginate($('page').value);"><span><img src="images/icons/refresh.png"> Refresh</span></a></td>
+</tr></table><br>
+
+<table cellpadding="0" cellspacing="0" align="center" width="100%" height="100%">
+  <tr><td align="center">
+  
+     <table cellpadding="0" cellspacing="0">
+       <tr>
+         <td background="images/modalbox/otl.png" width="8" height="25"></td>
+         <td background="images/modalbox/ot.png" height="25" valign="bottom">
+           <span class="modalbox_title" id="sources_browser_title"><img src="images/icons/user.png"> Users</span>
+           <span class="modalbox_buttons"></span>
+         </td>
+         <td background="images/modalbox/otr.png" width="8" height="25"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/ol.png" width="8"></td>
+	     <td bgcolor="#C9CDD0" width="900">
+
+	     	<table cellpadding="3" cellspacing="1"  width="100%" style="background:#EEEEEE;" class="datatable">
+	     	  <tr background="images/menu_bar_red.gif" align="center">
+	     	    <td width="1"><input type="checkbox" id="check_uncheck_all" onchange="CheckUncheck();"></td>
+	     	    <td><a href="javascript:void(0);" class="menu_link" onclick="$('order').value=1; $('sort').value=$('sort').value*-1; Paginate($('page').value);">Username</a></td>
+	     	    <td><a href="javascript:void(0);" class="menu_link" onclick="$('order').value=2; $('sort').value=$('sort').value*-1; Paginate($('page').value);">E-Mail</a></td>
+	     	    <td><a href="javascript:void(0);" class="menu_link" onclick="$('order').value=3; $('sort').value=$('sort').value*-1; Paginate($('page').value);">Date Registered</a></td>
+	     	    <td><a href="javascript:void(0);" class="menu_link" onclick="$('order').value=4; $('sort').value=$('sort').value*-1; Paginate($('page').value);">Status</a></td>
+	     	    <td><a href="javascript:void(0);" class="menu_link" onclick="$('order').value=5; $('sort').value=$('sort').value*-1; Paginate($('page').value);">Premium Access</a></td>
+	     	    <td><b class="white">Options</b></td>
+	     	  </tr>
+			  {foreach from=$array_users item=user key=user_id name=users}
+			    {if $smarty.foreach.users.index%2==0}
+			      {assign var="bgcolor" value="#D1D1D1"}
+			    {else}
+			      {assign var="bgcolor" value="#C9C9C9"}
+			    {/if}
+	         	<tr bgcolor="{$bgcolor}" align="center" style="font-weight:bold;" id="row_{$user_id}" class="user_row">
+	         	  <td><input type="checkbox" value="{$user_id}" class="user_cb"></td>
+	         	  <td  align="left" style="padding-left:5px;">{if $user.status==1}<b class="green" id="user_name_{$user_id}">{$user.username}</b>{elseif $user.status==0}<b id="user_name_{$user_id}">{$user.username}</b>{elseif $user.status==2}<b class="red" id="user_name_{$user_id}">* {$user.username} *</b>{/if}</td>
+	         	  <td id="user_email_{$user_id}">{$user.email}</td>
+	         	  <td>{$user.date_added|date_format}</td>
+	         	  <td>{if $user.status==1}<b class="green" id="user_status_{$user_id}">Active</b>{elseif $user.status==0}<b id="user_status_{$user_id}">Inactive</b>{elseif $user.status==2}<b class="red" id="user_status_{$user_id}">Banned</b>{/if}</td>
+	         	  <td>
+	         	    {if $user.premium_started}
+	         	      {$user.premium_remaining} remaining.
+	         	    {else}
+	         	      No premium access.
+	         	    {/if}
+	         	  </td>
+	         	  <td style="padding-left:5px;">
+	         	    <div class="option_button left ml3" style="padding-top:3px;"><a href="javascript:void(0);" onclick="OpenUserProfile({$user_id});" rel="View Complete User Info"><img src="images/icons/info.png" id="profile_icon_{$user_id}"></a></div>
+	         	    <div class="option_button left ml3" style="padding-top:3px;"><a href="../profile/{$user.id}/{$user.username}/" target="_blank" rel="Go to User's Profile"><img src="images/icons/user_profile.png"></a></div>
+	         	    <div class="option_button left ml3" style="padding-top:3px;"><a href="javascript:void(0);" onclick="ResendConfirmationMail({$user_id});" rel="Resend Confirmation E-Mail to the User"><img src="images/icons/mail_check.png" id="resend_mail_icon_{$user_id}"></a></div>
+	         	    <div class="option_button left ml3" style="padding-top:3px;"><a href="javascript:void(0);" onclick="OpenMailForm('{$user.email}','');" rel="Send an E-Mail to the User"><img src="images/icons/mail.png"></a></div>
+	         	    
+	         	    <div class="option_button right ml3" style="padding-top:3px;"><a href="javascript:void(0);" onclick="DeleteUser({$user_id});" rel="Delete User"><img src="images/icons/delete.png" id="delete_icon_{$user_id}"></a></div>
+	         	    <div class="option_button right ml3" style="padding-top:3px;"><a href="javascript:void(0);" onclick="OpenEditUser({$user_id});" rel="Edit User"><img src="images/icons/edit.png" id="edit_icon_{$user_id}"></a></div>
+	         	    <div class="option_button right ml3" style="padding-top:3px;"><a href="javascript:void(0);" onclick="OpenEditAvatar({$user_id});" rel="<b>Edit User's Avatar</b><br><div  class='avatar'><img src='{if preg_match('|^users/|',$user.avatar)}../{/if}{$user.avatar}' width='120' height='120'></div>" id="avatar_option_{$user_id}"><img src="images/icons/avatar.png" id="avatar_icon_{$user_id}"></a></div>
+
+	         	    <div class="option_button right ml3" style="padding-top:3px; {if $user.status!=1}display:none;{/if}" id="ban_user_option_{$user_id}"><a href="javascript:void(0);" onclick="BanUser({$user_id});" rel="Bann User"><img src="images/icons/forbidden.png" id="ban_icon_{$user_id}"></a></div>
+	         	    <div class="option_button right ml3" style="padding-top:3px; {if $user.status==1}display:none;{/if}" id="activate_user_option_{$user_id}"><a href="javascript:void(0);" onclick="ActivateUser({$user_id});" rel="Activate User's Account"><img src="images/icons/success.png" id="activate_icon_{$user_id}"></a></div>
+	         	  </td>
+	         	</tr>
+		      {foreachelse}
+		    	<tr bgcolor="#C9C9C9"><td colspan="8" align="center"><img src="images/icons/warning.png"> <b>No users have been added yet.</b></td></tr>
+		      {/foreach}
+		    </tr>
+		    </table>
+         </td>
+         <td background="images/modalbox/or.png" width="8"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/obl.png" width="8" height="11"></td>
+         <td background="images/modalbox/ob.png" height="11"></td>
+         <td background="images/modalbox/obr.png" width="8" height="1"></td>
+       </tr>
+     </table>
+  </td></tr>
+</table>
+<br class="br">
+
+<select id="selected_action" class="left" style="width:200px; margin-left:50px;">
+  <option value="">- Select Action for Selected Users</option>
+  <option value="1">Activate Selected Users</option>
+  <option value="2">Ban Selected Users</option>
+  <option value="3">Delete Selected Users</option>
+  <option value="" disabled>---------------------------------------------</option>
+  <option value="4">Resend Confirmation E-Mail for Selected Users</option>
+  <option value="5">Send E-Mail to Selected Users</option>
+
+</select>
+<a class="small_button ml5" href="javascript:void(0);" onclick="ActionOnSelected();"><span> Go</span></a>
+<img src="images/loading.gif" id="selected_action_loading_img" style="display:none;" class="left ml5">
+
+{if !$onlymod}
+</div>
+
+<script>
+ReTip();
+{if $smarty.get.trigger_profile>0}OpenUserProfile({$smarty.get.trigger_profile});{/if}
+</script>
+{/if}

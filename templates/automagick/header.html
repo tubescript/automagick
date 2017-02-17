@@ -1,0 +1,177 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>{$aSettings.site_title} - {if $module=="video"}{if $language==$default_language}{$video.title}{else}{$video.translations.$language.title}{/if}{elseif $title_string}{$title_string}{else}{$aLabels.meta_title}{/if}</title>
+<meta name="title" content="{if $module=="video"}{$video.title}{else}{$aSettings.site_title} - {if $title_string}{$title_string}{else}{$aLabels.meta_title}{/if} {/if}">
+<meta name="description" content="{if $module=="video"}{if $video.description}{$video.description}{else}{$video.title}{/if}{else}{$aLabels.meta_description}{/if}">
+<meta name="keywords" content="{if $module=="video"}{foreach from=$video.tags item=tag_ name=tags}{$tag_}{if !$smarty.foreach.tags.last}, {/if}{/foreach}{else}{$aLabels.meta_keywords}{/if}">
+
+{if $module=="video"}
+  <link rel="canonical" href="{$aSettings.installation_url}video/{$video.id}/{$video.title|regex_replace:'/[ &\/"]/':'-'}" />
+{/if}
+
+<base href="{$base_url}"></base>
+<link rel="stylesheet" href="templates/{$template}/{$aSettings.style_name}.css" type="text/css" />
+<script language="javascript" src="libs/prototype/prototype.js"></script>
+<script language="javascript" src="js/functions.js"></script>
+{if $load_js==1}<script language="javascript" src="js/modules/{$module}.js"></script>{/if}
+
+{*
+{if $module=="video" && $video.is_local==1 && $video.player_id==1}
+<script language="javascript" src="players/default/config.php?id={$video.id}"></script>
+{/if}
+*}
+
+{if $smarty.session.user_logged && $smarty.session.user.id==$user.id}
+  <script type='text/javascript' src="libs/scriptaculous/scriptaculous.js?load=effects,slider,builder,dragdrop"></script>
+{/if}
+<script>var aLabels={$sLabelsJSON};</script>
+
+<script>var template="{$template}";</script>
+{if $array_videos}
+<script>
+{foreach from=$array_videos item=video}
+  {if $video.json_thumbs}
+  thumbs_cache[{$video.id}]={$video.json_thumbs};
+  {/if}
+{/foreach}
+</script>
+{/if}
+
+{if $fav_array_videos}
+<script>
+{foreach from=$fav_array_videos item=video}
+  {if $video.json_thumbs}
+  thumbs_cache[{$video.id}]={$video.json_thumbs};
+  {/if}
+{/foreach}
+</script>
+{/if}
+
+{if $array_watched_videos}
+<script>
+{foreach from=$array_watched_videos item=video}
+  {if $video.json_thumbs}
+  thumbs_cache[{$video.id}]={$video.json_thumbs};
+  {/if}
+{/foreach}
+</script>
+{/if}
+
+{if $array_premium_videos}
+<script>
+{foreach from=$array_premium_videos item=video}
+  {if $video.json_thumbs}
+  thumbs_cache[{$video.id}]={$video.json_thumbs}
+  {/if}
+{/foreach}
+</script>
+{/if}
+
+</head>
+
+<body>
+<table cellpadding="0" cellspacing="0" width="100%" align="center">
+  <tr><td align="center" class="header_bg" height="72">
+    
+  	<table cellpadding="0" cellspacing="0" align="center" width="970">
+  	  <tr>
+  	    <td class="logo_bg"></td>
+  	    <td valign="bottom">
+  	      <table cellpadding="0" cellspacing="0" style="margin-left:20px;">
+  	        <tr>
+  	          <td class="tab {if $module=="home"}tab_active{/if}"><a href="index.html"><div class="tl"></div><div class="tm">{$aLabels.home}</div><div class="tr"></div></a></td>
+  	          <td width="6"></td>
+  	          <td class="tab {if $module=="videos" and !$favorites and !$premium}tab_active{/if}"><a href="browse/"><div class="tl"></div><div class="tm">{$aLabels.videos}</div><div class="tr"></div></a></td>
+  	          <td width="6"></td>
+  	          <td class="tab {if $module=="categories"}tab_active{/if}"><a href="categories.html"><div class="tl"></div><div class="tm">{$aLabels.categories}</div><div class="tr"></div></a></td>
+  	          <td width="6"></td>
+  	          <td class="tab {if $module=="videos" and $favorites and $smarty.session.user_logged}tab_active{/if}">{if $smarty.session.user_logged}<a href="favorites/">{else}<a href="javascript:void(0);" onclick="OpenLayer('login_register_layer');">{/if}<div class="tl"></div><div class="tm">{$aLabels.favorites}</div><div class="tr"></div></a></td>
+  	          <td width="6"></td>
+  	          <td class="tab {if $module=="videos" and $premium}tab_active{/if}"><a href="premium/"><div class="tl"></div><div class="tm">{$aLabels.premium}</div><div class="tr"></div></a></td>
+  	          <td width="6"></td>
+  	          <td class="tab {if $module=="videochat"}tab_active{/if}"><a href="videochat.html"><div class="tl"></div><div class="tm">{$aLabels.videochat}</div><div class="tr"></div></a></td>
+  	          {if $aSettings.video_upload_allowed}
+  	            <td width="6"></td>
+  	            <td class="tab tab_upload {if $module=="upload"}tab_active{/if}">{if $smarty.session.user_logged}<a href="javascript:void(0);" onclick="$('upload_layer').show();">{else}<a href="javascript:void(0);" onclick="OpenLayer('login_register_layer');">{/if}<div class="tl"></div><div class="tm">{$aLabels.upload}</div><div class="tr"></div></a></td>
+  	          {/if}
+  	        </tr>
+  	      </table>
+  	    
+  	    </td>
+  	    <td align="right" valign="bottom" style="padding-bottom:7px;">
+  	      {if $smarty.session.user_logged}
+  	        {if $module=="profile"}
+  	      	  <a href="javascript:void(0);" onclick="OpenEditProfileLayer({$smarty.session.user.id});" class="link2"><b>{$aLabels.edit_my_profile|capitalize}</b></a> - 
+  	      	{else}
+  	      	  <a href="profile/{$smarty.session.user.id}/{$smarty.session.user.username}/" class="link2"><b>{$aLabels.my_profile|capitalize}</b></a> - 
+  	      	{/if}
+  	        <a href="actions/logout.php" class="link2"><b>{$aLabels.logout|capitalize}</b></a>
+  	      {else}
+  	      	<a href="javascript:void(0);" onclick="OpenLayer('login_register_layer');" class="link2"><b>{$aLabels.register|capitalize}</b></a> - 
+  	        <a href="javascript:void(0);" onclick="OpenLayer('login_register_layer');" class="link2"><b>{$aLabels.login|capitalize}</b></a>  	        
+  	      {/if}
+  	    </tr>
+  	  </tr>
+  	</table>
+
+  </td></tr>
+</table>
+
+
+<table cellpadding="0" cellspacing="0" align="center" width="1000">
+  <tr>
+    <td class="bar"><div class="bl"></div><div class="bm"></div><div class="br"></div></td>
+  </tr>
+</table>
+
+
+
+<table cellpadding="0" cellspacing="0" align="center" width="1000">
+  <tr>
+	<td style="padding:20px;">
+	
+	<div style="display:inline;">
+	  <form name="search_form" id="search_form" action="index.php" method="get" class="text left">
+	    {if $smarty.session.user_logged and $favorites}<input type="hidden" name="favorites" value="1">{/if}
+	    {if $premium}<input type="hidden" name="premium" value="1">{/if}
+	    <input type="hidden" name="module" value="videos">
+	    <b>{$aLabels.search}:</b>
+	    <input type="text" class="input-text text" name="tag" id="tag" value="{$tag|replace:"\"":"&quot;"}">
+	    <a href="javascript:void(0);" onclick="$('search_form').submit();"><div class="input-button">{$aLabels.search}</div></a>
+	  </form>
+	  
+	  {if $installed_languages>1}
+	  <div class="right" style="margin-left:20px; margin-top:1px;">
+		{foreach from=$aLanguages key=lang_id item=lang}
+		  {if $lang.installed}
+		    <a href="{$browse_link}/{$order}/lang/{$lang_id}"><div class="small_button"><img src="templates/{$template}/images/{$lang.code}.gif" title="{$lang.name}"></div></a>
+		  {/if}
+		{/foreach}
+	  </div>
+	  {/if}
+	
+	  {if $active_groups>1}
+	  <form name="categ_type_form" id="categ_group_form" action="{$browse_link}/{$order}" method="post" class="text right">
+	    {if $smarty.session.user_logged and $favorites}<input type="hidden" name="favorites" value="1">{/if}
+	    <b>{$aLabels.view}</b>
+	    <select name="group_id" class="input-text text" onchange="this.form.submit();">
+	    {foreach from=$array_groups item=categories key=gid}
+	      {if $categories[0].group_status}
+		    <option value="{$gid}" {if $group_id==$gid}selected{/if}>{$categories[0].group_name} {$aLabels.videos}</option>
+		  {/if}
+	    {/foreach}
+	    </select>
+	  </form>
+	  {/if}
+	
+	</div>
+	</td>
+  </tr>
+</table>
+<center><div class="hr" style="width:980px;" align="center"></div></center>
+
+<br>
+
+<table cellpadding="0" cellspacing="0" align="center" width="1000" class="text">
+<tr><td style="padding:0px;">

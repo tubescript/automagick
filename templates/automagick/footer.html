@@ -1,0 +1,45 @@
+</td></tr>
+</table>
+
+
+{if !$smarty.session.user_logged}
+<div class="floating_layer" id="login_register_layer" style="display:none;">
+  <table cellpadding="0" cellspacing="0" width="100%" height="100%" align="center">
+    <tr><td align="center" valign="middle">
+  		{include file="login_register.html" cache_id=$cache_id}
+  	</td></tr>
+  </table>
+</div>
+{elseif $aSettings.video_upload_allowed}
+<div class="floating_layer" id="upload_layer" style="display:none;">
+  <table cellpadding="0" cellspacing="0" width="100%" height="100%" align="center">
+    <tr><td align="center" valign="middle">
+  		{include file="upload_form.html" cache_id=$cache_id}
+  	</td></tr>
+  </table>
+</div>
+{/if}
+
+
+<div class="floating_layer" id="premium_options_layer" style="display:none;">
+  <table cellpadding="0" cellspacing="0" width="100%" height="100%" align="center">
+    <tr><td align="center" valign="middle">
+  		{include file="premium_options_form.html" cache_id=$cache_id}
+  	</td></tr>
+  </table>
+</div>
+
+
+<center><div class="hr" style="width:980px;" align="center"></div></center>
+<br><br>
+<div align="center" class="text3">Copyright &copy; 2008-2011 Automagick Tube Script - All Rights Reserved -
+<a href="#">18 U.S.C. 2257 Statement</a> -
+<a href="#">Privacy Policy</a> -
+<a href="#">Terms And Conditions</a> -
+<a href="#">Contact</a> -
+<a href="#">Advertise</a> -
+{if $aSettings.rss_status==1}<a href="rss_feeds.html"><img src="templates/{$template}/images/rss.png"> Rss</a>{/if}
+{if $aSettings.tags_archive_enabled==1} - <a href="tags_archive.html">Tags Archive</a>{/if}
+
+</div>
+<br><br>

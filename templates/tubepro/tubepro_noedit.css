@@ -1,0 +1,102 @@
+a{color:#||tubepro_links_color||; font-family:arial,tahoma,verdana; text-decoration:none;}
+a:hover {text-decoration:underline;}
+.link{color:#||tubepro_links2_color||;font-family:arial,tahoma,verdana; text-decoration:none; font-weight:bold;}
+a.link:hover {text-decoration:underline;}
+
+.body{background:#||tubepro_body_bgcolor||; color:#||tubepro_body_font_color||}
+.header {background:#||tubepro_header_bg_color|| url(images/header_gradient.png);}
+.logo {background:url(||tubepro_logo_image||) no-repeat; width:||tubepro_logo_width||px; height:||tubepro_logo_height||px; margin: 0; padding: 0;}
+.bar {background:#||tubepro_bar_color|| url(images/bright.png) repeat-x;}
+.menu_item {color:#||tubepro_menu_links_color||; font-family:arial,tahoma,verdana; font-size:14px; font-weight:bold; text-shadow:1px 1px 0px rgba(0,0,0,0.25); float:left; width:auto; height:28px; line-height:28px; padding:0px 15px; display:inline-block; vertical-align:middle}
+.menu_item:hover{background:rgba(0,0,0,0.1);}
+.menu_active{background:#||tubepro_menu_active_color|| url(images/bright.png) repeat-x;}
+.menu_active:hover{background:#||tubepro_menu_active_color|| url(images/bright.png) repeat-x;}
+.separator {width:2px; height:28px; line-height:28px; float:left; background:url(images/separator.png);}
+.text {font-family:arial,tahoma,verdana; color:#||tubepro_body_font_color||; font-size:12px;}
+.title_text {height:20px; line-height:20px; border:1px solid rgba(0,0,0,0.1); font-family:arial,tahoma,verdana; color:#||tubepro_menu_links_color||; font-size:16px; font-weight:bold; text-shadow:1px 1px 0px rgba(0,0,0,0.3); padding-left:10px; background-position:0px -1px;}
+.title{color:#||tubepro_menu_links_color||; font-family:arial,tahoma,verdana; font-size:16px; padding:0px 10px; margin:0px; text-shadow: #444444 -1px -1px 0px;} /* only certain styles, not all. */
+.button {
+	height:28px;
+	line-height:24px;
+	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:url(images/button_gradient.png) rgb(||tubepro_button_rgba_color||); /* Fall-back for browsers that don't support rgba */
+	background:url(images/button_gradient.png) rgba(||tubepro_button_rgba_color||,0.7);
+	border:1px solid rgb(||tubepro_button_rgba_color||);  /* Fall-back for browsers that don't support rgba */
+	border:1px solid rgba(||tubepro_button_rgba_color||,0.85);
+	display:inline-block;
+	color:#||tubepro_button_text_color||;
+	font-family:arial,tahoma,verdana;
+	font-size:14px;
+	font-weight:bold;
+	text-decoration:none;
+	text-shadow:1px 1px 0px rgba(0,0,0,0.25);
+	cursor:pointer;
+	padding:0px 10px;
+}
+
+.button:hover {
+	background:url(images/button_gradient.png) rgb(||tubepro_button_rgba_color||); /* Fall-back for browsers that don't support rgba */
+	background:url(images/button_gradient.png) rgba(||tubepro_button_rgba_color||,0.85);
+	border:1px solid rgb(||tubepro_button_rgba_color||);
+	text-decoration:none;
+}
+
+.button:active {
+	position:relative;
+	top:1px;
+}
+
+.button_small {
+	height:20px;
+	line-height:20px;
+	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:url(images/button_gradient.png) rgb(||tubepro_button_rgba_color||); /* Fall-back for browsers that don't support rgba */
+	background:url(images/button_gradient.png) rgba(||tubepro_button_rgba_color||,0.7);
+	border:1px solid rgb(||tubepro_button_rgba_color||);  /* Fall-back for browsers that don't support rgba */
+	border:1px solid rgba(||tubepro_button_rgba_color||,0.85);
+	display:inline-block;
+	color:#||tubepro_button_text_color||;
+	font-family:arial,tahoma,verdana;
+	font-size:12px;
+	font-weight:bold;
+	text-decoration:none;
+	text-shadow:1px 1px 0px rgba(0,0,0,0.25);
+	cursor:pointer;
+	padding:0px 10px;
+}
+
+.button_small:hover {
+	background:url(images/button_gradient.png) rgb(||tubepro_button_rgba_color||); /* Fall-back for browsers that don't support rgba */
+	background:url(images/button_gradient.png) rgba(||tubepro_button_rgba_color||,0.85);
+	border:1px solid rgb(||tubepro_button_rgba_color||);
+	text-decoration:none;
+}
+
+.button_small:active {
+	position:relative;
+	top:1px;
+}
+
+.current_page{
+	background:url(images/button_gradient.png) #||tubepro_menu_active_color||; /* Fall-back for browsers that don't support rgba */
+}
+
+.floating_box {border:7px solid #||tubepro_bar_color||; background:#||tubepro_body_bgcolor|| url(images/shadow.png) repeat-x 0px 0px; padding:30px;}
+.container_box {border:1px solid #||tubepro_box_border||; background:#||tubepro_box_bgcolor|| url(images/shadow.png) repeat-x 0px 0px; padding:4px;}
+.thumb_box {border:1px solid #||tubepro_box_border||; background:#||tubepro_thumb_bgcolor|| url(images/shadow.png) repeat-x 0px 0px; padding:0px;}
+.shadow_box{-moz-box-shadow:4px 4px 0px 0px rgba(0,0,0,0.25); -webkit-box-shadow:4px 4px 0px 0px rgba(0,0,0,0.25); box-shadow:4px 4px 0px 0px rgba(0,0,0,0.25);}
+.small_shadow_box{-moz-box-shadow:2px 2px 0px 0px rgba(0,0,0,0.25); -webkit-box-shadow:2px 2px 0px 0px rgba(0,0,0,0.25); box-shadow:2px 2px 0px 0px rgba(0,0,0,0.25);}
+.thumb {border:1px solid #||tubepro_thumb_border_color||; background:url(../../thumbs/nothumb.jpg) no-repeat center center; padding:1px;}
+.thumb_small {background:url(../../thumbs/nothumb_small.jpg) no-repeat center center; border:1px solid #||tubepro_thumb_border_color||; padding:1px;}
+.thumb_table {border:1px solid #333333;}
+.avatar {border:1px solid #||tubepro_thumb_border_color||; padding:1px; margin:1px; width:120px; height:120px; background:url(../../users/noavatar.jpg) 1px 1px no-repeat;}
+.avatar_small {border:1px solid #666666; padding:1px; margin:1px; width:60px; height:60px; background:url(../../users/noavatar_small.jpg) 1px 1px no-repeat;}
+
+.footer{background:#||tubepro_bar_color||;}
+.footer1{background:url(images/shadow.png) repeat-x 0px 0px rgba(0,0,0,0.15);}
+.footer2{background:url(images/shadow.png) repeat-x 0px 0px rgba(0,0,0,0.60);}
+.footer3{background:url(images/shadow.png) repeat-x 0px 0px rgba(0,0,0,0.30);}

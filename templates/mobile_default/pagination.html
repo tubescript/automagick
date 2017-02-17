@@ -1,0 +1,25 @@
+{*
+This template recieves the next variables:
+- {$page}: Actual Page.
+- {$total_pages}: Number of total pages.
+- {links}: Links array with index=page.
+*}
+<div style="display:table;">
+  <div style="display:table-row;"> 
+{if $page>1}
+  <div style="display:table-cell;"><a href="{$links[$prev_page]}">&laquo;</a></div>
+{else}
+  <div style="display:table-cell;"><b class="disabled">&laquo;</b></div>
+{/if}
+
+<div style="display:table-cell;">
+  &nbsp;&nbsp;<b>{$page}</b>&nbsp;&nbsp;
+</div>
+
+{if $page<$total_pages}
+  <div style="display:table-cell;"><a href="{$links[$next_page]}">&raquo;</a></div>
+{else}
+  <div style="display:table-cell;"><b class="disabled">&raquo;</b></div>
+{/if}
+  </div>
+</div>

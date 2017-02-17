@@ -1,0 +1,97 @@
+.ips_wrapper {
+  background:url(images/input_bg.png) no-repeat;
+  position: relative;
+  cursor:pointer;
+  margin:0px;
+  padding:0px;
+  width:120px;
+  height:21px;
+  display: block;
+}
+
+.ips_wrapper .ips_text {
+  color:#555555;
+  font-size:8pt;
+  font-family:tahoma,verdana,arial;
+  margin-left: 3px;
+  padding: 1px;
+  overflow: hidden;
+  width: 100%;
+  height:21px;
+  display: block;
+}
+
+.ips_input {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  padding: 3px;
+  display: block;
+}
+
+.hidden {
+  display: none;
+}
+
+.ips_trigger {
+  background:url(images/button_bg.png) no-repeat right;
+  position:absolute;
+  top:0px;
+  right:0px;
+  margin:0px;
+  width:21px;
+  height:21px;
+  cursor:pointer;
+}
+
+.ips_trigger:hover {
+  background:url(images/button_bg_on.png) no-repeat right;
+}
+
+.ips_trigger span {
+}
+
+/* .ips_wrapper.over .ips_trigger {
+  border-left: 1px solid #578bc5;
+}
+.ips_trigger.over {
+  color: #333;
+}*/
+
+.ips_options_list {
+  position: absolute;
+  background: #EFEFEF;
+  border: 1px solid #999999;
+  z-index: 10000;
+  width:100%;
+  max-height:144px;
+  overflow-x:auto;
+  left:0px;
+  top:10px;
+}
+
+.ips_options_list li {
+  margin:0px;
+  margin-left:-40px;
+  padding: 1px;
+  padding-left:3px;
+  background: #fff;
+  color: #555555;
+  font-size: 8pt;
+  cursor: pointer;
+  overflow: hidden;
+  height: 18px;
+  list-style-type: none;
+}
+
+.ips_options_list li.over {
+  background:#DDDDDD;
+}
+.ips_options_list li.off {
+}
+.ips_options_list li.off.over {
+}
+.ips_options_list li.half {
+}
+.ips_options_list li.half.over {
+}

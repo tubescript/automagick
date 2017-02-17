@@ -1,0 +1,119 @@
+<div id="rss_feed_add_edit_layer" style="display:none; background:transparent;" class="floating_layer">
+<table cellpadding="0" cellspacing="0" align="center" width="100%" height="100%">
+  <tr><td align="center">
+       
+     <table cellpadding="0" cellspacing="0" class="draggable">
+       <tr class="draggable_handle" style="cursor:pointer;">
+         <td background="images/modalbox/otl.png" width="8" height="25"></td>
+         <td background="images/modalbox/ot.png" height="25" valign="bottom">
+           <span class="modalbox_title" id="rss_feed_add_edit_title"></span>
+           <span class="modalbox_buttons">
+             &nbsp;
+             <a href="javascript:void(0);" onclick="CloseLayer('rss_feed_add_edit_layer');"><img src="images/icons/close_big.png" onmouseover="this.src='images/icons/close_big_on.png';" onmouseout="this.src='images/icons/close_big.png';"></a>
+
+           </span>
+         </td>
+         <td background="images/modalbox/otr.png" width="8" height="25"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/ol.png" width="8"></td>
+         <td>
+           <table cellpadding="0" cellspacing="0">
+	         <tr>
+	           <td background="images/modalbox/itl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/it.png" height="10"></td>
+	           <td background="images/modalbox/itr.png" width="10" height="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/il.png" width="10"></td>
+	           <td bgcolor="#C9CDD0" width="650" class="modal_text">
+	           <br>
+	           	<input type="hidden" id="rss_feed_add_edit_id" value="">
+
+	           	<fieldset class="fieldset3" style="padding:10px;" id="rss_feed_add_edit_step_1">
+	           	  <legend class="legend3"><b>Step 1 - Feed URL</b></legend>
+	           	    Enter the URL of the Feed and click "Fetch" button to continue.<br><br class="br">
+	           	    <input type="text" id="rss_feed_add_edit_url" class="left" style="width:350px; margin-right:3px;">
+	           	    <a class="small_button" href="javascript:void(0);" onclick="FetchRssFeed();"><span><img src="images/icons/feed_fetch.png" style="margin-top:-1px;" id="rss_feed_fetch_icon"> Fetch</span></a>
+	           	    <br class="clear">
+	           	    <div id="rss_feed_primary_tag_div" style="display:none;">
+	           	      <b>Primary Tag: </b><input type="text" id="rss_feed_add_edit_primary_tag">
+	           	      <a href="javascript:void(0);" rel="Primary Field is the container tag of each ITEM of the feed.<br>Most fo the cases it is called 'item'."><img src="images/icons/help.png"></a>
+	           	    </div>
+	           	    
+	           	</fieldset>
+	           	<br><br class="br">
+	           	
+	           	<fieldset class="fieldset3" style="padding:10px; display:none;" id="rss_feed_add_edit_step_2">
+	           	  <legend class="legend3"><b>Step 2 - Fields Assignation</b></legend>
+	           	    Select, from the list of recognized tags, the correspondient matching values.<br><br>
+	           	    <div id="rss_feed_recognized_tags_contents" style="width:320px; text-align:right; float:left;"></div>
+	           	    <div id="rss_feed_recognized_tags_separators" style="margin-left:4px; width:100px; float:left;"></div>
+	           	    <br>
+	           	</fieldset>
+	           	<br><br class="br">
+	           	
+	           	<fieldset class="fieldset3" style="padding:10px; display:none;" id="rss_feed_add_edit_step_3">
+	           	  <legend class="legend3"><b>Step 3 - Feed Options</b></legend>
+	           	</fieldset>
+
+	           </td>
+	           <td background="images/modalbox/ir.png" width="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/ibl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/ib.png" height="10"></td>
+	           <td background="images/modalbox/ibr.png" width="10" height="10"></td>
+	         </tr>
+	       </table>         
+         </td>
+         <td background="images/modalbox/or.png" width="8"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/obl.png" width="8" height="11"></td>
+         <td background="images/modalbox/ob.png" height="11"></td>
+         <td background="images/modalbox/obr.png" width="8" height="1"></td>
+       </tr>
+     </table>
+  </td></tr>
+</table>
+</div>
+
+
+<div style="display:none;" id="rss_feeds_instructions_contents">
+
+</div>
+
+<table cellpadding="5" cellspacing="1" width="900">
+  <tr>
+    <td width="200">
+      <a class="button" href="javascript:void(0);" onclick="OpenAddEditRSSFeed();"><span><img src="images/icons/add.png" id="rss_feeds_add_icon"> Add New Feed</span></a>
+    </td>
+    <td></td>
+    <td width="150">
+      <a class="button" href="javascript:void(0);" onclick="RefreshRSSFeeds();" style="margin-left:200px;"><span><img src="images/icons/refresh.png" id="rss_feeds_refresh_icon"> Refresh</span></a>
+    </td>
+  </tr>
+</table>
+
+<table cellpadding="5" cellspacing="1" width="900" style="border:1px solid #AAAAAA; background:#EEEEEE;">
+  <tr bgcolor="#AAAAAA">
+    <td><b>Feed Name</b></td>
+    <td><b>Feed URL</b></td>
+    <td><b>Read Every</b></td>
+    <td><b>Add Videos as</b></td>
+    <td><b>Options</b></td>
+  </tr>
+{foreach from=$aRssFeeds item=feed}
+  <tr class="server_row" id="feed_row_{$server.id}">
+    <td><b>{$feed.name}</b></td>
+    <td><b>{$feed.url}</b></td>
+    <td><b>{$feed.read_every}</b></td>
+    
+  </tr>
+{foreachelse}
+  <tr bgcolor="#D1D1D1">
+    <td colspan="8" align="center">No Feeds found.</td>
+  </tr>
+{/foreach}
+</table>

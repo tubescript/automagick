@@ -1,0 +1,81 @@
+<div style="width:800px; text-align:justify;">
+	Easily import all the data from your Automagick Tube Script version 1 to this version.
+	Just enter the database info of version 1 and press the "Analyze Data" Button.<br><br class="br">
+	
+	You will be able to choose what to import and what to discard. After that, proceed with the next step, and all data will be added, simple and fast.<br><br class="br">
+	
+	If the database is not on the same server, then you should enter, in the "host" field, the IP or hostname of the database, keeping in mind that you should grant remote access to the user.
+	If you don't know how to do that, contact your hosting support and request them to do it.<br>
+</div>
+<br><br><br>
+
+
+<fieldset class="fieldset2" style="width:500px; text-align:left;">
+  <legend class="legend2"><b>Version 1 Info</b></legend>
+  <div class="bottom" style="padding:20px;">
+    <table cellpadding="5" cellspacing="1"  width="100%" style="border:1px solid #AAAAAA; background:#EEEEEE;">
+      <tr bgcolor="#D1D1D1">
+        <td align="right" width="180"><b class="red">*</b> <b>Database Host:</b></td>
+        <td>
+          <input type="text" name="database_host" id="database_host" class="input-text" style="width:200px;" tabindex="1">
+          <a href="javascript:void(0);" rel="Database Host"><img src="images/icons/help.png"></a>
+        </td>
+      </tr>
+      <tr bgcolor="#C9C9C9">
+        <td align="right"><b class="red">*</b> <b>Database Username:</b></td>
+        <td>
+          <input type="text" name="database_user" id="database_user" class="input-text" style="width:200px;" tabindex="1">
+          <a href="javascript:void(0);" rel="Database User"><img src="images/icons/help.png"></a>
+        </td>
+      </tr>
+        <tr bgcolor="#D1D1D1">
+        <td align="right"><b class="red">*</b> <b>Database Password:</b></td>
+        <td>
+          <input type="text" name="database_pass" id="database_pass" class="input-text" style="width:200px;" tabindex="1">
+          <a href="javascript:void(0);" rel="Database Password"><img src="images/icons/help.png"></a>
+        </td>
+      </tr>
+      <tr bgcolor="#C9C9C9">
+        <td align="right"><b class="red">*</b> <b>Database Name:</b></td>
+        <td>
+          <input type="text" name="database_name" id="database_name" class="input-text" style="width:200px;" tabindex="1">
+          <a href="javascript:void(0);" rel="Database Name"><img src="images/icons/help.png"></a>
+        </td>
+      </tr>
+      
+      <tr bgcolor="#D1D1D1">
+        <td align="right"><b class="red">*</b> <b>Installation URL:</b></td>
+        <td>
+          <input type="text" name="installation_url" id="installation_url" class="input-text" style="width:200px;" tabindex="1">
+          <a href="javascript:void(0);" rel="Installation URL of your version 1 site.<br>Example: http://www.mysite.com/ or http://www.mysite.com/tube/."><img src="images/icons/help.png"></a>
+        </td>
+      </tr>
+    </table>
+    <br class="br">
+    <center>
+    
+    <input type="checkbox" value="1" name="import_categories" id="import_categories" checked> <label for="import_categories"><b>Migrate Groups and Categories</b></label>
+    <a href="javascript:void(0);" rel="If you check this option, all the groups and categories you had in version 1<br>will be created keeping the assignation of videos.<br>If you don't, only the videos will be added, with no category assignation."><img src="images/icons/help.png"></a>
+    <br>
+    <input type="checkbox" value="1" name="only_active" id="only_active"> <label for="only_active"><b>Migrate Only Active Videos</b></label>
+    <a href="javascript:void(0);" rel="If you check this option, only the active videos will be migrated.<br>Inactive videos will be ignored."><img src="images/icons/help.png"></a>
+    <br>
+    <input type="checkbox" value="1" name="use_old_ids" id="use_old_ids"> <label for="use_old_ids"><b>Attempt to keep the same Video IDs</b></label>
+    <a href="javascript:void(0);" rel="If you check this option, the migration will attempt to use the same Video IDs as used in vesion 1.<br>This will be usefull for google not to loose the links.<br>It is recommended for you to have version 2 without videos if you wish to use this option."><img src="images/icons/help.png"></a>
+    <br><br>
+    
+    <div id="msg_error" class="error" style="width:350px; display:none;"><img src="images/icons/error.gif"> <span id="error_msg"></span></div>
+
+    <div style="width:120px;">
+      <a class="button" id="analyze_button" href="javascript:void(0);" onclick="AnalyzeData();"><span><img src="images/icons/import.png"> Analyze Data</span></a>
+      <a class="button disabled" id="analyze_button_disabled"  href="javascript:void(0);" style="display:none;"><span><img src="images/loading.gif" id="analyze_icon"> Analyze Data</span></a>
+    </div>
+    </center>
+    
+    <br style="clear:both;">
+  </div>
+</fieldset>
+
+<script>
+ReTip();
+</script>

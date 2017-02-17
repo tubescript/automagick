@@ -1,0 +1,127 @@
+{if $smarty.session.user_logged && $smarty.session.user.id==$user.id}
+	<script language="javascript" src="libs/cropper/cropper.js"></script>
+	<link rel="stylesheet" href="libs/cropper/cropper.css" type="text/css" />
+	
+	
+	<div class="floating_layer" id="edit_profile_layer" style="display:none;">
+	  <table cellpadding="0" cellspacing="0" width="100%" height="100%" align="center">
+	    <tr><td align="center" valign="middle">
+	  		{include file="edit_profile.html" cache_id=$cache_id}
+	  	</td></tr>
+	  </table>
+	</div>
+
+{/if}
+
+<input type="hidden" name="page" id="page" value="{$page}">
+<input type="hidden" name="order" id="order" value="{$order}">
+
+<div class="left" style="width:780px;">
+
+	<div class="left rounded3 container_box" style="padding:0px; width:100%; margin-bottom:10px;">
+	  <div class="bar rounded3 title_text m3">
+		<div class="left">{$title_string} <span style="font-size:13px;">&nbsp;({$aLabels.showing} {$start}-{$end} {$aLabels.of} {$total_videos} {$aLabels.videos})</span></div>
+		<div class="right" style="font-size:13px; line-height:18px; padding-right:8px;"><a href="{$browse_link}/1" class="white">{$aLabels.date}</a> - <a href="{$browse_link}/2" class="white">{$aLabels.views}</a> - <a href="{$browse_link}/3" class="white">{$aLabels.rating}</a> - <a href="{$browse_link}/4" class="white">{$aLabels.title}</a> - <a href="{$browse_link}/5" class="white">{$aLabels.duration}</a></div>
+	  </div>
+		
+	  <div class="m5">
+		  {foreach from=$array_videos item=video name=videos}
+			<table cellpadding="0" cellspacing="8" class="text left thumb_box rounded5 m3" id="video_{$video.id}">
+			  <tr><td colspan="2">
+				<a href="javascript:void(0);" onclick="{if $smarty.session.user_logged}FavAddVideo({$video.id},1);{else}OpenLayer('login_register_layer');{/if}" id="favstar_off_{$video.id}" title="Add Video to Favorites." {if in_array($video.id,$array_favorites)}style="display:none;"{/if}><img src="templates/{$template}/images/star_off.png" border="0" align="absmiddle"></a>
+				<a href="javascript:void(0);" onclick="{if $smarty.session.user_logged}FavRemoveVideo({$video.id},1);{else}OpenLayer('login_register_layer');{/if}" id="favstar_on_{$video.id}"  title="Remove Video from Favorites." {if !in_array($video.id,$array_favorites)}style="display:none;"{/if}><img src="templates/{$template}/images/star_on.png" border="0" align="absmiddle"></a>
+				<a href="video/{$video.id}/{$video.title|regex_replace:'/[ \/"]/':'-'}" class="link" title="{$video.title|replace:'"':'&quot;'}">
+				  {if $mb_available}
+					{if $language==$default_language or !$video.translations.$language.title}
+						{$video.title|mb_truncate:20:"...":"UTF-8":true}
+					{else}
+						{$video.translations.$language.title|mb_truncate:20:"...":"UTF-8":true}
+					{/if}
+				  {else}
+					{if ($language==$default_language or !$video.translations.$language.title)}
+						{$video.title|truncate:12:"...":true}
+					{else}
+						{$video.translations.$language.title|truncate:12:"...":true}
+					{/if}
+				  {/if}
+				</a>
+				{if $smarty.session.user_logged && $smarty.session.user.id==$user.id}
+				  <a href="javascript:void(0);" class="right" onclick="DeleteVideo({$video.id});" title="Delete this Video"><img src="templates/{$template}/images/delete.png" id="img_delete_{$video.id}" border="0" align="absmiddle"></a>
+				{/if}
+			  </td></tr>
+			  <tr><td colspan="2" align="center" class="thumb" style="width:{$aSettings.thumb_width}px; height:{$aSettings.thumb_height}px;" onmouseover="StartThumbRotation('thumb_{$video.id}','{$video.id}');" onmouseout="StopThumbRotation('thumb_{$video.id}','{$video.id}');">
+				<div style="position:relative; height:{$aSettings.thumb_height}px;">
+				  <div style="position:absolute; top:0px; left:0px; z-index:1;"><a href="video/{$video.id}/{$video.title|regex_replace:'/[ \/"]/':'-'}" title="{$video.title|replace:'"':'&quot;'}"><img src="{$video.thumbs[0]}" width="{$aSettings.thumb_width}" height="{$aSettings.thumb_height}" id="thumb_{$video.id}"></a></div>
+				  {if $video.premium}<div class="premium_icon" style="position:absolute; z-index:2;" title="{$aLabels.premium_video}"></div>{/if}
+				</div>
+			  </td></tr>
+			  <tr><td><b>{$video.duration_formated}</b></td><td align="right"><b>{$video.activation_date|date_format}</b></td></tr>
+			  <tr><td>{$video.votes} ratings</td><td align="right"><img src="templates/{$template}/images/star_image_{$video.star_image}.png" title="Rating: {$video.rating} of 5"></td></tr>
+			</table>
+			{if ($smarty.foreach.videos.index+1)%$aSettings.videos_cols==0}<br class="clear">{/if}
+		  {foreachelse}
+			<center><br><b>No videos where found.</b><br></center>
+		  {/foreach}
+		  
+		  <br class="clear"><br>
+		  <center>{$pagination}</center>
+		  <br class="clear"><br>
+	  </div>
+	</div>
+
+	<div class="left rounded3 container_box" style="padding:0px; width:100%;">
+	  <div class="bar rounded3 title_text m3">
+		<div class="left">{if $smarty.session.user_logged && $smarty.session.user.id==$user.id}{$aLabels.my|capitalize}{else}{$user.username}{/if} {$aLabels.favorited} {$aLabels.videos}</b> &nbsp;(Showing {$fav_start}-{$fav_end} of {$fav_total_videos} videos)</div>
+		<div class="right" style="font-size:13px; line-height:18px; padding-right:8px;"><a href="{$fav_browse_link}/1" class="white">Date</a> - <a href="{$fav_browse_link}/2" class="white">Views</a> - <a href="{$fav_browse_link}/3" class="white">Rating</a> - <a href="{$fav_browse_link}/4" class="white">Title</a> - <a href="{$fav_browse_link}/5" class="white">Duration</a></div>
+	  </div>
+		
+	  <div class="m5">  
+		  {foreach from=$fav_array_videos item=video name=videos}
+			<table cellpadding="0" cellspacing="8" class="text left thumb_box rounded5 m3">
+			  <tr><td colspan="2">
+				<a href="javascript:void(0);" onclick="{if $smarty.session.user_logged}FavAddVideo({$video.id},1);{else}OpenLayer('login_register_layer');{/if}" id="favstar_off_{$video.id}" title="Add Video to Favorites." {if in_array($video.id,$array_favorites)}style="display:none;"{/if}><img src="templates/{$template}/images/star_off.png" border="0" align="absmiddle"></a>
+					<a href="javascript:void(0);" onclick="{if $smarty.session.user_logged}FavRemoveVideo({$video.id},1);{else}OpenLayer('login_register_layer');{/if}" id="favstar_on_{$video.id}"  title="Remove Video from Favorites." {if !in_array($video.id,$array_favorites)}style="display:none;"{/if}><img src="templates/{$template}/images/star_on.png" border="0" align="absmiddle"></a>
+				<a href="video/{$video.id}/{$video.title|regex_replace:'/[ \/"]/':'-'}" class="link" title="{$video.title|replace:'"':'&quot;'}">
+				  {if $mb_available}
+					{if $language==$default_language or !$video.translations.$language.title}
+						{$video.title|mb_truncate:23:"...":"UTF-8":true}
+					{else}
+						{$video.translations.$language.title|mb_truncate:23:"...":"UTF-8":true}
+					{/if}
+				  {else}
+					{if ($language==$default_language or !$video.translations.$language.title)}
+						{$video.title|truncate:15:"...":true}
+					{else}
+						{$video.translations.$language.title|truncate:15:"...":true}
+					{/if}
+				  {/if}
+				</a>
+			  </td></tr>
+			  <tr><td colspan="2" align="center" class="thumb" style="width:{$aSettings.thumb_width}px; height:{$aSettings.thumb_height}px;" onmouseover="StartThumbRotation('thumb2_{$video.id}','{$video.id}');" onmouseout="StopThumbRotation('thumb_{$video.id}','{$video.id}');">
+				<div style="position:relative; height:{$aSettings.thumb_height}px;">
+				  <div style="position:absolute; top:0px; left:0px; z-index:1;"><a href="video/{$video.id}/{$video.title|regex_replace:'/[ \/"]/':'-'}" title="{$video.title|replace:'"':'&quot;'}"><img src="{$video.thumbs[0]}" width="{$aSettings.thumb_width}" height="{$aSettings.thumb_height}" id="thumb2_{$video.id}"></a></div>
+				  {if $video.premium}<div class="premium_icon" style="position:absolute; z-index:2;" title="{$aLabels.premium_video}"></div>{/if}
+				</div>
+			  </td></tr>
+			  <tr><td><b>{$video.duration_formated}</b></td><td align="right"><b>{$video.activation_date|date_format}</b></td></tr>
+			  <tr><td>{$video.votes} ratings</td><td align="right"><img src="templates/{$template}/images/star_image_{$video.star_image}.png" title="Rating: {$video.rating} of 5"></td></tr>
+			</table>
+			{if ($smarty.foreach.videos.index+1)%$aSettings.videos_cols==0}<br class="clear">{/if}
+		  {foreachelse}
+			<center><br><b>No videos where found.</b><br></center>
+		  {/foreach}
+		  <br class="clear"><br>
+		  <center>{$pagination}</center>
+		  <br class="clear"><br>
+		</div>
+	</div>
+</div>
+
+<div class="right" style="width:200px;">
+{php}
+$spot=1;
+include("modules/banner.php");
+{/php}
+</div>
+
+<br>

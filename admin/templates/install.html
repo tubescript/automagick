@@ -1,0 +1,115 @@
+Complete the next form with your database info, to install the script.<br>
+It will be installed with basic settings you will be able to change in <b>Admin > Settings</b>
+<br><br>
+{if $folders_not_writable}
+  <div class="warning" style="width:500px;">
+    <img src="images/icons/warning.png"> This server configuration does not allow Automagick to write file to some folders.<br>
+    You should make writable (CHMOD to 777), the mext folders:
+    <br style="clear:both;">
+    <br class="br">
+    <div class="left" style="margin-left:30px;">
+      <img src="images/icons/folder.png"> previews/<br>
+      <img src="images/icons/folder.png"> temp/<br>
+      <img src="images/icons/folder.png"> thumbs/<br>
+      <img src="images/icons/folder.png"> libs/smarty/cache/<br>
+      <img src="images/icons/folder.png"> libs/smarty/templates_c/<br>
+    </div>
+    <div class="left" style="margin-left:30px;">
+      <img src="images/icons/folder.png"> users/<br>
+      <img src="images/icons/folder.png"> videos/<br>      
+      <img src="images/icons/folder.png"> admin/temp/<br>
+      <img src="images/icons/folder.png"> admin/libs/smarty/templates_c/<br>
+    </div>
+    <br style="clear:both;">
+    <br class="br">
+    Or make apache user have the ownership of your root folder and all subfolders.
+  </div>
+{/if}
+
+{if !$ffmpeg_exists}
+  <div class="warning" style="width:500px;">
+    <img src="images/icons/warning.png"> <b>It seems FFMPEG is not installed in this server.</b><br>
+    Proceed with the installation anyway, as you may change the path of FFMPEG in <b>Admin > Settings.</b>
+  </div>
+{/if}
+
+{if !$imagemagick_exists}
+  <div class="warning" style="width:500px;">
+    <img src="images/icons/warning.png"> <b>It seems Imagemagick is not installed in this server.</b><br>
+    Proceed with the installation anyway, as you may change Imagemagick path in <b>Admin > Settings</b>.
+  </div>
+{/if}
+
+{*
+{if !$magick_quotes_enabled}
+  <div class="error" style="width:500px;">
+    <img src="images/icons/error.gif"> <b>It seems php.ini's magic_quotes_gpc value is not enabled.</b><br>
+    It should be set to 'On' for the script to work. Contact your hosting support if you can't do it yourself.
+  </div>
+{/if}
+*}
+
+<br>
+
+<fieldset class="fieldset2" style="width:600px; text-align:left;">
+  <legend class="legend2"><b>Installation Info</b></legend>
+  <div class="bottom" style="padding:20px;">
+    <table cellpadding="5" cellspacing="1"  width="100%" style="border:1px solid #AAAAAA; background:#EEEEEE;">
+      <tr bgcolor="#C9C9C9">
+        <td align="right"><b class="red">*</b> <b>License Number:</b></td>
+        <td>
+          <input type="text" name="license_number" id="license_number" class="input-text" style="width:200px;" tabindex="1">
+          <a href="javascript:void(0);" rel="License Number, as provided in your account of Automagick.com"><img src="images/icons/help.png"></a>
+        </td>
+      </tr>
+      <tr bgcolor="#D1D1D1">
+        <td align="right" width="180"><b class="red">*</b> <b>Database Host:</b></td>
+        <td>
+          <input type="text" name="database_host" id="database_host" class="input-text" style="width:200px;" tabindex="1">
+          <a href="javascript:void(0);" rel="Database Host (i.e. localhost)"><img src="images/icons/help.png"></a>
+        </td>
+      </tr>
+      <tr bgcolor="#C9C9C9">
+        <td align="right"><b class="red">*</b> <b>Database Username:</b></td>
+        <td>
+          <input type="text" name="database_user" id="database_user" class="input-text" style="width:200px;" tabindex="1">
+          <a href="javascript:void(0);" rel="Database User"><img src="images/icons/help.png"></a>
+        </td>
+      </tr>
+        <tr bgcolor="#D1D1D1">
+        <td align="right"><b class="red">*</b> <b>Database Password:</b></td>
+        <td>
+          <input type="text" name="database_pass" id="database_pass" class="input-text" style="width:200px;" tabindex="1">
+          <a href="javascript:void(0);" rel="Database Password"><img src="images/icons/help.png"></a>
+        </td>
+      </tr>
+      <tr bgcolor="#C9C9C9">
+        <td align="right"><b class="red">*</b> <b>Database Name:</b></td>
+        <td>
+          <input type="text" name="database_name" id="database_name" class="input-text" style="width:200px;" tabindex="1">
+          <a href="javascript:void(0);" rel="Database Name"><img src="images/icons/help.png"></a>
+        </td>
+      </tr>
+    </table>
+    <br>
+    <center>
+    <div class="error" id="error_div" style="width:320px; display:none;">
+	  <img src="images/icons/error.gif"> <span id="error_msg" style="font-weight:bold;"></span>
+	</div>
+	
+	<div class="success" id="success_div" style="width:260px; display:none;">
+	  <img src="images/icons/success.png"> <b>The script has been successfully installed.</b> <br><font size="1"><a href="index.php">Click Here</a> to login to admin panel (admin - admin)</font>
+	</div>
+    <div style="width:200px;">
+      <a class="button" id="install_button" href="javascript:void(0);" onclick="RunInstall();"><span><img src="images/icons/install.png"> Install Automagick Tube Script</span></a>
+      <a class="button disabled" id="install_button_disabled"  href="javascript:void(0);" style="display:none;"><span><img src="images/loading.gif" id="install_icon"> Install Automagick Tube Script</span></a>
+    </div>
+    </center>
+    
+    <br style="clear:both;">
+  </div>
+</fieldset>
+
+<script type="text/javascript">
+ReTip();
+</script>

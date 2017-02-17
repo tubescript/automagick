@@ -1,0 +1,23 @@
+{*
+This template recieves the next variables:
+- {$page}: Actual Page.
+- {$total_pages}: Number of total pages.
+- {links}: Links array with index=page.
+*}
+{if $page>1}
+  <a href="{$first_page}" class="link"><b>First</b></a>&nbsp;&nbsp;
+  <a href="{$links[$prev_page]}" class="link"><img src="images/icons/prev.gif" align="absmiddle" border="0" id="pagination_prev_icon"></a>&nbsp;&nbsp;
+{else}
+  <b class="page_off">First</b>&nbsp;&nbsp;
+  <img src="images/icons/prev_off.gif" align="absmiddle" border="0">&nbsp;&nbsp;
+{/if}
+{foreach from=$links item=link key=i}
+  {if $i!=$page}<a href="{$link}" class="link"><b>{$i}</b></a>&nbsp;&nbsp;{else}<b class="actual_page">{$i}</b>&nbsp;&nbsp;{/if}
+{/foreach}
+{if $page<$total_pages}
+  <a href="{$links[$next_page]}" class="link"><img src="images/icons/next.gif" align="absmiddle" border="0" id="pagination_next_icon"></a>&nbsp;&nbsp;
+  <a href="{$last_page}" class="link"><b>Last</b></a>
+{else}
+  <img src="images/icons/next_off.gif" align="absmiddle" border="0">&nbsp;&nbsp;
+  <b class="page_off">Last</b>
+{/if}

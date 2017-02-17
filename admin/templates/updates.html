@@ -1,0 +1,138 @@
+<div id="log_layer" style="display:none;" class="floating_layer">
+<table cellpadding="0" cellspacing="0" align="center" width="100%" height="100%">
+  <tr><td align="center">
+  
+     <table cellpadding="0" cellspacing="0" class="draggable">
+       <tr class="draggable_handle" style="cursor:pointer;">
+         <td background="images/modalbox/otl.png" width="8" height="25"></td>
+         <td background="images/modalbox/ot.png" height="25" valign="bottom">
+           <span class="modalbox_title">Installation Log</span>
+           <span class="modalbox_buttons">
+             &nbsp;
+             <a href="javascript:void(0);" onclick="CloseLayer('log_layer');"><img src="images/icons/close_big.png" onmouseover="this.src='images/icons/close_big_on.png';" onmouseout="this.src='images/icons/close_big.png';"></a>
+           </span>
+         </td>
+         <td background="images/modalbox/otr.png" width="8" height="25"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/ol.png" width="8"></td>
+         <td>
+           <table cellpadding="0" cellspacing="0">
+	         <tr>
+	           <td background="images/modalbox/itl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/it.png" height="10"></td>
+	           <td background="images/modalbox/itr.png" width="10" height="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/il.png" width="10"></td>
+	           <td bgcolor="#C9CDD0" width="580" class="modal_text">
+	             <div id="log_window" class="input_text" style="height:300px; overflow-y:auto; padding:8px;"></div>                                        
+	           </td>
+	           <td background="images/modalbox/ir.png" width="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/ibl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/ib.png" height="10"></td>
+	           <td background="images/modalbox/ibr.png" width="10" height="10"></td>
+	         </tr>
+	       </table>         
+         </td>
+         <td background="images/modalbox/or.png" width="8"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/obl.png" width="8" height="11"></td>
+         <td background="images/modalbox/ob.png" height="11"></td>
+         <td background="images/modalbox/obr.png" width="8" height="1"></td>
+       </tr>
+     </table>
+  </td></tr>
+</table>
+</div>
+
+
+<fieldset>
+  <legend><b>Updates</b></legend>
+  <div class="bottom">
+    <div style="width:200px; text-align:justify;" align="center">
+  	  <b>Installed Version:</b> {$current_version}<br>
+  	  <b>Last Version:</b> {$last_version}  
+  	</div>
+  
+	{if $error_404}
+		<br><div class="error" style="width:400px;"><span class="left" style="height:30px; margin:4px;"><img src="images/icons/error.gif"></span><b>Automagick Servers could not be contacted at this time.<br>Please try again later.</b></div>
+	{else}
+	
+		{if $version_info.success==true}
+		
+			  {if !empty($version_info.versions)}
+			  
+			    <br><div class="warning" style="width:400px;"><span class="left" style="height:30px; margin:4px;"><img src="images/icons/warning.png"></span><b>You need to update! There is, at least, one update to be installed.</b></div>
+			    
+				<table cellpadding="0" cellspacing="0">
+				  <tr>
+					<td background="images/modalbox/otl.png" width="8" height="25"></td>
+					<td background="images/modalbox/ot.png" height="25" valign="bottom">
+					  <span class="modalbox_title">Latest Updates Info</span>
+					  <span class="modalbox_buttons">
+					  &nbsp;
+					  </span>
+					</td>
+					<td background="images/modalbox/otr.png" width="8" height="25"></td>
+				  </tr>
+				  <tr>
+					<td background="images/modalbox/ol.png" width="8"></td>
+					<td>
+					   <table cellpadding="0" cellspacing="0">
+				         <tr>
+				           <td background="images/modalbox/itl.png" width="10" height="10"></td>
+				           <td background="images/modalbox/it.png" height="10"></td>
+				           <td background="images/modalbox/itr.png" width="10" height="10"></td>
+				         </tr>
+				         <tr>
+				           <td background="images/modalbox/il.png" width="10"></td>
+				           <td bgcolor="#C9CDD0" width="580" class="modal_text">
+				           
+				           	{foreach from=$version_info.versions key=version item=info name=versions}
+				           	  <b><u>Version {$version}:</u></b><br><br class="br">
+				           	  {$info}
+				           	  <br><br class="br"><br class="br">
+				           	  {if !$smarty.foreach.versions.last}<div class="hr" style="width:100%;"></div>{/if}
+				           	{/foreach}
+				           
+					 	   </td>
+				           <td background="images/modalbox/ir.png" width="10"></td>
+				         </tr>
+				         <tr>
+				           <td background="images/modalbox/ibl.png" width="10" height="10"></td>
+				           <td background="images/modalbox/ib.png" height="10"></td>
+				           <td background="images/modalbox/ibr.png" width="10" height="10"></td>
+				         </tr>
+				       </table>	
+				    </div>
+					</td>
+			        <td background="images/modalbox/or.png" width="8"></td>
+				  </tr>
+				  <tr>
+					<td background="images/modalbox/obl.png" width="8" height="11"></td>
+					<td background="images/modalbox/ob.png" height="11"></td>
+					<td background="images/modalbox/obr.png" width="8" height="1"></td>
+				  </tr>
+				</table>
+				<br class="br">
+				<table align="center"><tr>
+				  <td><a class="button" id="update_button" href="javascript:void(0);" onclick="InstallUpdates('{$current_version}','{$version_info.update_key}');"><span><img src="images/icons/updates.png"> Install Updates</span></a></td>
+				  <td><a class="button" style="display:none;" id="view_log_button" href="javascript:void(0);" onclick="OpenLayer('log_layer');"><span><img src="images/icons/view.png"> View Results</span></a></td>
+				</td></tr></table>
+
+				<iframe id="updates_iframe" style="display:none;"></iframe>
+
+			 {else}
+			   <br><div class="success" style="width:500px;"><span class="left" style="height:30px; margin:4px;"><img src="images/icons/success.png"></span><b>You have already installed the latest version and don't need to update.</b></div>
+			 {/if}
+		{else}
+			<br><div class="error" style="width:500px;"><span class="left" style="height:30px; margin:4px;"><img src="images/icons/error.gif"></span><b>{$version_info.message}</b></div>
+		{/if}
+	{/if}
+	<br>
+  </div>
+</fieldset>

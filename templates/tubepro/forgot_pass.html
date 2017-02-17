@@ -1,0 +1,23 @@
+<div class="container_box shadow_box rounded5 draggable" style="width:270px; max-height:300px; overflow-x:auto; line-height:18px;" id="forgot_box">
+
+  <div style="width:270px; text-align:right;" class="left">
+  
+    <div class="draggable_handle bar rounded3 title_text" style="text-align:left;">
+	  <span class="left">{$aLabels.forgot_password|capitalize}</span>
+	  <span class="right"><a href="javascript:void(0);" onclick="$('forgot_layer').hide();"><img src="templates/{$template}/images/close_big.png" onmouseover="this.src='templates/{$template}/images/close_big_on.png';" onmouseout="this.src='templates/{$template}/images/close_big.png';" class="m3"></a></span>
+	</div>
+    
+	<div style="padding:10px;">
+      {$aLabels.forgot_instructions}
+      <br><br class="break">
+      <form id="forgot_form" action="javascript:SendRecoverEmail($('forgot_form').user_email.value);">
+        <b>{$aLabels.email}:</b> <input type="text" name="user_email" id="user_email" class="input-text">
+        <br><br class="break">
+		<a class="button_small rounded3 right mr5" onclick="$('forgot_form').submit();">{$aLabels.recover_password|capitalize}</a>
+        <br><br class="break">
+        <div id="forgot_error_msg" class="red" style="text-align:center; font-weight:bold; display:none;"></div>
+        <div id="forgot_success_msg" class="green" style="text-align:center; font-weight:bold; display:none;"></div>
+      </form>
+    </div>
+  </div> 
+</div>

@@ -1,0 +1,115 @@
+<div class="rounded3 container_box draggable" style="width:720px; max-height:450px; overflow-y:auto; padding:0px; margin-bottom:10px;">
+  <div class="bar rounded3 title_text m3 draggable_handle" style="text-align:left;">
+	<span class="left">{$aLabels.buy_premium_membership|capitalize}</span>
+	<span class="right"><a href="javascript:void(0);" onclick="$('premium_options_layer').hide();"><img src="templates/{$template}/images/close_big.png" onmouseover="this.src='templates/{$template}/images/close_big_on.png';" onmouseout="this.src='templates/{$template}/images/close_big.png';" class="m3"></a></span>
+  </div>
+  <div class="m5" style="padding:10px;">
+    
+    {$aLabels.premium_membership_instructions}
+    <br><br>
+    
+    {if $aSettings.paypal_method_status}
+      <table width="100%">
+      <tr>
+	    {if $aLabels.paypal_option_button_1}
+	      <td align="center">
+	      <b class="link">{$aSettings.paypal_option_item_name_1}</b>
+	      <br><br class="break">
+	      {$aLabels.paypal_option_button_1}
+	      </td>
+	    {/if}
+	    {if $aLabels.paypal_option_button_2}
+	      <td align="center">
+	      <b class="link">{$aSettings.paypal_option_item_name_2}</b>
+	      <br><br class="break">
+	      {$aLabels.paypal_option_button_2}
+	      </td>
+	    {/if}
+	    {if $aLabels.paypal_option_button_3}
+	      <td align="center">
+	      <b class="link">{$aSettings.paypal_option_item_name_3}</b>
+	      <br><br class="break">
+	      {$aLabels.paypal_option_button_3}
+	      </td>
+	    {/if}
+	    {if $aLabels.paypal_option_button_4}
+	      <td align="center">
+	      <b class="link">{$aSettings.paypal_option_item_name_4}</b>
+	      <br><br class="break">
+	      {$aLabels.paypal_option_button_4}
+	      </td>
+	    {/if}
+	    {if $aLabels.paypal_option_button_5}
+	      <td align="center">
+	      <b class="link">{$aSettings.paypal_option_item_name_5}</b>
+	      <br><br class="break">
+	      {$aLabels.paypal_option_button_5}
+	      </td>
+	    {/if}
+      </tr>
+      </table>
+      <br>
+    {/if}
+    
+    {if $aSettings.zombaio_method_status}
+      <br>
+      <table width="100%">
+      <tr>
+	    {if $aLabels.zombaio_option_button_1}
+	      <td align="center">
+	      <b class="link">{$aSettings.zombaio_option_item_name_1}</b>
+	      <br><br class="break">
+	      {$aLabels.zombaio_option_button_1}
+	      </td>
+	    {/if}
+	    {if $aLabels.zombaio_option_button_2}
+	      {assign var='aReplaces[3]' value=$aSettings.zombaio_option_pricing_id_2}
+	      <td align="center">
+	      <b class="link">{$aSettings.zombaio_option_item_name_2}</b>
+	      <br><br class="break">
+	      {$aLabels.zombaio_option_button_2}
+	      </td>
+	    {/if}
+	    {if $aLabels.zombaio_option_button_3}
+	      {assign var='aReplaces[3]' value=$aSettings.zombaio_option_pricing_id_3}
+	      <td align="center">
+	      <b class="link">{$aSettings.zombaio_option_item_name_3}</b>
+	      <br><br class="break">
+	      {$aLabels.zombaio_option_button_3}
+	      </td>
+	    {/if}
+	    {if $aLabels.zombaio_option_button_4}
+	      {assign var='aReplaces[3]' value=$aSettings.zombaio_option_pricing_id_4}
+	      <td align="center">
+	      <b class="link">{$aSettings.zombaio_option_item_name_4}</b>
+	      <br><br class="break">
+	      {$aLabels.zombaio_option_button_4}
+	      </td>
+	    {/if}
+	    {if $aLabels.zombaio_option_button_5}
+	      {assign var='aReplaces[3]' value=$aSettings.zombaio_option_pricing_id_5}
+	      <td align="center">
+	      <b class="link">{$aSettings.zombaio_option_item_name_5}</b>
+	      <br><br class="break">
+	      {$aLabels.zombaio_option_button_5}
+	      </td>
+	    {/if}
+      </tr>
+      </table>
+    {/if}
+    
+    {if $aSettings.ccbill_method_status}
+      <br>
+      <table width="100%">
+      <tr>
+	    {if $aLabels.ccbill_option_button_1}<td align="center">{$aLabels.ccbill_option_button_1}</td>{/if}
+	    {if $aLabels.ccbill_option_button_2}<td align="center">{$aLabels.ccbill_option_button_2}</td>{/if}
+	    {if $aLabels.ccbill_option_button_3}<td align="center">{$aLabels.ccbill_option_button_3}</td>{/if}
+	    {if $aLabels.ccbill_option_button_4}<td align="center">{$aLabels.ccbill_option_button_4}</td>{/if}
+	    {if $aLabels.ccbill_option_button_5}<td align="center">{$aLabels.ccbill_option_button_5}</td>{/if}
+      </tr>
+      </table>
+    {/if}
+    
+  </div>
+</div>

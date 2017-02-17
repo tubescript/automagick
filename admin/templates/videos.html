@@ -1,0 +1,2406 @@
+{if !$onlymod}
+<fieldset style="color:#999999; width:700px; border:1px solid #333333; display:none;" class="text">
+<legend  class="red"> <b>Instructions</b>&nbsp;</legend>
+<div id="instructions" style="width:95%; display:none; text-align:justify;"><br>
+  The admin panel is quite intuitive, so you will learn it easily.<br><br>
+  
+  
+  <b class="red">1) Automated Contents</b><br><br>
+    
+  Videos are automaticaly added, if you have active sources/plugins.<br>
+  A source is an external site like pornotube.com which the script will grab videos from.<br>
+  A plugin is a sponsor source, which provides the videos to be retrieved.<br>  
+  (More sources/plugins are added once in a while. Read the <a href="index.php">Index News</a> to be informed.)<br><br>
+  
+  You have to configure a cron job for automated contents to work.<br>  
+  Check the installation guide to set the cron up.<br><br>
+  
+  Videos can also be checked automatically, by setting another cron job. (automagick_cron.php?check=1)<br>
+  Some videos, by technical reasons cannot be checked, so they will be automatically skipped by the cron job.<br>
+  You can manually check a video by clicking on the "Check Video" Option or manually run the check cronjob for Tube 8, by clicking on "Tube 8 Check" .<br>
+  Videos are updated or deleted depending on the result of the verification.<br><br>
+  "Get Source's Videos" will manually run automagick_cron.php, to grab as many videos as it's configured.<br><br>
+  
+  <b class="red">2) Add New Videos</b><br><br>
+
+  To add your own videos, click on "Add New Video" option. Pay attention to the tooltips, that explain the format of some fields.<br><br>
+  
+  You can add your own player if you want to. Just embedd the correspondient code pointing to your own player url.<br>
+  You could also hotlink FLVs in your player if other sites allow it to.<br><br>
+  
+  <b class="red">3) Edit a Video</b><br><br>
+  
+  To edit a video, click on the "Edit Video" link. You will be able to change all values of the video.<br><br>  
+  
+  <b class="red">4) Delete a Video</b><br><br>
+  
+  To delete a video, click on "Delete Video".<br>
+  "Mass Delete" option will allow you to delete all videos of a specific source.<br><br>
+  
+  <b class="red">5) Filters and Options</b><br><br>
+  
+  Use them to browse, search and order videos as you wish. It will make your job easier.<br><br>  
+  
+  <b class="red">6) Bug Reporting</b><br><br>
+  
+  I try to keep the script is constantly updated. Sometimes, little bugs appear and I need to fix them.<br>
+  If you find any of them, please send me a report and I'll work on th as soon as I can. <a href="http://www.automagick.com/?module=contact">Bug Report</a><br><br>
+</div>
+  
+<center style="margin-top:8px;"><a href="javascript:void(0);" onclick="ToggleLayer('instructions');">Click to Expand / Collapse</a></center><br>
+</fieldset><br>
+
+
+
+<div id="tasks_cron_layer" style="display:none;" class="floating_layer">
+<table cellpadding="0" cellspacing="0" align="center" width="100%" height="100%">
+  <tr><td align="center">
+  
+     <table cellpadding="0" cellspacing="0" class="draggable">
+       <tr class="draggable_handle" style="cursor:pointer;">
+         <td background="images/modalbox/otl.png" width="8" height="25"></td>
+         <td background="images/modalbox/ot.png" height="25" valign="bottom">
+           <span class="modalbox_title">Tasks Manager</span>
+           <span class="modalbox_buttons">
+             &nbsp;
+             <a href="javascript:void(0);" onclick="CloseLayer('tasks_cron_layer');"><img src="images/icons/close_big.png" onmouseover="this.src='images/icons/close_big_on.png';" onmouseout="this.src='images/icons/close_big.png';"></a>
+
+           </span>
+         </td>
+         <td background="images/modalbox/otr.png" width="8" height="25"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/ol.png" width="8"></td>
+         <td>
+           <table cellpadding="0" cellspacing="0">
+	         <tr>
+	           <td background="images/modalbox/itl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/it.png" height="10"></td>
+	           <td background="images/modalbox/itr.png" width="10" height="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/il.png" width="10"></td>
+	           <td bgcolor="#C9CDD0" width="350" class="modal_text">
+	             <input type="hidden" id="tasks_cron_ids" value="">
+	             
+			     Set the tasks you wish for the selected videos.<br>
+			     These will be executed when the Tasks CronJob runs the next time<br>
+			     (or when corresponds, if a limit is applied).<br><br>
+			     
+			     This action will overwrite any existing tasks for the selected videos<br><br>
+			     
+			     <fieldset class="fieldset3" style="padding:5px; width:330px;">
+			       <form id="tasks_form">
+		           <input type="checkbox" name="tasks[]" value="1" id="task_1"> <label for="task_1"><b>Download & Host / Convert Video File<br></label><br class="br">
+		        {* <input type="checkbox" name="tasks[]" value="7" id="task_7"> <label for="task_7"><b>Add Converted Mobile File (M4V)<br></label><br class="br"> *}
+		           <input type="checkbox" name="tasks[]" value="9" id="task_9"> <label for="task_9"><b>Add Converted Mobile File (MP4)<br></label><br class="br">
+				   <input type="checkbox" name="tasks[]" value="B" id="task_B"> <label for="task_B"><b>Fix for Pseudo-Streaming<br></label><br class="br">
+		           <input type="checkbox" name="tasks[]" value="A" id="task_A"> <label for="task_A"><b>Move to Any Active Streaming Server<br></label><br class="br">
+		           <input type="checkbox" name="tasks[]" value="2" id="task_2"> <label for="task_2"><b>Download & Host Preview Image<br></label><br class="br">
+		           <input type="checkbox" name="tasks[]" value="3" id="task_3"> <label for="task_3"><b>Download & Host Thumbnails<br></label><br class="br">
+		           <input type="checkbox" name="tasks[]" value="4" id="task_4"> <label for="task_4"><b>Capture Random Preview Image<br></label><br class="br">
+		           <input type="checkbox" name="tasks[]" value="5" id="task_5"> <label for="task_5"><b>Capture Thumbnail Secuence <br></label><br class="br">
+		           <input type="checkbox" name="tasks[]" value="6" id="task_6"> <label for="task_6"><b>Get Video Duration<br></label><br class="br">
+		           <input type="checkbox" name="tasks[]" value="8" id="task_8"> <label for="task_8"><b>Translate Video Title and Description<br></label><br class="br">
+		           </form>
+		         </fieldset><br>
+		         
+		         <a class="button" href="javascript:void(0);" onclick="SetCronTasks();" style="margin-left:70px;"><span><img src="images/icons/cron_tasks.png" id="set_cron_tasks_icon"> Set Tasks</span></a>
+		         <a class="button" href="javascript:void(0);" onclick="RunCronTasks();" style="margin-left:30px;"><span><img src="images/icons/cron_tasks_run.png" id="run_cron_tasks_icon"> Run Tasks</span></a>
+
+	           </td>
+	           <td background="images/modalbox/ir.png" width="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/ibl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/ib.png" height="10"></td>
+	           <td background="images/modalbox/ibr.png" width="10" height="10"></td>
+	         </tr>
+	       </table>         
+         </td>
+         <td background="images/modalbox/or.png" width="8"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/obl.png" width="8" height="11"></td>
+         <td background="images/modalbox/ob.png" height="11"></td>
+         <td background="images/modalbox/obr.png" width="8" height="1"></td>
+       </tr>
+     </table>
+  </td></tr>
+</table>
+</div>
+
+<div id="import_layer" style="display:none;" class="floating_layer">
+<table cellpadding="0" cellspacing="0" align="center" width="100%" height="100%">
+  <tr><td align="center">
+  
+     <table cellpadding="0" cellspacing="0" class="draggable">
+       <tr class="draggable_handle" style="cursor:pointer;">
+         <td background="images/modalbox/otl.png" width="8" height="25"></td>
+         <td background="images/modalbox/ot.png" height="25" valign="bottom">
+           <span class="modalbox_title">Import Videos</span>
+           <span class="modalbox_buttons">
+             &nbsp;
+             <a href="javascript:void(0);" onclick="CloseLayer('import_layer');"><img src="images/icons/close_big.png" onmouseover="this.src='images/icons/close_big_on.png';" onmouseout="this.src='images/icons/close_big.png';"></a>
+           </span>
+         </td>
+         <td background="images/modalbox/otr.png" width="8" height="25"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/ol.png" width="8"></td>
+         <td>
+           <table cellpadding="0" cellspacing="0">
+	         <tr>
+	           <td background="images/modalbox/itl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/it.png" height="10"></td>
+	           <td background="images/modalbox/itr.png" width="10" height="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/il.png" width="10"></td>
+	           <td bgcolor="#C9CDD0" width="815" class="modal_text" style="padding:0px;">
+	           <div style="height:450px; overflow:auto; padding:10px;">
+	           
+	           	  <form action="actions/videos/import_videos.php" id="import_form" method="POST" target="import_iframe">
+	           	  <input type="hidden" name="import_layer_simulate" id="import_layer_simulate" value="0">
+				  
+				  <br>
+	           	  <fieldset class="fieldset3" style="width:400px; float:left;">
+				  <legend class="legend3"> <b>Import Fields Order</b></legend>
+				    <input type="hidden" name="import_layer_fields_count" id="import_layer_fields_count" value="1">
+					<div class="bottom" style="padding:15px; height:400px; overflow-x:auto; clear:left;">
+					
+					  <div class="left">
+					    <a class="small_button" href="javascript:void(0);" onclick="AddNewImportField();"><span><img src="images/icons/add-tiny.png" style="margin-top:-1px;"> Add Field</span></a>
+					  </div>
+					  <div class="right">
+					    <a class="small_button" href="javascript:void(0);" onclick="ClearImportFieldsDiv();"><span><img src="images/icons/recycle.png" style="margin-top:-1px;"> Clear Fields</span></a>
+					  </div><br><br>
+					  
+					  <div style="width:365px;" class="left" id="import_layer_fields_div">
+					      <select name="import_layer_fields[1]" id="import_layer_field_1" class="input-text left m3" style="width:115px;">
+						    <option value="">1) - Ignore Field - </option>
+						    <option value="title">Title</option>
+						    <option value="description">Description</option>
+						    <option value="category">Category</option>
+						    <option value="duration">Duration</option>
+						    <option value="thumb">Thumbnail</option>
+						    <option value="tags">Tags</option>
+						    <option value="preview">Preview Image</option>
+						    <option value="embed_code">Embed Code</option>
+						    <option value="flv_url">FLV Url</option>
+						    <option value="m4v_url">M4V Url</option>
+						    <option value="mp4_url">MP4 Url</option>
+						    <option value="preroll_img">Pre-roll Image</option>
+						    <option value="preroll_link">Pre-roll Link</option>
+						    <option value="postroll_img">Post-roll Image</option>
+						    <option value="postroll_link">Post-roll Link</option>
+						  </select>
+					  </div>
+					</div>	           
+				  </fieldset>
+			  
+				  <fieldset class="fieldset3" style="width:360px;">
+				  <legend class="legend3"> <b>Import Options</b></legend>
+				  
+				  <div class="bottom" style="height:400px; padding:15px; clear:left;">
+				    
+				  	<table class="left">
+				      <tr>
+				        <td align="right">
+				          <b>Source Name:</b>
+				        </td>
+				        <td>
+						  <input type="text" name="import_layer_source_name" id="import_layer_source_name" value="" style="height:18px;">
+						  <a href="javascript:void(0);" rel="Choose a name for this source.<br>If the source name already exists, the videos will be added."><img src="images/icons/help.png"></a>
+						</td>
+					  </tr>
+					  <tr>
+				        <td align="right">
+				          <b>Separator:</b>
+				        </td>
+				        <td>
+				          <select name="import_layer_separator" id="import_layer_separator" onchange="CheckCustomSeparatorValue(this.value);">
+						    <option value="|">| (pipe)</option>
+						    <option value=";">; (Semi-Colon)</option>
+						    <option value=",">, (Comma)</option>
+						    <option value="+">+ (Plus)</option>
+						    <option value="*">* (Asterisk)</option>
+						    <option value="-">- (Hyphen)</option>
+						    <option value="_">_ (Underscore)</option>
+						    <option value="custom"> Custom</option>
+						  </select>
+						  <input type="text" name="import_layer_custom_separator" id="import_layer_custom_separator" value="" style="width:25px; display:none;">
+						  <a href="javascript:void(0);" rel="Select the separator used in the entered text."><img src="images/icons/help.png"></a>
+						</td>
+					  </tr>
+					  <tr>
+				        <td align="right">
+				          <b>FLV Player:</b>
+				        </td>
+				        <td>
+				          <select id="import_layer_player_id" name="import_layer_player_id">
+						   {foreach from=$array_players item=player key=player_id}
+						     {if ($player.editable==1 or $player.id==1)}<option value="{$player_id}">{$player.name}</option>{/if}
+						   {foreachelse}
+						     <option disabled>No players to select</option>
+						   {/foreach}
+						  </select>
+						  <a href="javascript:void(0);" rel="Select FLV PLayer.<br>If you have selected FLV Url, the video will be watched in the chosen FLV Player.<br>The use of 'Embed Code' will override this option."><img src="images/icons/help.png"></a>
+						</td>
+					  </tr><tr>
+					    <td align="right">
+					      <b>Replace Player Size:</b>
+					    </td>
+					    <td>
+					      <input type="checkbox" id="import_layer_replace_player_size" name="import_layer_replace_player_size" value="1">
+						  <a href="javascript:void(0);" rel="Attempt to replace the original player size for the configured values,<br>if 'Embed Code' field has been selected."><img src="images/icons/help.png"></a>
+					    </td>
+					  </tr><tr>
+					    <td align="right">
+					      <b>Force to Category:</b>
+					    </td>
+					    <td>
+						  <select id="import_layer_category_id" name="import_layer_category_id">
+						  <option value="" style="font-weight:bold;">No Forcing</option>
+						  <option value="" style="font-weight:bold;" disabled>-----------------------</option>
+						  {foreach from=$array_groups item=categories key=group_id}
+						    <option value="" style="font-weight:bold; {if $categories[0].group_status==0}color:#CC0000;{/if}" disabled>-- {$categories[0].group_name|upper}</option>
+							{foreach from=$categories item=category}
+							  <option value="{$category.category_id}" {if $categories[0].group_status==0 or $category.status==0}style="color:#CC0000;"{/if}>&nbsp;&nbsp;&nbsp;&nbsp;{$category.category_name}</option>
+							{/foreach}
+							<option value="" style="font-weight:bold;" disabled>-----------------------</option>
+						  {/foreach}
+						  </select>
+						  <a href="javascript:void(0);" rel="Select a category to force the imported videos into it.<br>If set to 'No Forcing', automagick will attempt to assign the videos<br>to a category using the fields order or Smart Recategorization, if possible.<br>If no categorization is possible, a warning<br>will be displayed in the Import Results Window."><img src="images/icons/help.png"></a>
+						</td>
+					  </tr><tr>
+					  	<td align="right"><b>Force to Channel:</b></td>
+                          <td>
+                           <select id="import_layer_channel_id" name="import_layer_channel_id">
+                           <option value="" style="font-weight:bold;">No Forcing</option>
+						   {foreach from=$array_channels item=channel}
+						  	 <option value="{$channel.id}" {if $channel.status==0}style="color:#CC0000;"{/if}>{$channel.name}</option>
+						   {foreachelse}
+						     <option disabled>No channels to select</option>
+						   {/foreach}
+						   </select>
+						   <a href="javascript:void(0);" rel="Select a channel to force the imported videos into it.<br>If set to 'No Forcing', automagick will not assign a channel to the video."><img src="images/icons/help.png"></a>
+						 </td>
+					  </tr><tr>
+						<td align="right">
+						  <b>Video File Method:</b>
+						</td>
+						<td>
+				          <select name="import_layer_file_method" id="import_layer_file_method">
+				            <option value="1">Hotlink</option><br>
+				            <option value="2">Download & Host</option>
+						  </select>
+						  <a href="javascript:void(0);" rel="Select preferred method for the video files.<br>If FLV Url field is sent, it will try to use this selected method.<br>Embed Code will override FLV Url field, if both are present.<br>If the FLV Url ponts to a not .flv file, Automagick will attempt to convert it.<br>If you choose Download & Host method, the video files will be queued and grabed by cron job."><img src="images/icons/help.png"></a>
+						</td>
+					  </tr>
+					  <tr>
+						<td align="right">
+						  <b>Convert to M4V:</b>
+						</td>
+						<td>
+						  <input type="checkbox" name="import_layer_mobile_convert_m4v" id="import_layer_mobile_convert_m4v" checked>
+						  <a href="javascript:void(0);" rel="Check this option if you want to <u>additionally</u> convert the videos<br>into M4V format for them to be available in the mobile version<br>This task will be performed by the Tasks CronJob. FFMPEG Needed."><img src="images/icons/help.png"></a>
+						  &nbsp;&nbsp;&nbsp;
+						  						  
+						  <b>Convert to MP4:</b> &nbsp;
+						  <input type="checkbox" name="import_layer_mobile_convert_mp4" id="import_layer_mobile_convert_mp4" checked>
+						  <a href="javascript:void(0);" rel="Check this option if you want to <u>additionally</u> convert the videos<br>into MP4 format for them to be available in the mobile version<br>This task will be performed by the Tasks CronJob. FFMPEG Needed."><img src="images/icons/help.png"></a>
+						</td>
+					  </tr>
+					  <tr>
+						<td align="right">
+						  <b>Move to RTMP Server:</b>
+						</td>
+						<td>
+						  <input type="checkbox" name="import_layer_automove" id="import_layer_automove" {if $aSettings.default_player_rtmp_automove==1}checked{/if}>
+						  <a href="javascript:void(0);" rel="Check this option if you want to set a cron task to<br>move the imported videos to active RTMP Servers"><img src="images/icons/help.png"></a>
+						</td>
+					  </tr>
+					  <tr>
+						<td align="right">
+						  <b>Preview Image Method:</b>
+						</td>
+						<td>
+				          <select name="import_layer_preview_method" id="import_layer_preview_method">
+				            <option value="1">Hotlink</option><br>
+				            <option value="2">Download & Host</option>
+				            <option value="3">Capture Random Frame</option>
+						  </select>
+						  <a href="javascript:void(0);" rel="Select preferred method for the Image Preview.<br>If you choose Download & Host method, the preview<br>images will be queued and grabed by cron job.<br>If you choose 'Capture Random Frame', automagick will attempt to grab a random frame<br>from the video file, when (and only if) the video has been downloaded."><img src="images/icons/help.png"></a>
+						</td>
+					  </tr>
+					  <tr>
+						<td align="right">
+						  <b>Thumbnails Method:</b>
+						</td>
+						<td>
+				          <select name="import_layer_thumbs_method" id="import_layer_thumbs_method" style="width:150px;">
+				            <option value="1">Hotlink</option><br>
+				            <option value="2">Download & Host</option>
+				            <option value="3">Capture Frames Secuence</option>
+						  </select>
+						  <a href="javascript:void(0);" rel="Select preferred method for the thumbnail.<br>If you choose Download & Host method,<br>the thumbnails will be queued and grabed by cron job.<br>If you choose 'Capture Frames Secuence', automagick will attempt to grab frames<br>from the video file, when (and only if) the video has been downloaded."><img src="images/icons/help.png"></a>
+						</td>
+					  </tr>
+					  <tr><td height="10"></td></tr>
+					  <tr>
+				        <td align="right">
+				          <b>Import as:</b>
+				        </td>
+				        <td>
+				          <select name="import_layer_status" id="import_layer_status">
+				            <option value="0">Inactive Videos</option>
+				            <option value="1">Active Videos</option>
+				            <option value="-1">Pending for Approval</option>
+						  </select>
+						  <a href="javascript:void(0);" rel="Select the status you want the videos to have after imported."><img src="images/icons/help.png"></a>
+				        </td>
+				      </tr>
+				      <tr>
+				        <td align="right">
+				          <b>Import as Premium:</b>
+				        </td>
+				        <td>
+				          <input type="checkbox" id="import_layer_premium" name="import_layer_premium" value="1">
+						  <a href="javascript:void(0);" rel="Select whether to import videos as premium or regular"><img src="images/icons/help.png"></a>
+				        </td>
+				      </tr>
+				      <tr>
+						<td align="right">
+						  <b>Set Auto-Translate Task:</b>
+						</td>
+						<td>
+						  <input type="checkbox" name="import_layer_autotranslate" id="import_layer_autotranslate" checked>
+						  <a href="javascript:void(0);" rel="Check this option if you want to <u>additionally</u><br>use the autotranslate feature to translate the titles and descrpitions<br>of the videos to all secondary languages, after they are imported."><img src="images/icons/help.png"></a>
+						</td>
+					  </tr>
+					  
+				      <tr>
+				        <td align="right">
+				          <b>Activation Date:</b>
+				        </td>
+				        <td>
+				          <select name="import_layer_activation_method" id="import_layer_activation_method" onchange="CheckImportActivationDateMethod(this.value);" style="width:150px;">
+				            <option value="0">No Activation Date</option>
+				            <option value="1">Fixed Activation Date</option>
+				            <option value="2">Progressive Activation (by videos)</option>
+				            <option value="3">Progressive Activation (by date)</option>
+						  </select>
+						  <a href="javascript:void(0);" rel="Select preferred method for activating the videos automatically."><img src="images/icons/help.png"></a>
+				        </td>
+				      </tr>
+				      <tr>
+				        <td colspan="2" align="right">
+				          <div id="import_layer_activation_fixed" style="display:none;">
+				            Activate all on:
+	                        <a href="javascript:void(0);" rel="Click to pick a date"><img src="images/icons/calendar_activation.png" id="import_layer_activation_date_img"></a>
+	                        <input type="text" name="import_layer_activation_date" id="import_layer_activation_date" value="" style="width:89px; background:transparent; border:0px;" readonly>
+	                        {literal}<script type="text/javascript">Calendar.setup({inputField: "import_layer_activation_date", button: "import_layer_activation_date_img",ifFormat:"%Y-%m-%d %H:%M:%S", showsTime:true, align: "Tr"});</script>{/literal}
+						  </div>
+						  
+						  <div id="import_layer_activation_progressive_1" style="display:none; width:270px;">
+							  <div>
+	                            <input type="text" name="import_layer_activation_videos_amount" id="import_layer_activation_videos_amount" style="width:20px; height:14px; text-align:right; float:left; margin-right:-1px;">
+	                            <div style="float:left; border:1px solid #999999;">
+	                              <div class="spinner_up" id="import_layer_activation_videos_amount_up"></div>
+	                              <div class="spinner_down" id="import_layer_activation_videos_amount_down"></div>
+	                            </div>
+	                            <span style="float:left; margin-left:4px; margin-right:4px;">
+	                              videos/day, starting on
+	                              <a href="javascript:void(0);" rel="Click to pick a date"><img src="images/icons/calendar_activation.png" id="import_layer_activation_date_progressive_1_img"></a>
+	                              <input type="text" name="import_layer_activation_date_progressive_1" id="import_layer_activation_date_progressive_1" value="" style="width:89px; background:transparent; border:0px;" readonly>
+	                          	  {literal}<script type="text/javascript">Calendar.setup({inputField: "import_layer_activation_date_progressive_1", button: "import_layer_activation_date_progressive_1_img",ifFormat:"%Y-%m-%d %H:%M:%S", showsTime:true, align: "Tr"});</script>{/literal}
+	                            </span>
+	                          </div>
+                           	  {literal}<script type="text/javascript">new SpinnerControl('import_layer_activation_videos_amount', 'import_layer_activation_videos_amount_up', 'import_layer_activation_videos_amount_down', {interval:1, min:1}); </script>{/literal}
+                          </div>
+						  
+						  <div id="import_layer_activation_progressive_2"  class="right" style="display:none; width:240px; text-align:center;">
+						      Allocate imported videos within<br><br class="br">
+							  <div>
+	                            <input type="text" name="import_layer_activation_days_amount" id="import_layer_activation_days_amount" style="width:20px; height:14px; text-align:right; float:left; margin-right:-1px;">
+	                            <div style="float:left; border:1px solid #999999;">
+	                              <div class="spinner_up" id="import_layer_activation_days_amount_up"></div>
+	                              <div class="spinner_down" id="import_layer_activation_days_amount_down"></div>
+	                            </div>
+	                            <span style="float:left; margin-left:4px; margin-right:4px;">
+	                              days, starting on
+	                              <a href="javascript:void(0);" rel="Click to pick a date"><img src="images/icons/calendar_activation.png" id="import_layer_activation_date_progressive_2_img"></a>
+	                              <input type="text" name="import_layer_activation_date_progressive_2" id="import_layer_activation_date_progressive_2" value="" style="width:89px; background:transparent; border:0px;" readonly>
+	                          	  {literal}<script type="text/javascript">Calendar.setup({inputField: "import_layer_activation_date_progressive_2", button: "import_layer_activation_date_progressive_2_img",ifFormat:"%Y-%m-%d %H:%M:%S", showsTime:true, align: "Tr"});</script>{/literal}
+	                            </span>
+	                          </div>
+                           	  {literal}<script type="text/javascript" style="display:none;">new SpinnerControl('import_layer_activation_days_amount', 'import_layer_activation_days_amount_up', 'import_layer_activation_days_amount_down', {interval:1, min:1}); </script>{/literal}
+                           	  </div>
+				        </td>
+				      </tr>
+				    </table>
+				  </div>
+				  </fieldset>
+				  <br><br class="br">
+				  
+				  <fieldset class="fieldset3" style="width:760px;">
+				  <legend class="legend3"> <b>Import Data (Paste Text Here)</b></legend>
+				    <div class="bottom" style="padding:15px; height:160px; overflow-x:auto; clear:left; text-align:center;">
+				      <textarea id="import_layer_data" name="import_layer_data" style="width:720px; height:150px; overflow:auto;" wrap="off"></textarea>
+				    </div>
+				  </fieldset>
+
+				  <br class="br">
+				  <table align="center">
+				    <tr>
+				      <td><a class="button" href="javascript:void(0);" onclick="ImportVideos(1);"><span><img src="images/icons/simulate.png" id="import_layer_simulate_icon"> Simulate Import</span></a></td>
+				      <td width="5"></td>
+				      <td><a class="button" href="javascript:void(0);" onclick="ImportVideos();"><span><img src="images/icons/import.png" id="import_layer_import_icon"> Import Videos</span></a></td>
+				    </tr>
+				  </table>
+				  
+				  </form>
+
+				  <iframe name="import_iframe" id="import_iframe" style="width:0px; height:0px; display:none;"></iframe>
+				  
+	           </div>
+			   </td>
+	           <td background="images/modalbox/ir.png" width="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/ibl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/ib.png" height="10"></td>
+	           <td background="images/modalbox/ibr.png" width="10" height="10"></td>
+	         </tr>
+	       </table>         
+         </td>
+         <td background="images/modalbox/or.png" width="8"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/obl.png" width="8" height="11"></td>
+         <td background="images/modalbox/ob.png" height="11"></td>
+         <td background="images/modalbox/obr.png" width="8" height="1"></td>
+       </tr>
+     </table>
+  </td></tr>
+</table>
+</div>
+
+
+<div id="edit_layer" style="display:none;" class="floating_layer">
+<table cellpadding="0" cellspacing="0" align="center" width="100%" height="100%">
+  <tr><td align="center">
+  
+     <table cellpadding="0" cellspacing="0" class="draggable">
+       <tr class="draggable_handle" style="cursor:pointer;">
+         <td background="images/modalbox/otl.png" width="8" height="25"></td>
+         <td background="images/modalbox/ot.png" height="25" valign="bottom">
+           <span class="modalbox_title" id="edit_layer_title">Edit Video</span>
+           <span class="modalbox_buttons">
+             &nbsp;{* if($('refresh_on_close').value==1)Paginate($('page').value); *}
+             <a href="javascript:void(0);" onclick="CloseLayer('edit_layer');"><img src="images/icons/close_big.png" onmouseover="this.src='images/icons/close_big_on.png';" onmouseout="this.src='images/icons/close_big.png';"></a>
+           </span>
+         </td>
+         <td background="images/modalbox/otr.png" width="8" height="25"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/ol.png" width="8"></td>
+         <td>
+           <table cellpadding="0" cellspacing="0">
+	         <tr>
+	           <td background="images/modalbox/itl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/it.png" height="10"></td>
+	           <td background="images/modalbox/itr.png" width="10" height="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/il.png" width="10"></td>
+	           <td bgcolor="#C9CDD0" width="450" class="modal_text" style="padding:0px;">
+	           <div style="height:450px; overflow:auto; padding:10px;">
+	           
+	             {* Main Container Table *}
+	             <table cellpadding="0" cellspacing="8" width="100%">
+	               <tr>
+	                 <td valign="top">
+	             	   {* Video Information Fieldset *}
+	             	   
+	             	    <table cellpadding="0" cellspacing="0" style="position:relative; z-index:2; left:15px;">
+						  <tr>
+						    <td class="tinytab_active" id="edit_video_1" onclick="SwitchTinyTab('edit_video',1); $('edit_video_translations_div').hide(); $('edit_video_media_div').hide(); $('edit_video_basic_info_div').show();">Basic Video Info</td>
+						    <td width="5"></td>
+						    <td class="tinytab" id="edit_video_2" onclick="SwitchTinyTab('edit_video',2); $('edit_video_basic_info_div').hide(); $('edit_video_media_div').hide(); $('edit_video_translations_div').show();">Tanslations</td>
+						    <td width="5"></td>
+						    <td class="tinytab" id="edit_video_3" onclick="SwitchTinyTab('edit_video',3); $('edit_video_basic_info_div').hide(); $('edit_video_translations_div').hide(); $('edit_video_media_div').show();">Video Media Files</td>
+						  </tr>
+						</table>
+	                   <fieldset class="fieldset3 tinyblue" style="width:410px; min-height:400px; margin-top:-1px; position:relative; z-index:1;">
+	                   {* <legend class="legend0"><b>Basic Video Information</b></legend> *}
+	                   
+	                   <form id="edit_form" action="javascript:void(0);" onsubmit="AddEditVideo();">
+	             	   <input type="hidden" name="edit_id" id="edit_id" value="">
+	             	   <input type="hidden" id="refresh_on_close" value="">
+	             	   
+                       <div style="padding:15px; text-align:justify;" id="edit_video_basic_info_div">
+                       
+                         <div class="left">
+                           <a href="javascript:void(0);" rel="Add/Edit the basic data of the video.<br>Check the help tooltips to learn more about each field.<br>After you add a new video it will automatically<br>switch to Edit Mode (so you can add translations and media files),<br>and  you may click on the link of the success<br>message to add another new video."> <img src="images/icons/help_big.png" onmouseover="this.src='images/icons/help_big_on.png';" onmouseout="this.src='images/icons/help_big.png';"></a>
+                         </div>
+	                     <br>
+	                     
+                         <table cellpadding="0" cellspacing="0" width="100%"><tr>
+                           <td><span class="mandatory">(*)</span> Mandatory Fields</span></td>
+                           <td width="50" align="right">
+                             <a class="button" href="javascript:void(0);" onclick="AddEditVideo();"><span><img src="images/icons/save.png" id="edit_video_save_icon"> Save</span></a>
+                           </td>
+                         </tr></table>  
+                         <br><br class="br">
+                         
+                         <div id="edit_video_success_msg" class="success" style="width:330px; margin-left:15px;" align="center">
+                           <img src="images/icons/success.png"> Video information successfuly saved.
+                           <div id="edit_layer_reset_add_link" style="margin-left:20px;">
+                             <font size="1"> You are now on 'Edit Mode' for this video.
+                             <br><a href="javascript:void(0);" onclick="OpenEditLayer('','add');" class="tahoma7 green">Click Here to Add a New Video</a>.</font>
+                           </div>                           
+                         </div>
+                         
+                         <table cellpadding="4" cellspacing="1" style="border:1px solid #AAAAAA;" bgcolor="#EEEEEE" width="100%">
+                           <tr bgcolor="#D1D1D1" valign="top" id="edit_player_id_row">
+	                         <td align="right"><b class="mandatory">*</b> <b>FLV Player:</b></td>
+	                         <td>
+	                           <select id="edit_player_id" name="edit_player_id" style="width:200px;" tabindex="0">
+							   {foreach from=$array_players item=player key=player_id}
+							     {if ($player.editable==1 or $player.id==1)}<option value="{$player_id}">{$player.name}</option>{/if}
+							   {foreachelse}
+							     <option disabled>No players to select</option>
+							   {/foreach}
+							   </select>
+	                           <a href="javascript:void(0);" rel="Select the Player you want to use for this video.<br>Some videos (sources ones) can't use<br>different players other than the original."><img src="images/icons/help.png"></a>
+	                           <span id="edit_player_id_error_span"><a href="javascript:void(0);" rel="<b class='red'>Please, select FLV Player.</b>" class="edit_form_error_msg" id="edit_player_id_error_msg"><img src="images/icons/failure.png"></a></span>
+	                         </td>
+	                       </tr>	                       
+	                       <tr bgcolor="#C9C9C9">
+	                         <td align="right"><b class="mandatory">*</b> <b>Source:</b></td>
+	                         <td>
+	                           <select id="edit_source" name="edit_source" style="width:200px;" tabindex="0">
+	                             <option value="0">No Source</option>
+							   {foreach from=$array_sources item=source key=source_id}
+							     <option value="{$source_id}">{$source.name}</option>
+							   {/foreach}
+							   </select>
+	                           <a href="javascript:void(0);" rel="Select the Source (site, sponsor, etc), if any.<br>This field is only to have the videos organized."><img src="images/icons/help.png"></a>
+	                         </td>
+	                       </tr>
+	                       <tr bgcolor="#D1D1D1" valign="top">
+	                         <td align="right" width="110"><b class="mandatory">*</b> <b>Title:</b></td>
+	                         <td>
+	                           <input type="text" id="edit_title" name="edit_title" style="width:200px;" tabindex="1" maxlength="100">
+	                           <a href="javascript:void(0);" rel="Up to 100 characters."><img src="images/icons/help.png"></a>
+	                           <span id="edit_title_error_span"><a href="javascript:void(0);" rel="<b class='red'>Title cannot be empty.</b>" class="edit_form_error_msg" id="edit_title_error_msg"><img src="images/icons/failure.png"></a></span>
+	                         </td>
+	                       </tr>
+	                       <tr bgcolor="#C9C9C9" valign="top">
+	                         <td align="right">
+	                           <b>Description:</b><br>
+	                           <font size="1"><span id="description_chars_count">500</span> Chars. left.</font>
+	                         <td>
+	                           <textarea id="edit_description" name="edit_description" style="width:200px; height:50px;" onkeyup="CalculateCharsCount(this.id,'description_chars_count',500);"  tabindex="2"></textarea>
+	                           <a href="javascript:void(0);" rel="Up to 500 characters." class="top"><img src="images/icons/help.png"></a>
+	                         </td>
+	                       </tr>
+	                       <tr bgcolor="#D1D1D1" valign="top">
+	                         <td align="right"><b>Tags:</b></td>
+	                         <td>
+	                           <input type="text" id="edit_tags" name="edit_tags" style="width:200px;" tabindex="8">
+	                           <a href="javascript:void(0);" rel="Keywords that will help your surfers find the video.<br>Comma separated."><img src="images/icons/help.png"></a>
+	                         </td>
+	                       </tr>
+	                       <tr bgcolor="#C9C9C9" valign="top">
+	                         <td align="right"><b class="mandatory">*</b> <b>Categories:</b></td>
+	                         <td>
+	                           <select id="edit_categories" name="edit_categories[]" multiple size="4" style="width:200px;" tabindex="3">
+							   {foreach from=$array_groups item=categories key=group_id}
+							     <option style="font-weight:bold; {if $categories[0].group_status==0}color:#CC0000;{/if}" disabled>-- {$categories[0].group_name|upper}</option>
+								 {foreach from=$categories item=category}
+								   <option value="{$category.category_id}" {if $categories[0].group_status==0 or $category.status==0}style="color:#CC0000;"{/if}>&nbsp;&nbsp;&nbsp;&nbsp;{$category.category_name}</option>
+								 {foreachelse}
+							       <option disabled>No categories to select</option>
+								 {/foreach}
+								 <option value="" style="font-weight:bold;" disabled>-----------------------</option>
+							   {foreachelse}
+							     <option disabled>No categories to select</option>
+							   {/foreach}
+							   </select>
+	                           <a href="javascript:void(0);" rel="Select one or multiple categories.<br>Use Ctrl+Shift keys to select them." class="top"><img src="images/icons/help.png"></a>
+	                           <span id="edit_categories_error_span" class="top"><a href="javascript:void(0);" rel="<b class='red'>Select, at least, one category.</b>" class="edit_form_error_msg" id="edit_categories_error_msg"><img src="images/icons/failure.png"></a></span>
+	                         </td>
+	                       </tr>
+	                       <tr bgcolor="#D1D1D1" valign="top">
+	                         <td align="right"><b>Channels:</b></td>
+	                         <td>
+	                           <select id="edit_channels" name="edit_channels[]" multiple size="4" style="width:200px;" tabindex="4">
+							     {foreach from=$array_channels item=channel}
+								   <option value="{$channel.id}" {if $channel.status==0}style="color:#CC0000;"{/if}>{$channel.name}</option>
+							     {foreachelse}
+							       <option disabled>No channels to select</option>
+							     {/foreach}
+							   </select>
+	                           <a href="javascript:void(0);" rel="Select one or multiple channels.<br>Use Ctrl+Shift keys to select them." class="top"><img src="images/icons/help.png"></a>
+	                         </td>
+	                       </tr>
+	                       <tr bgcolor="#C9C9C9" valign="top">
+	                         <td align="right"><b>Embed Code:</b></td>
+	                         <td>
+	                           <textarea id="edit_embed_code" name="edit_embed_code"  style="width:200px;" rows="4" tabindex="4"></textarea>
+	                           <a href="javascript:void(0);" rel="Enter here the Embed Code of the video.<br>The use of this field will override all other video methods.<br>You can leave it empty if you want to use another method." class="top"><img src="images/icons/help.png"></a>
+	                         </td>
+	                       </tr>
+	                       <tr bgcolor="#D1D1D1" valign="top">
+	                         <td align="right"><b>Preroll Image:</b></td>
+	                         <td>
+	                           <input type="text" id="edit_preroll_img" name="edit_preroll_img" style="width:200px;" tabindex="8">
+	                           <a href="javascript:void(0);" rel="Preroll Ad Image for this video only.<br>Must use the default player."><img src="images/icons/help.png"></a>
+	                         </td>
+	                       </tr>
+	                       <tr bgcolor="#C9C9C9" valign="top">
+	                         <td align="right"><b>Preroll Link URL:</b></td>
+	                         <td>
+	                           <input type="text" id="edit_preroll_link" name="edit_preroll_link" style="width:200px;" tabindex="8">
+	                           <a href="javascript:void(0);" rel="Preroll Ad Link URL for this video only.<br>Must use the default player."><img src="images/icons/help.png"></a>
+	                         </td>
+	                       </tr>
+	                       <tr bgcolor="#D1D1D1" valign="top">
+	                         <td align="right"><b>Postroll Image:</b></td>
+	                         <td>
+	                           <input type="text" id="edit_postroll_img" name="edit_postroll_img" style="width:200px;" tabindex="8">
+	                           <a href="javascript:void(0);" rel="Postroll Ad Image for this video only.<br>Must use the default player."><img src="images/icons/help.png"></a>
+	                         </td>
+	                       </tr>
+	                       <tr bgcolor="#C9C9C9" valign="top">
+	                         <td align="right"><b>Postroll Link URL:</b></td>
+	                         <td>
+	                           <input type="text" id="edit_postroll_link" name="edit_postroll_link" style="width:200px;" tabindex="8">
+	                           <a href="javascript:void(0);" rel="Postroll Ad Link URL for this video only.<br>Must use the default player."><img src="images/icons/help.png"></a>
+	                         </td>
+	                       </tr>
+	                       <tr bgcolor="#D1D1D1" align="absmiddle">
+	                         <td align="right"><b>Duration:</b></td>
+	                         <td>
+	                           <div>
+	                             <input type="text" id="edit_duration_hours" name="edit_duration_hours" style="width:20px; height:14px; text-align:right; float:left; margin-right:-1px;" tabindex="5">
+	                             <div style="float:left; border:1px solid #999999;">
+	                               <div class="spinner_up" id="edit_duration_hours_up"></div>
+	                               <div class="spinner_down" id="edit_duration_hours_down"></div>
+	                             </div>
+	                             <div style="float:left; margin-left:4px; margin-right:4px;">hs.</span>
+	                           </div>
+	                           {literal}<script type="text/javascript">new SpinnerControl('edit_duration_hours', 'edit_duration_hours_up', 'edit_duration_hours_down', {interval:1, min:0, max:20}); </script>{/literal}
+	                           
+	                           <div>
+	                             <input type="text" id="edit_duration_mins" name="edit_duration_mins" style="width:20px; height:14px; text-align:right; float:left; margin-right:-1px;" tabindex="6">
+	                             <div style="float:left; border:1px solid #999999;">
+	                               <div class="spinner_up" id="edit_duration_mins_up"></div>
+	                               <div class="spinner_down" id="edit_duration_mins_down"></div>
+	                             </div>
+	                             <div style="float:left; margin-left:4px; margin-right:4px">min.</span>
+	                           </div>
+	                           {literal}<script type="text/javascript">new SpinnerControl('edit_duration_mins', 'edit_duration_mins_up', 'edit_duration_mins_down', {interval:1, min:-1, max:60, afterUpdate:"CheckDurationSpinner($('edit_duration_mins').value,'mins');"}); </script>{/literal}
+	                           
+	                           <div>
+	                             <input type="text" id="edit_duration_secs" name="edit_duration_secs" style="width:20px; height:14px; text-align:right; float:left; margin-right:-1px;" tabindex="7">
+	                             <div style="float:left; border:1px solid #999999;">
+	                               <div class="spinner_up" id="edit_duration_secs_up"></div>
+	                               <div class="spinner_down" id="edit_duration_secs_down"></div>
+	                             </div>
+	                             <div style="float:left; margin-left:4px; margin-right:4px">sec.</span>
+	                           </div>
+	                           {literal}<script type="text/javascript">new SpinnerControl('edit_duration_secs', 'edit_duration_secs_up', 'edit_duration_secs_down', {interval:1, min:-1, max:60, afterUpdate:"CheckDurationSpinner($('edit_duration_secs').value,'secs');"}); </script>{/literal}
+
+	                           <a href="javascript:void(0);" rel="Duration of the Video.<br>If you leave these values empty, Automagick will attempt<br> to get the duration from the video automatically."><img src="images/icons/help.png"></a>
+	                         </td>
+	                       </tr>
+	                       <tr bgcolor="#C9C9C9" valign="top">
+	                         <td align="right"><b>Date Added:</b></td>
+	                         <td>
+	                           <input type="text" name="edit_date_added_formated" id="edit_date_added_formated" value="" style="width:60px;" tabindex="9">
+	                           <a href="javascript:void(0);" rel="Click to pick a date"><img src="images/icons/calendar.png" id="edit_date_added_img"></a>
+	                           {literal}<script type="text/javascript">Calendar.setup({inputField: "edit_date_added_formated", button: "edit_date_added_img", ifFormat:"%Y-%m-%d %H:%M:%S", showsTime:true, align: "Tr"});</script>{/literal}
+	                           <a href="javascript:void(0);" rel="The date the surfers will see this video was added.<br>If left empty, the current date will be used."><img src="images/icons/help.png"></a>
+	                         </td>
+	                       </tr>
+	                       <tr bgcolor="#D1D1D1" valign="top">
+	                         <td align="right"><b>Activation Date:</b></td>
+	                         <td>
+	                           <input type="text" name="edit_activation_date_formated" id="edit_activation_date_formated" value="" style="width:89px;" tabindex="10">
+	                           <a href="javascript:void(0);" rel="Click to pick a date"><img src="images/icons/calendar_activation.png" id="edit_activation_date_img"></a>
+	                           {literal}<script type="text/javascript">Calendar.setup({inputField: "edit_activation_date_formated", button: "edit_activation_date_img",ifFormat:"%Y-%m-%d %H:%M:%S", showsTime:true, align: "Tr"});</script>{/literal}
+	                           <a href="javascript:void(0);" rel="Date this video will be automatically activated.<br>Date & Time"><img src="images/icons/help.png"></a>
+	                         </td>
+	                       </tr>
+	                       <tr bgcolor="#C9C9C9" valign="top">
+	                         <td align="right"><b>Deactivation Date:</b></td>
+	                         <td>
+	                           <input type="text" name="edit_deactivation_date_formated" id="edit_deactivation_date_formated" value="" style="width:89px;" tabindex="11">
+	                           <a href="javascript:void(0);" rel="Click to pick a date"><img src="images/icons/calendar_deactivation.png" id="edit_deactivation_date_img"></a>
+	                           {literal}<script type="text/javascript">Calendar.setup({inputField: "edit_deactivation_date_formated", button: "edit_deactivation_date_img",ifFormat:"%Y-%m-%d %H:%M:%S", showsTime:true, align: "Tr"});</script>{/literal}
+	                           <a href="javascript:void(0);" rel="Date this video will be automatically deactivated.<br>Date & Time"><img src="images/icons/help.png"></a>
+	                         </td>
+	                       </tr>
+	                       <tr bgcolor="#D1D1D1" valign="top">
+	                         <td align="right"><b>Viewed:</b></td>
+	                         <td>
+	                           <div>
+	                             <input type="text" id="edit_views" name="edit_views" style="width:60px; height:14px; text-align:right; float:left; margin-right:-1px;" tabindex="12">
+	                             <div style="float:left; border:1px solid #999999;">
+	                               <div class="spinner_up" id="edit_views_up"></div>
+	                               <div class="spinner_down" id="edit_views_down"></div>
+	                             </div>
+	                             <div style="float:left; margin-left:4px; margin-right:6px">times</span>
+	                           </div>
+	                           {literal}<script type="text/javascript">new SpinnerControl('edit_views', 'edit_views_up', 'edit_views_down', {interval:1, min:0}); </script>{/literal}
+	                         </td>
+	                       </tr>
+	                       <tr bgcolor="#C9C9C9" valign="top">
+	                         <td align="right"><b>Favorited:</b></td>
+	                         <td>
+	                           <div>
+	                             <input type="text" id="edit_favorited" name="edit_favorited" style="width:60px; height:14px; text-align:right; float:left; margin-right:-1px;" tabindex="12">
+	                             <div style="float:left; border:1px solid #999999;">
+	                               <div class="spinner_up" id="edit_favorited_up"></div>
+	                               <div class="spinner_down" id="edit_favorited_down"></div>
+	                             </div>
+	                             <div style="float:left; margin-left:4px; margin-right:6px">times</span>
+	                           </div>
+	                           {literal}<script type="text/javascript">new SpinnerControl('edit_favorited', 'edit_favorited_up', 'edit_favorited_down', {interval:1, min:0}); </script>{/literal}
+	                         </td>
+	                       </tr>
+	                       <tr bgcolor="#D1D1D1" valign="top">
+	                         <td align="right"><b>Rating:</b></td>
+	                         <td>
+	                           <div>
+	                             <input type="text" id="edit_rating" name="edit_rating" style="width:60px; height:14px; text-align:right; float:left; margin-right:-1px;" tabindex="13">
+	                             <div style="float:left; border:1px solid #999999;">
+	                               <div class="spinner_up" id="edit_rating_up"></div>
+	                               <div class="spinner_down" id="edit_rating_down"></div>
+	                             </div>
+	                           </div>
+	                           {literal}<script type="text/javascript">new SpinnerControl('edit_rating', 'edit_rating_up', 'edit_rating_down', {interval:0.1, round:1, min:0, max:5}); </script>{/literal}
+	                         </td>
+	                         </td>
+	                       </tr>
+	                       <tr bgcolor="#C9C9C9" valign="top">
+	                         <td align="right"><b>Voted:</b></td>
+	                         <td>
+	                           <div>
+	                             <input type="text" id="edit_votes" name="edit_votes" style="width:60px; height:14px; text-align:right; float:left; margin-right:-1px;" tabindex="14">
+	                             <div style="float:left; border:1px solid #999999;">
+	                               <div class="spinner_up" id="edit_votes_up"></div>
+	                               <div class="spinner_down" id="edit_votes_down"></div>
+	                             </div>
+	                             <div style="float:left; margin-left:4px; margin-right:6px">times</span>
+	                           </div>
+	                           {literal}<script type="text/javascript">new SpinnerControl('edit_votes', 'edit_votes_up', 'edit_votes_down', {interval:1, min:0}); </script>{/literal}
+	                         </td>
+	                         </td>
+	                       </tr>
+	                       <tr bgcolor="#D1D1D1" valign="top">
+	                         <td align="right"><b>Status:</b></td>
+	                         <td>
+	                           <select id="edit_status" name="edit_status" style="width:200px;" tabindex="15">
+								 <option value="0">Inactive</option>
+								 <option value="1">Active</option>
+								 <option value="-1">Pending for Approval</option>
+							   </select>
+	                           <a href="javascript:void(0);" rel="Change the status of the video.<br>Setting it to Pending,<br>will move it to 'Pending Videos Tab'."><img src="images/icons/help.png"></a>
+	                         </td>
+	                       </tr>
+	                       <tr bgcolor="#C9C9C9" valign="top">
+	                         <td align="right"><b>Is Premium:</b></td>
+	                         <td>
+	                           <input type="checkbox" id="edit_premium" name="edit_premium" value="1" tabindex="16">
+	                           <a href="javascript:void(0);" rel="If you check the video as premium,<br>it will be shown in the Premium Section of your site<br>instead of in the main pages."><img src="images/icons/help.png"></a>
+	                         </td>
+	                         </td>
+	                       </tr>
+	                     </table>
+	                     <br>
+	                     <table cellpadding="0" cellspacing="0" width="100%"><tr>
+                           <td><span class="mandatory">(*)</span> Mandatory Fields</span></td>
+                           <td width="50" align="right">
+                             <a class="button" href="javascript:void(0);" onclick="AddEditVideo();"><span><img src="images/icons/save.png" id="edit_video_save_icon_2"> Save</span></a>
+                           </td>
+                         </tr></table>  
+                         <br><br class="br">
+                         <div id="edit_video_success_msg_2" class="success" style="width:330px; margin-left:15px;" align="center">
+                           <img src="images/icons/success.png"> Video information successfuly saved.
+                           <div id="edit_layer_reset_add_link_2" style="margin-left:20px;">
+                             <font size="1"> You are now on 'Edit Mode' for this video.
+                             <br><a href="javascript:void(0);" onclick="OpenEditLayer('','add');" class="tahoma7 green">Click Here to Add a New Video</a>.</font>
+                           </div>
+                         </div>
+	                   </div>
+	                   
+	                   
+	                   <div style="padding:15px; text-align:justify; display:none;" id="edit_video_translations_div">
+                       
+	                     <div class="left">
+                           <a href="javascript:void(0);" rel="Edit here the titles and descriptions of the videos in other languages.<br>In order to translate into other languages, you need to add them first.<br>You may add or remove languages in Settings > Languages."> <img src="images/icons/help_big.png" onmouseover="this.src='images/icons/help_big_on.png';" onmouseout="this.src='images/icons/help_big.png';"></a>
+                         </div>
+	                     <br>
+	                     
+                         <table cellpadding="0" cellspacing="0" width="100%"><tr>
+                           <td><span class="mandatory">(*)</span> Mandatory Fields</span></td>
+                           <td width="50" align="right">
+                             <a class="button" href="javascript:void(0);" onclick="EditVideoTranslations();"><span><img src="images/icons/save.png" id="edit_video_translations_save_icon"> Save</span></a>
+                           </td>
+                         </tr></table>  
+                         <br><br class="br">
+	                     <div id="edit_video_translations_success_msg" class="success" style="width:330px; margin-left:15px;" align="center"><img src="images/icons/success.png"> Video translations successfuly saved.</div>
+                         
+                         {foreach from=$array_languages item=language name=languages}
+                           {if $language.default==0}
+                             <table cellpadding="4" cellspacing="1" style="border:1px solid #AAAAAA;" bgcolor="#EEEEEE" width="100%">
+                             <tr bgcolor="#C9C9C9">
+	                           <td align="right" width="130">
+	                             <img src="images/flags/{$language.code}.gif"> <b>{$language.name} Title:</b>
+	                           </td>
+	                           <td>
+	                             <input type="text" name="translation_titles[{$language.id}]" id="edit_title_translation_{$language.id}" style="width:200px;" maxlength="100" class="translation_titles" tabindex="{$smarty.foreach.languages.index*2-1}">
+	                             <a href="javascript:void(0);" rel="Up to 100 characters."><img src="images/icons/help.png"></a>
+	                           </td>
+	                         </tr>
+	                         <tr bgcolor="#D1D1D1" valign="top">
+                               <td align="right"><b>{$language.name} Description:</b><br>
+	                             <font size="1"><span id="tr_{$language.id}_description_chars_count">500</span> Chars. left.</font>
+	                           <td>
+	                             <textarea name="translation_descriptions[{$language.id}]" id="edit_description_translation_{$language.id}" style="width:200px; height:50px;" onkeyup="CalculateCharsCount(this.id,'tr_{$language.id}_description_chars_count',500);"  class="translation_descriptions"  tabindex="{$smarty.foreach.languages.index*2}"></textarea>
+	                             <a href="javascript:void(0);" rel="Up to 500 characters." class="top"><img src="images/icons/help.png"></a>
+	                           </td>
+	                         </tr>
+	                         </table>
+	                         <br class="br">
+	                       {/if}
+                         {/foreach}
+                         
+                                                 
+                         <table cellpadding="0" cellspacing="0" width="100%"><tr>
+                           <td><span class="mandatory">(*)</span> Mandatory Fields</span></td>
+                           <td width="50" align="right">
+                             <a class="button" href="javascript:void(0);" onclick="EditVideoTranslations();"><span><img src="images/icons/save.png" id="edit_video_translations_save_icon_2"> Save</span></a>
+                           </td>
+                         </tr></table>  
+                         <br><br class="br">                         
+                         <div id="edit_video_translations_success_msg_2" class="success" style="width:330px; margin-left:15px;" align="center"><img src="images/icons/success.png"> Video translations successfuly saved.</div>
+                         
+	                   </div>
+	                   
+	                   </form>
+	                   
+	                   <div style="padding:15px; text-align:justify; display:none; position:relative;" id="edit_video_media_div">
+		                     {* Overlay Protecting Layer *}
+		                     <div id="edit_video_protect_layer" style="width:398px; height:350px; position:absolute; z-index:2; top:10px; left:0px; background:#DBDBDB;" class="disabled" ></div>
+		                     
+		                     <div style=" width:370px; height:350px; padding:15px; position:absolute; z-index:1; top:0px; left:0px;">
+		                        
+		                     	<div class="left">
+		                          <a href="javascript:void(0);" rel="Add/Replace media files to this video:<br>Video File, Preview Image & Thumbnails.<br>You have several methods for each case<br>and you can read the instructions for each<br>in the different help tooltips."> <img src="images/icons/help_big.png" onmouseover="this.src='images/icons/help_big_on.png';" onmouseout="this.src='images/icons/help_big.png';"></a>
+		                        </div>
+			                    <br><br class="br">
+								
+								<div class="warning" style="min-height:16px;">
+
+								  <div class="left"><b>Important Information:</b> <a id="edit_video_warning_link" href="javascript:void(0);" onclick="$('edit_video_warning_link').hide(); $('edit_video_warning_info').show();">Click to expand</a></div>
+								  
+								  <div id="edit_video_warning_info" style="display:none;">
+								    <div class="right"><a href="javascript:void(0);" onclick="$('edit_video_warning_info').hide(); $('edit_video_warning_link').show();"><img src="images/icons/close_big.png" onmouseover="this.src='images/icons/close_big_on.png';" onmouseout="this.src='images/icons/close_big.png';"></a></div><br class="clear"><br>
+								    If you are adding a video in FLV format, try to check if the video has the needed <b>keyframes</b> for Pseudo-Streaming to work fine. Other way, users won't be able to seek to other parts of the video.<br><br>
+								    If you are adding a video in MP4 format, try to check if the metadata is already located at the beginning of the file, so it can be played instantly.<br><br>
+								    If you don't know the situation of your case, test the video and, if you are not satisfied with the results (due to one of these problems), add the "Fix for Pseudo-Streaming" task to the video, and the script will take care of it.
+									You will probably need to use tools like flvtool2 and ffmpeg to do it.
+								  </div>
+								</div>
+	                     
+		                     	<span class="mandatory">(*)</span> Mandatory Fields</span>
+		                     	<br><br class="br">
+		                     
+		                     	<div id="edit_video_success_msg_media" class="success" style="width:330px; margin-left:15px;" align="center"></div>
+		                     	
+		                     	 {* VIDEO FILE *}
+			                     <table cellpadding="4" cellspacing="1" style="border:1px solid #AAAAAA;" bgcolor="#EEEEEE" width="100%">
+			                       <tr bgcolor="#D1D1D1" id="edit_video_file_exists_row">
+			                         <td align="right" width="120"><b class="mandatory">*</b> <b>Video:</b></td>
+			                         <td>
+			                           <div class="option_button" style="float:left; padding-top:3px;"><a href="javascript:void(0);" onclick="VideoSimplePreview($('edit_id').value);" id="edit_simple_preview_video_link" rel="<b>Video File Exists</b><br>Click to preview."><img src="images/icons/videos.png" id="edit_simple_preview_video_icon"></a></div>
+			                           <a href="javascript:void(0);" onclick="" id="edit_m4v_ok_image" rel="" class="ml3" style="display:none;"><img src="images/icons/m4v_ok.png"></a>
+			                           <a href="javascript:void(0);" onclick="" id="edit_mp4_ok_image" rel="" class="ml3" style="display:none;"><img src="images/icons/mp4_ok.png"></a>
+			                         </td>
+			                         <td align="right" width="26">
+			                           <div class="option_button"><a href="javascript:void(0);" id="edit_video_file_info" rel="" class="disabled"><img src="images/icons/info.png"></a></div>
+			                         </td>
+			                         <td align="right" width="26">
+			                           <div class="option_button"><a href="javascript:void(0);" onclick="ShowEditVideoFileOptions();" id="edit_edit_video" rel="<b>Edit the Video File</b><br>(upload, download/host, hotlink)."><img src="images/icons/pencil.png" id="edit_edit_video_icon"></a></div>
+			                         </td>
+			                       </tr>
+			                       <tr bgcolor="#D1D1D1" id="edit_video_file_editing_row">
+			                         <td align="right" width="120"><b class="mandatory">*</b> <b>Video:</b></td>
+			                         <td>
+			                           <select onchange="SwitchEditVideoMethod(this.value);" id="edit_video_method_select">
+			                             <option value="0"> -- Select Method --</option>
+			                             <option value="1">Upload Video</option>
+			                             <option value="2">Download & Host Video</option>
+			                             <option value="3">Hotlink Video</option>
+			                           </select>
+			                           <a href="javascript:void(0);" rel="<b>Edit Video File Methods:</b><br><br><u>Upload Video</u>: You will be able to select a file from your PC, and upload it to the server.<br>Allowed formats are FLV, AVI, MPG, MPEG, WMV, M4V and MP4, and they will be autoconverted to FLV, if you have configured it to.<br><br><U>Download Video</u>: You will be able to download a file from any url.<br>Allowed formats are the same as for the Upload method, and the file will also be autoconverted to FLV, if you have configured it to.<br>Make sure your server has allow_url_fopen set to 'On'.<br><br><u>Hotlink Video</u>: You will be able to link directly to the file hosted in a 3rd party's server.<br>This will work only if the file is not protected against hotlink.<br>Allowed format: FLV only."><img src="images/icons/help.png"></a>
+			                         </td>
+			                         <td align="right" width="26">
+			                           <div class="option_button"><a href="javascript:void(0);" onclick="CancelEditVideoFileOptions();" id="edit_cancel_edition" rel="Cancel Video Edition"><img src="images/icons/close2.png" onmouseover="this.src='images/icons/close2_on.png';" onmouseout="this.src='images/icons/close2.png';"></a></div>
+			                         </td>
+			                       </tr>
+			                       <tr bgcolor="#C9C9C9" id="edit_video_method_upload" style="display:none;">
+			                         <td align="right"><b>Upload Video:</b></td>
+			                         <td>
+			                           <form id="edit_video_file_upload_form" name="edit_video_file_upload_form" action="actions/videos/video_upload.php" enctype="multipart/form-data" method="post" target="video_upload_iframe">
+				                         <label class="cabinet" style="float:left;">
+				                           <span><img src="images/icons/upload.png" id="edit_video_file_upload_button_img"></span>
+				                           <span id="edit_video_file_upload_button_text">Browse...</span>
+				                           <input type="hidden" name="edit_video_file_name_uploaded" id="edit_video_file_name_uploaded" value="">
+				                           <input type="file" name="edit_video_file_name" id="edit_video_file_name" class="file" size="1" onchange="SubmitVideoUploadForm();">
+				                         </label>
+				                         
+				                         <span id="edit_video_file_upload_cancel" style="float:left; display:none; padding-left:4px; margin-top:-1px;">
+				                           <div class="option_button"><a href="javascript:void(0);" onclick="CancelVideoFileUpload();" rel="Cancel File Upload"><img src="images/icons/stop.png"></a></div>
+				                         </span>
+				                         <iframe style="display:none; width:0px; height:0px;" src="about:blank" id="video_upload_iframe" name="video_upload_iframe"></iframe>
+			                           </form>
+			                         </td>
+			                         <td align="right" width="26">
+			                           <div class="option_button" id="save_uploaded_video" style="display:none;"><a href="javascript:void(0);" onclick="SaveVideoUploadedFile()" rel="Save the uploaded video.<br><b>Warning:</b> you won't be able to restore the old video." id="save_uploaded_video_link"><img src="images/icons/save.png" id="save_uploaded_video_icon"></a></div>
+			                           <div class="option_button disabled" id="save_uploaded_video_disabled" style="cursor:pointer;"><img src="images/icons/save.png"></div>
+			                         </td>
+			                       </tr>
+			                       <tr bgcolor="#C9C9C9" id="edit_video_method_download" style="display:none;">
+			                         <td align="right"><b>Download Video:</b></td>
+			                         <td>
+			                           <input type="text" id="edit_video_file_name_downloaded" name="edit_video_file_name_downloaded" style="width:150px; float:left; margin-top:1px; margin-right:4px;" onkeyup="CheckEnableDownloadButton(this.value,'video');">
+			                           <div class="option_button" id="edit_downloaded_video_button" style="display:none;"><a href="javascript:void(0);" onclick="DownloadVideo();" rel="Download this video."><img src="images/icons/download.png" id="edit_download_video_icon"></a></div>
+			                           <div class="option_button disabled" id="edit_downloaded_video_button_disabled" style="cursor:pointer;"><img src="images/icons/download.png"></div>
+			                           
+			                         </td>
+			                         <td align="right" width="26">
+			                           <div class="option_button" id="save_downloaded_video" style="display:none;"><a href="javascript:void(0);" onclick="SaveVideoDownloadedFile();" rel="Save the downloaded video.<br><b>Warning:</b> you won't be able to restore the old video." id="save_downloaded_video_link"><img src="images/icons/save.png" id="save_downloaded_video_icon"></a></div>
+			                           <div class="option_button disabled" id="save_downloaded_video_disabled" style="cursor:pointer;"><img src="images/icons/save.png"></div>
+			                         </td>
+			                       </tr>
+			                       <tr bgcolor="#C9C9C9" id="edit_video_method_hotlink" style="display:none;">
+			                         <td align="right"><b>Hotlink Video:</b></td>
+			                         <td>
+			                           <input type="text" id="edit_video_file_name_hotlink" name="edit_video_file_name_hotlink" style="width:150px; float:left; margin-top:1px; margin-right:4px;" onkeyup="CheckEnableSaveButton(this.value,'video');">
+			                           <div class="option_button" id="edit_video_hotlink_error" style="display:none;"><a href="javascript:void(0);" rel="Make sure this is a valid URL" id="edit_video_hotlink_error_msg"><img src="images/icons/failure.png"></a></div>
+			                         </td>
+			                         <td align="right" width="26">
+			                           <div class="option_button" id="save_hotlinked_video" style="display:none;"><a href="javascript:void(0);" onclick="SaveVideoHotlinked();" rel="Save the video url.<br><b>Warning:</b> you won't be able to restore the old video." id="save_hotlinked_video_link"><img src="images/icons/save.png" id="save_hotlinked_video_icon"></a></div>
+			                           <div class="option_button disabled" id="save_hotlinked_video_disabled" style="cursor:pointer;"><img src="images/icons/save.png"></div>
+			                         </td>
+			                       </tr>
+			                     </table>
+			                     <br class="br">
+			                     
+			                     {* PREVIEW IMAGE *}
+			                     <table cellpadding="4" cellspacing="1" style="border:1px solid #AAAAAA;" bgcolor="#EEEEEE" width="100%">
+			                       <tr bgcolor="#D1D1D1" id="edit_video_preview_exists_row">
+			                         <td align="right" width="120"><b>Preview Image:</b></td>
+			                         <td>
+			                           <div class="option_button" style="float:left; padding-top:3px;"><a href="javascript:void(0);" rel="<b>No Preview Image.</b><br>Edit to Add." id="edit_preview_image_link"><img src="images/icons/thumb.png"></a></div>
+			                         </td>
+			                         <td align="right" width="26">
+			                           <div class="option_button"><a href="javascript:void(0);" id="edit_image_preview_info" rel="" class="disabled"><img src="images/icons/info.png"></a></div>
+			                         </td>
+			                         <td align="right" width="48">
+			                           <div class="option_button" style="float:left; padding-top:3px;"><a href="javascript:void(0);" onclick="ShowEditVideoPreviewOptions();" id="edit_edit_preview" rel="<b>Edit the Video Preview Image</b><br>(upload, download/host, hotlink, frame capture)."><img src="images/icons/pencil.png" id="edit_edit_preview_icon"></a></div>
+			                           <div style="width:3px; float:left;">&nbsp;</div>
+			                           <div class="option_button" style="float:left; padding-top:3px;"><a href="javascript:void(0);" onclick="DeletePreviewImage();" id="edit_delete_preview" rel="Delete the Video Preview Image."><img src="images/icons/delete.png" id="edit_delete_preview_icon"></a></div>
+			                         </td>
+			                       </tr>
+			                       <tr bgcolor="#D1D1D1" id="edit_video_preview_editing_row" style="display:none;">
+			                         <td align="right" width="120"><b>Preview Image:</b></td>
+			                         <td>
+			                           <select onchange="SwitchEditPreviewMethod(this.value);" id="edit_video_preview_method_select">
+			                             <option value="0"> -- Select Method --</option>
+			                             <option value="1">Upload Image</option>
+			                             <option value="2">Download & Host Image</option>
+			                             <option value="3">Hotlink Image</option>
+			                             <option value="4">Frame Capture</option>
+			                           </select>
+			                           <a href="javascript:void(0);" rel="<b>Edit Preview Image Methods:</b><br><br><u>Upload</u>: You will be able to select an image from your PC, and upload it to the server.<br>Allowed formats are JPG, PNG and GIF.<br><br><U>Download</u>: You will be able to download an image from any url.<br>Allowed formats are the same as for the Upload method.<br>Make sure your server has allow_url_fopen set to 'On'.<br><br><u>Hotlink</u>: You will be able to link directly to the image hosted in a 3rd party's server.<br>This will work only if the file is not protected against hotlink.<br>Allowed formats: JPG, GIF and PNG.<br><br><u>Frame Capture</u>: You will have the chance to select a specific frame<br>of the video (if exists) or grab a random one automaticaly."><img src="images/icons/help.png"></a>
+			                         </td>
+			                         <td align="right" width="26">
+			                           <div class="option_button"><a href="javascript:void(0);" onclick="CancelEditVideoPreviewOptions();" id="edit_cancel_edition" rel="Cancel Preview Image Edition"><img src="images/icons/close2.png" onmouseover="this.src='images/icons/close2_on.png';" onmouseout="this.src='images/icons/close2.png';"></a></div>
+			                         </td>
+			                       </tr>
+			                       <tr bgcolor="#C9C9C9" id="edit_preview_method_upload" style="display:none;">
+			                         <td align="right"><b>Upload Image:</b></td>
+			                         <td>
+			                           <form id="edit_video_preview_upload_form" action="actions/videos/preview_upload.php" enctype="multipart/form-data" method="post" target="preview_upload_iframe">
+				                         <label class="cabinet" style="float:left;">
+				                           <span><img src="images/icons/upload.png" id="edit_video_preview_upload_button_img"></span>
+				                           <span id="edit_video_preview_upload_button_text">Browse...</span>
+				                           <input type="hidden" name="edit_video_preview_name_uploaded" id="edit_video_preview_name_uploaded" value="">
+				                           <input type="file" name="edit_video_preview_name" id="edit_video_preview_name" class="file" size="1" onchange="SubmitPreviewUploadForm();">
+				                         </label>
+				                         <iframe style="display:none; width:0px; height:0px;" src="about:blank" id="preview_upload_iframe" name="preview_upload_iframe"></iframe>
+			                           </form>
+			                         </td>
+			                         <td align="right" width="26">
+			                           <div class="option_button" id="save_uploaded_preview" style="display:none;"><a href="javascript:void(0);" onclick="SaveVideoUploadedPreview()" rel="Save the uploaded video.<br><b>Warning:</b> you won't be able to restore the old video." id="save_uploaded_preview_link"><img src="images/icons/save.png" id="save_uploaded_preview_icon"></a></div>
+			                           <div class="option_button disabled" id="save_uploaded_preview_disabled" style="cursor:pointer;"><img src="images/icons/save.png"></div>
+			                         </td>
+			                       </tr>
+			                       <tr bgcolor="#C9C9C9" id="edit_preview_method_download" style="display:none;">
+			                         <td align="right"><b>Download Image:</b></td>
+			                         <td>
+			                           <input type="text" id="edit_video_preview_name_downloaded" name="edit_video_preview_name_downloaded" style="width:150px; float:left; margin-top:1px; margin-right:4px;" onkeyup="CheckEnableDownloadButton(this.value,'preview');">
+			                           <div class="option_button" id="edit_downloaded_preview_button" style="display:none;"><a href="javascript:void(0);" onclick="DownloadPreview();" rel="Download this Preview Image."><img src="images/icons/download.png" id="edit_download_preview_icon"></a></div>
+			                           <div class="option_button disabled" id="edit_downloaded_preview_button_disabled" style="cursor:pointer;"><img src="images/icons/download.png"></div>
+			                         </td>
+			                         <td align="right" width="26">
+			                           <div class="option_button" id="save_downloaded_preview" style="display:none;"><a href="javascript:void(0);" onclick="SaveDownloadedPreview();" rel="Save the downloaded Preview Image.<br><b>Warning:</b> you won't be able to restore the old video." id="save_downloaded_preview_link"><img src="images/icons/save.png" id="save_downloaded_preview_icon"></a></div>
+			                           <div class="option_button disabled" id="save_downloaded_preview_disabled" style="cursor:pointer;"><img src="images/icons/save.png"></div>
+			                         </td>
+			                       </tr>
+			                       <tr bgcolor="#C9C9C9" id="edit_preview_method_hotlink" style="display:none;">
+			                         <td align="right"><b>Hotlink Image:</b></td>
+			                         <td>
+			                           <input type="text" id="edit_video_preview_name_hotlink" name="edit_video_preview_name_hotlink" style="width:150px; float:left; margin-top:1px; margin-right:4px;" onkeyup="CheckEnableSaveButton(this.value,'preview');">
+			                         </td>
+			                         <td align="right" width="26">
+			                           <div class="option_button" id="save_hotlinked_preview" style="display:none;"><a href="javascript:void(0);" onclick="SavePreviewHotlinked();" rel="Save the preview image url.<br><b>Warning:</b> you won't be able to restore the old image." id="save_hotlinked_preview_link"><img src="images/icons/save.png" id="save_hotlinked_preview_icon"></a></div>
+			                           <div class="option_button disabled" id="save_hotlinked_preview_disabled" style="cursor:pointer;"><img src="images/icons/save.png"></div>
+			                         </td>
+			                       </tr>
+			                       <tr bgcolor="#C9C9C9" id="edit_preview_method_capture" style="display:none;">
+			                         <td align="right"><b>Frame Capture:</b></td>
+			                         <td>
+			                           <div class="left">
+			                             <input type="hidden" id="edit_video_preview_name_captured" name="edit_video_preview_name_captured">
+			                             <div class="option_button" id="edit_captured_preview_button" style="display:none;"><a href="javascript:void(0);" rel="<b>No Preview Image</b>" id="edit_captured_preview_link"><img src="images/icons/thumb.png" id="edit_captured_preview_icon"></a></div>
+			                             <div class="option_button disabled" id="edit_captured_preview_button_disabled" style="cursor:pointer;"><a href="javascript:void(0);" rel="<b>No Preview Image</b><br>Use the Frame Selector to capture a frame from the video<br>or grab a random one using the 'Get Random Frame' Option."><img src="images/icons/thumb.png"></div>
+			                           </div>
+			                           
+			                           <div class="right">
+			                             <div class="option_button" id="capture_video_frame"><a href="javascript:void(0);" onclick="OpenFrameSelector();" rel="<b>Open Video Frame Selector</b><br>To manually select a frame from the video as Preview Image.<br>Might take 1 min or more<br>depending on the video length." id="capture_video_frame_link"><img src="images/icons/video_frame.png" id="capture_video_frame_icon"></a></div>
+			                             <div class="option_button" id="capture_video_frame_disabled" style="display:none;"><a href="javascript:void(0);" onclick="OpenFrameEditor();"><img src="images/icons/video_frame.png"></a></div>
+			                             
+			                             <div class="option_button" id="random_video_frame"><a href="javascript:void(0);" onclick="GetRandomVideoFrame();" rel="<b>Get a Random frame from the video.</b><br>It might take 1 min or more the first time<br>depending on the video length." id="random_video_frame_link"><img src="images/icons/video_frame_auto.png" id="random_video_frame_icon"></a></div>
+			                             <div class="option_button" id="random_video_frame_disabled" style="display:none;"><a href="javascript:void(0);" onclick="OpenFrameEditor();"><img src="images/icons/video_frame_auto.png"></a></div>
+			                           </div>
+			                           
+			                         </td>
+			                         <td align="right" width="26">
+			                           <div class="option_button" id="save_captured_preview" style="display:none;"><a href="javascript:void(0);" onclick="SaveCapturedPreview();" rel="Save the captured preview.<br><b>Warning:</b> you won't be able to restore the old video." id="save_captured_preview_link"><img src="images/icons/save.png" id="save_captured_preview_icon"></a></div>
+			                           <div class="option_button disabled" id="save_captured_preview_disabled" style="cursor:pointer;"><img src="images/icons/save.png"></div>
+			                         </td>
+			                       </tr>
+			                     </table>
+			                     
+			                     <br class="br">
+			                     {* THUMBNAILS *}
+			                     <table cellpadding="4" cellspacing="1" style="border:1px solid #AAAAAA;" bgcolor="#EEEEEE" width="100%">
+			                       <tr bgcolor="#D1D1D1" id="edit_video_thumbs_exists_row">
+			                         <td align="right" width="120"><b class="mandatory">*</b> <b>Thumbnails:</b></td>
+			                         <td>
+			                           <div class="option_button" style="float:left; padding-top:3px;"><a href="javascript:void(0);" rel="<b>No Thumbnails.</b><br>Edit to Add." id="edit_thumbs_link"><img src="images/icons/thumb.png"></a></div>
+			                         </td>
+			                         <td align="right" width="26">
+			                           <div class="option_button"><a href="javascript:void(0);" id="edit_thumbs_info" rel="" class="disabled"><img src="images/icons/info.png"></a></div>
+			                         </td>
+			                         <td align="right" width="26">
+			                           <div class="option_button"><a href="javascript:void(0);" onclick="ShowEditVideoThumbsOptions();" id="edit_edit_thumbs" rel="<b>Edit the Video Thumbnails</b><br>(upload, download, hotlink, frame capture)."><img src="images/icons/pencil.png" id="edit_edit_thumbs_icon"></a></div>
+			                         </td>
+			                       </tr>
+			                       <tr bgcolor="#D1D1D1" id="edit_video_thumbs_editing_row" style="display:none;">
+			                         <td align="right" width="120"><b class="mandatory">*</b> <b>Thumbnails:</b></td>
+			                         <td>
+			                           <select onchange="SwitchEditThumbsMethod(this.value);" id="edit_video_thumbs_method_select">
+			                             <option value="0"> -- Select Method --</option>
+			                             <option value="1">Upload Images</option>
+			                             <option value="2">Download & Host Images</option>
+			                             <option value="3">Hotlink Images</option>
+			                             <option value="4">Frames Capture</option>
+			                           </select>
+			                           <a href="javascript:void(0);" rel="<b>Edit Thumbnails Methods:</b><br><br><u>Upload</u>: You will be able to select several images from your PC, and upload them to the server.<br>Allowed formats are JPG, PNG and GIF.<br><br><U>Download</u>: You will be able to download an image from any url.<br>Allowed formats are the same as for the Upload method.<br>Make sure your server has allow_url_fopen set to 'On'.<br><br><u>Hotlink</u>: You will be able to link directly to the image hosted in a 3rd party's server.<br>This will work only if the file is not protected against hotlink.<br>Allowed formats: JPG, GIF and PNG.<br><br><u>Frame Capture</u>: You will have the chance to select a specific frame<br>of the video (if exists) or grab a random one automaticaly."><img src="images/icons/help.png"></a>
+			                         </td>
+			                         <td align="right" width="26">
+			                           <div class="option_button"><a href="javascript:void(0);" onclick="CancelEditVideoThumbsOptions();" id="edit_cancel_edition" rel="Cancel Thumbnails Edition"><img src="images/icons/close2.png" onmouseover="this.src='images/icons/close2_on.png';" onmouseout="this.src='images/icons/close2.png';"></a></div>
+			                         </td>
+			                       </tr>
+			                       <tr bgcolor="#C9C9C9" id="edit_thumbs_method_upload" style="display:none;">
+			                         <td align="right" valign="top" style="margin-top:5px;">
+			                           <b>Upload Images:</b>
+			                           <br><font size="1">Settings Amount: {$aSettings.thumbs_amount}</font>
+			                         </td>
+			                         <td>
+			                           <form id="edit_video_thumbs_upload_form" action="actions/videos/thumbs_upload.php" enctype="multipart/form-data" method="post" target="thumbs_upload_iframe">
+				                         <label class="cabinet" style="float:left;">
+				                           <span><img src="images/icons/upload.png" id="edit_video_thumbs_upload_button_img"></span>
+				                           <span id="edit_video_thumbs_upload_button_text">Browse...</span>
+				                           <input type="hidden" name="edit_video_uploaded_thumb" id="edit_video_uploaded_thumb" value="">
+				                           <input type="file" name="edit_video_uploaded_thumb_name" id="edit_video_uploaded_thumb_name" class="file" size="1" onchange="SubmitThumbsUploadForm();">
+				                         </label>
+				                         <br class="br">
+				                         <br class="br">
+				                         <div id="edit_video_uploaded_thumbs_preview" style="width:200px"></div>
+				                         <iframe style="display:none; width:0px; height:0px;" src="about:blank" id="thumbs_upload_iframe" name="thumbs_upload_iframe"></iframe>
+			                           </form>
+			                         </td>
+			                         <td align="right" valign="top" width="26">
+			                           <div class="option_button" id="save_uploaded_thumbs" style="display:none;"><a href="javascript:void(0);" onclick="SaveVideoUploadedThumbs()" rel="Save the uploaded thumbnails.<br><b>Warning:</b> you won't be able to restore the old ones." id="save_uploaded_thumbs_link"><img src="images/icons/save.png" id="save_uploaded_thumbs_icon"></a></div>
+			                           <div class="option_button disabled" id="save_uploaded_thumbs_disabled" style="cursor:pointer;"><img src="images/icons/save.png"></div>
+			                         </td>
+			                       </tr>
+			                       <tr bgcolor="#C9C9C9" id="edit_thumbs_method_download" style="display:none;">
+			                         <td align="right">
+			                           <b>Download Images:</b>
+			                           <br><font size="1">Settings Amount: {$aSettings.thumbs_amount}</font>
+			                         </td>
+			                         <td>
+			                           <input type="text" id="edit_video_thumb_name_downloaded" name="edit_video_thumb_name_downloaded" style="width:150px; float:left; margin-top:1px; margin-right:4px;" onkeyup="CheckEnableDownloadButton(this.value,'thumb');">
+			                           <div class="option_button" id="edit_downloaded_thumb_button" style="display:none;"><a href="javascript:void(0);" onclick="DownloadThumb();" rel="Download this Image."><img src="images/icons/download.png" id="edit_downloaded_thumb_icon"></a></div>
+			                           <div class="option_button disabled" id="edit_downloaded_thumb_button_disabled" style="cursor:pointer;"><img src="images/icons/download.png"></div>
+			                           <br class="br">
+			                           <div id="edit_video_downloaded_thumbs_preview" style="width:200px"></div>
+			                         </td>
+			                         <td align="right" valign="top" width="26">
+			                           <div class="option_button" id="save_downloaded_thumbs" style="display:none;"><a href="javascript:void(0);" onclick="SaveDownloadedThumbs();" rel="Save the downloaded thumbnails</b><br><b>Warning:</b> you won't be able to restore the old ones." id="save_downloaded_thumbs_link"><img src="images/icons/save.png" id="save_downloaded_thumbs_icon"></a></div>
+			                           <div class="option_button disabled" id="save_downloaded_thumbs_disabled" style="cursor:pointer;"><img src="images/icons/save.png"></div>
+			                         </td>
+			                       </tr>
+			                       <tr bgcolor="#C9C9C9" id="edit_thumbs_method_hotlink" style="display:none;">
+			                         <td align="right">
+			                           <b>Hotlink Images:</b>
+			                           <br><font size="1">Settings Amount: {$aSettings.thumbs_amount}</font>
+			                         </td>
+			                         <td>
+			                           <input type="text" id="edit_video_thumb_name_hotlink" name="edit_video_thumb_name_hotlink" style="width:150px; float:left; margin-top:1px; margin-right:4px;" onkeyup="CheckEnableHotlinkButton(this.value,'thumb');">
+			                           <div class="option_button" id="edit_hotlinked_thumb_button" style="display:none;"><a href="javascript:void(0);" onclick="HotlinkThumb();" rel="Hotlink this Image."><img src="images/icons/remote.png" id="edit_hotlinked_thumb_icon"></a></div>
+			                           <div class="option_button disabled" id="edit_hotlinked_thumb_button_disabled" style="cursor:pointer;"><img src="images/icons/remote.png"></div>
+			                           <br class="br">
+			                           <div id="edit_video_hotlinked_thumbs_preview" style="width:200px"></div>
+			                         </td>
+			                         <td align="right" valign="top" width="26">
+			                           <div class="option_button" id="save_hotlinked_thumbs" style="display:none;"><a href="javascript:void(0);" onclick="SaveThumbsHotlinked();" rel="Save the images urls.<br><b>Warning:</b> you won't be able to restore the old image." id="save_hotlinked_thumbs_link"><img src="images/icons/save.png" id="save_hotlinked_thumbs_icon"></a></div>
+			                           <div class="option_button disabled" id="save_hotlinked_thumbs_disabled" style="cursor:pointer;"><img src="images/icons/save.png"></div>
+			                         </td>
+			                       </tr>
+			                       <tr bgcolor="#C9C9C9" id="edit_thumbs_method_capture" style="display:none;">
+			                         <td align="right" valign="top">
+			                           <b>Frames Capture:</b>
+			                           <br><font size="1">Settings Amount: {$aSettings.thumbs_amount}</font>
+			                         </td>
+			                         <td valign="top">
+			                           <div class="left">
+			                             <div id="edit_video_captured_thumbs_preview" style="width:140px;"></div>
+			                           </div>
+			                           <div class="right">
+			                             <div class="option_button" id="capture_video_frame_thumbs"><a href="javascript:void(0);" onclick="OpenFrameSelector('thumbs');" rel="<b>Open Video Frame Selector</b><br>To manually select frames from the video as Thumbnails.<br>Might take 1 min or more<br>depending on the video length." id="capture_video_frame_thumbs_link"><img src="images/icons/video_frame.png" id="capture_video_frame_thumbs_icon"></a></div>
+			                             <div class="option_button" id="capture_video_frame_thumbs_disabled" style="display:none;"><a href="javascript:void(0);" onclick="OpenFrameEditor();"><img src="images/icons/video_frame.png"></a></div>
+			                           
+			                             <div class="option_button" id="random_video_frame_thumbs"><a href="javascript:void(0);" onclick="GetRandomFramesForThumbs();" rel="<b>Get frames secuence from the video.</b><br>It might take 1 min or more the first time<br>depending on the video length." id="random_video_frame_thumbs_link"><img src="images/icons/video_frame_auto.png" id="random_video_frame_thumbs_icon"></a></div>
+			                             <div class="option_button" id="random_video_frame_thumbs_disabled" style="display:none;"><a href="javascript:void(0);" onclick="OpenFrameEditor();"><img src="images/icons/video_frame_auto.png"></a></div>
+			                           </div>
+			                         </td>
+			                         <td align="right" valign="top" width="26">
+			                           <div class="option_button" id="save_captured_thumbs" style="display:none;"><a href="javascript:void(0);" onclick="SaveCapturedThumbs();" rel="Save the captured thumbs.<br><b>Warning:</b> you won't be able to restore the old video." id="save_captured_thumbs_link"><img src="images/icons/save.png" id="save_captured_thumbs_icon"></a></div>
+			                           <div class="option_button disabled" id="save_captured_thumbs_disabled" style="cursor:pointer;"><img src="images/icons/save.png"></div>
+			                         </td>
+			                       </tr>
+			                     </table>
+			                     <br>
+			                     
+			                     <img src="images/icons/info.png"> If you Upload/Download/Hotlink MP4 file, you would be editing BOTH the web and mobile versions related video files.
+			                     If you do it with FLV or other regular formats, you will be editing the web version related video files only. M4V will edit only mobile.
+			                     
+			                 </div>
+	                   </div>
+	                   </fieldset>
+	                   
+	                   
+	                 </td>
+	                 <td valign="top">
+	                 </td>
+	               </tr>
+	             </table> 
+	            
+	           </div>
+			   </td>
+	           <td background="images/modalbox/ir.png" width="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/ibl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/ib.png" height="10"></td>
+	           <td background="images/modalbox/ibr.png" width="10" height="10"></td>
+	         </tr>
+	       </table>         
+         </td>
+         <td background="images/modalbox/or.png" width="8"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/obl.png" width="8" height="11"></td>
+         <td background="images/modalbox/ob.png" height="11"></td>
+         <td background="images/modalbox/obr.png" width="8" height="1"></td>
+       </tr>
+     </table>
+  </td></tr>
+</table>
+</div>
+
+
+<div id="frame_selector_layer" style="display:none; background:transparent;" class="floating_layer">
+<table cellpadding="0" cellspacing="0" align="center" width="100%" height="100%">
+  <tr><td align="center">
+  
+     <table cellpadding="0" cellspacing="0" class="draggable">
+       <tr class="draggable_handle" style="cursor:pointer;">
+         <td background="images/modalbox/otl.png" width="8" height="25"></td>
+         <td background="images/modalbox/ot.png" height="25" valign="bottom">
+           <span class="modalbox_title">Frame Selector</span>
+           <span class="modalbox_buttons">
+             &nbsp;
+             <a href="javascript:void(0);" onclick="CloseLayer('frame_selector_layer');"><img src="images/icons/close_big.png" onmouseover="this.src='images/icons/close_big_on.png';" onmouseout="this.src='images/icons/close_big.png';"></a>
+           </span>
+         </td>
+         <td background="images/modalbox/otr.png" width="8" height="25"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/ol.png" width="8"></td>
+         <td>
+           <table cellpadding="0" cellspacing="0">
+	         <tr>
+	           <td background="images/modalbox/itl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/it.png" height="10"></td>
+	           <td background="images/modalbox/itr.png" width="10" height="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/il.png" width="10"></td>
+	           <td bgcolor="#C9CDD0" width="800">
+	      
+	            <div style="float:left;">
+	             <fieldset class="fieldset3" style="width:480px; padding:10px;">
+	               <div style="padding:1px; border:1px solid #666666; width:480px; height:360px;">
+	                 <div id="frame_selector_loading_bg" style="background:#000000; width:480px; height:360px; background-image:url(images/loading2.gif); background-position:center center; background-repeat:no-repeat;"><img src="" border="0" id="frame_selector_preview_image" width="480" height="360"></div>
+	                 <input type="hidden" id="frame_selector_original_image" value="">
+	                 <input type="hidden" id="frame_selector_working_image" value="">
+	                 <input type="hidden" id="frame_selector_temp_image" value="">
+	               </div>
+	             </fieldset><br class="br">
+	             
+	             <fieldset class="fieldset3" style="width:484px; padding:10px; text-align:center;">
+	               <div class="left">
+	                 <div id="frame_selector_slider" class="left" style="width:400px; background:url(images/sliderbg.gif); height:2px; border:1px solid #EEEEEE"><div id="frame_selector_pointer" class="slider_pointer"></div></div>
+	                 <br style="clear:both;">
+	                 Current Frame: <span id="current_frame">1</span> of <span id="total_frames">0</span>&nbsp;|&nbsp;Current Time: <span id="current_time">00:00</span> of <span id="total_time">00:00</span>
+	               </div>
+	               <div id="frame_selector_slider_thumb_preview" class="right" style="height:50px; border:1px solid #999999;"></div>
+	               <br class="br">
+				   
+	             </fieldset>
+	           </div>
+	           
+	           <div style="float:left;">
+	             <br>
+	             <fieldset class="fieldset3" style="width:280px;">
+	             
+	             <input type="hidden" id="cropped_x1" value="">
+				 <input type="hidden" id="cropped_y1" value="">
+				 <input type="hidden" id="cropped_x2" value="">
+				 <input type="hidden" id="cropped_y2" value="">
+				 <input type="hidden" id="cropped_width" value="">
+				 <input type="hidden" id="cropped_height" value="">
+				 <input type="hidden" id="real_width" value="">
+				 <input type="hidden" id="real_height" value="">
+		  
+	             <legend class="legend3"><b>Crop Image</b></legend>
+	               <div style="padding:10px;">
+	                 <input type="checkbox" id="frame_selector_crop_image" onclick="LoadCropper(this.checked,{$aSettings.player_width},{$aSettings.player_height});" align="absmiddle" style="margin:5px; float:left;">
+	                 
+	                 <div id="frame_editor_crop_button" style="display:none;"><a class="small_button" href="javascript:void(0);" onclick="CropThumb('preview')"><span> <img src="images/icons/crop.png"> Crop Image</span></a></div>
+	                 <div id="frame_editor_crop_button_disabled" class="disabled"><a class="small_button" href="javascript:void(0);"><span> <img src="images/icons/crop.png"> Crop Image</span></a></div>
+	                 <br>
+	               </div>
+	             </fieldset>
+	             <br><br class="br">
+	             
+	             <fieldset class="fieldset3" style="width:280px;">
+	             <legend class="legend3"><b>Adjustments</b></legend>
+	               <div style="padding:10px;">
+	               
+	                  <table cellpadding="3" class="text">
+					    <tr>
+					      <td><a href="javascript:void(0);" rel="Image Brightness"><img src="images/icons/brightness.gif" border="0" align="absmiddle"></a></td>
+					      <td align="center"><a href="javascript:void(0);" onclick="setSliderValue(brightness_slider,parseInt($('brightness_value').innerHTML)-10);" title="Less Brightness"><img src="images/icons/less.gif" border="0" align="absmiddle"></a></td>
+					  	  <td><div id="frame_selector_brightness_slider" style="width:111px; background:url(images/sliderbg_measured.gif); height:5px;"><div id="frame_selector_brightness_pointer" class="slider_pointer"></div></div></td>
+					  	  <td align="center"><a href="javascript:void(0);" onclick="setSliderValue(brightness_slider,parseInt($('brightness_value').innerHTML)+10);" title="More Brightness"><img src="images/icons/more.gif" border="0" align="absmiddle"></a></td>
+					  	  <td align="right" id="brightness_value" width="25">0</td>
+					  	</tr>
+					  	<tr>
+					      <td><a href="javascript:void(0);" rel="Image Contrast"><img src="images/icons/contrast.gif" border="0" align="absmiddle"></a></td>
+					      <td align="center"><a href="javascript:void(0);" onclick="setSliderValue(contrast_slider,parseInt($('contrast_value').innerHTML)-10);" title="Less Contrast"><img src="images/icons/less.gif" border="0" align="absmiddle"></a></td>
+					  	  <td><div id="frame_selector_contrast_slider" style="width:111px; background:url(images/sliderbg_measured.gif); height:5px;"><div id="frame_selector_contrast_pointer" class="slider_pointer"></div></div></td>
+					  	  <td align="center"><a href="javascript:void(0);" onclick="setSliderValue(contrast_slider,parseInt($('contrast_value').innerHTML)+10);" title="More Contrast"><img src="images/icons/more.gif" border="0" align="absmiddle"></a></td>
+					  	  <td align="right" id="contrast_value">0</td>
+					  	</tr>
+					  	<tr>
+					  	  <td><a href="javascript:void(0);" rel="Image Sharpness"><img src="images/icons/sharpness.gif" border="0" align="absmiddle"></a></td>
+					      <td align="center"><a href="javascript:void(0);" onclick="setSliderValue(sharpness_slider,parseInt($('sharpness_value').innerHTML)-10);" title="Less Sharpness"><img src="images/icons/less.gif" border="0" align="absmiddle"></a></td>
+					  	  <td><div id="frame_selector_sharpness_slider" style="width:111px; background:url(images/sliderbg_measured.gif); height:5px;"><div id="frame_selector_sharpness_pointer" class="slider_pointer"></div></div></td>
+					  	  <td align="center"><a href="javascript:void(0);" onclick="setSliderValue(sharpness_slider,parseInt($('sharpness_value').innerHTML)+10);" title="More Sharpness"><img src="images/icons/more.gif" border="0" align="absmiddle"></a></td>
+					  	  <td align="right" id="sharpness_value">0</td>
+					  	</tr>
+					 </table>
+				 
+	                 <div id="frame_editor_adjustments_button" style="display:none;"><a class="small_button" href="javascript:void(0);" onclick="ApplyAdjustments();"><span><img src="images/icons/assign.png"> Apply</span></a></div>
+	                 <div id="frame_editor_adjustments_button_disabled" class="disabled"><a class="small_button" href="javascript:void(0);"><span><img src="images/icons/assign.png"> Apply</span></a></div>
+	                 
+	                 <br>
+	               </div>
+	             </fieldset><br class="br">
+	             
+	             <div style="width:270px; margin-left:20px;">
+	               <div id="frame_editor_add_thumb_div">
+	                 <div id="frame_editor_add_thumb_button" style="display:none;"><a class="small_button" href="javascript:void(0);" onclick="FrameSelectorAddThumb();" rel="Create a thumbnail from this frame"><span><img src="images/icons/thumb_add.png" id="frame_editor_add_thumb_icon"> Create Thumb</span></a></div>
+	                 <div id="frame_editor_add_thumb_button_disabled" class="disabled"><a class="small_button" href="javascript:void(0);"><span><img src="images/icons/thumb_add.png"> Create Thumb</span></a></div>
+	               </div>
+	               <div id="frame_editor_save_preview_div">
+	                 <div id="frame_editor_save_button" style="display:none;"><a class="small_button" href="javascript:void(0);" onclick="SaveEditedPreview();"><span><img src="images/icons/success.png" id="frame_editor_save_icon"> Save and Close</span></a></div>
+	                 <div id="frame_editor_save_button_disabled" class="disabled"><a class="small_button" href="javascript:void(0);"><span><img src="images/icons/success.png"> Save and Close</span></a></div>
+	               </div>
+	               <div style="float:left;">&nbsp;&nbsp;</div>
+	               <div id="frame_editor_restore_button" style="display:none;"><a class="small_button" href="javascript:void(0);" onclick="RestoreOriginal();" rel="Restore Original Image"><span> <img src="images/icons/undo.png"> Restore Original</span></a></div>
+                   <div id="frame_editor_restore_button_disabled" class="disabled"><a class="small_button" href="javascript:void(0);" rel="Restore Original Image"><span> <img src="images/icons/undo.png"> Restore Original</span></a></div>
+                 </div>
+                 <br><br>
+                 
+                 <div id="frame_editor_captured_thumbs_instructions" class="center"><b>Selected Thumbnails</b></div>
+                 <div id="frame_editor_captured_thumbs_preview" style="margin:5px; border:1px solid #999999; padding:5px; width:260px; height:100px; overflow-y:auto;"></div>
+                 <div id="frame_editor_captured_thumbs_save_div" style="padding-left:80px;">
+                   <div id="frame_editor_captured_thumbs_save_button" style="display:none;"><a class="small_button" href="javascript:void(0);" onclick="SaveCapturedThumbsFromSelector();"><span><img src="images/icons/success.png" id="frame_editor_captured_thumbs_save_icon"> Save and Close</span></a></div>
+	               <div id="frame_editor_captured_thumbs_save_button_disabled" class="disabled"><a class="small_button" href="javascript:void(0);"><span><img src="images/icons/success.png"> Save and Close</span></a></div>
+                 </div>
+	             
+	           </div>
+	           
+	           
+	           </td>
+	           <td background="images/modalbox/ir.png" width="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/ibl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/ib.png" height="10"></td>
+	           <td background="images/modalbox/ibr.png" width="10" height="10"></td>
+	         </tr>
+	       </table>         
+         </td>
+         <td background="images/modalbox/or.png" width="8"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/obl.png" width="8" height="11"></td>
+         <td background="images/modalbox/ob.png" height="11"></td>
+         <td background="images/modalbox/obr.png" width="8" height="1"></td>
+       </tr>
+     </table>
+  </td></tr>
+</table>
+</div>
+
+<div id="mass_delete_layer" style="display:none;" class="floating_layer">
+<table cellpadding="0" cellspacing="0" align="center" width="100%" height="100%">
+  <tr><td align="center">
+  
+     <table cellpadding="0" cellspacing="0" class="draggable">
+       <tr class="draggable_handle" style="cursor:pointer;">
+         <td background="images/modalbox/otl.png" width="8" height="25"></td>
+         <td background="images/modalbox/ot.png" height="25" valign="bottom">
+           <span class="modalbox_title">Mass Delete Videos</span>
+           <span class="modalbox_buttons">
+             &nbsp;
+             {* <a href="javascript:void(0);" rel="Mass Delete Instructions"><img src="images/icons/help_big.png" onmouseover="this.src='images/icons/help_big_on.png';" onmouseout="this.src='images/icons/help_big.png';"></a> *}
+             <a href="javascript:void(0);" onclick="CloseLayer('mass_delete_layer');"><img src="images/icons/close_big.png" onmouseover="this.src='images/icons/close_big_on.png';" onmouseout="this.src='images/icons/close_big.png';"></a>
+
+           </span>
+         </td>
+         <td background="images/modalbox/otr.png" width="8" height="25"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/ol.png" width="8"></td>
+         <td>
+           <table cellpadding="0" cellspacing="0">
+	         <tr>
+	           <td background="images/modalbox/itl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/it.png" height="10"></td>
+	           <td background="images/modalbox/itr.png" width="10" height="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/il.png" width="10"></td>
+	           <td bgcolor="#C9CDD0" width="350" class="modal_text">
+	             {* <div class="modal_success" id="mass_delete_success"><span>All videos of the source were successfuly deleted.</span></div> *}
+	             <div class="modal_error" id="mass_delete_error" style="width:106%; display:none;"><span id="mass_delete_error_msg"></span></div>
+	             
+			     This funtion will delete all videos of the same group, depending on your choice .<br>Select the option you want and click "Delete".<br><br>
+			     
+			     <fieldset class="fieldset3" style="padding:5px; width:330px;">
+			       <table cellpadding="2" cellspacing="2">
+			       <tr>
+			         <td>
+				       <span style="float:left;">
+					     <b>Delete all videos of:</b>
+					     <select id="md_source">
+						   <option value=""> - Select Source - </option>
+						   <option value="-1">No Source</option>
+						 {foreach from=$array_sources item=source}
+						   <option value="{$source.id}">{$source.name}</option>
+						 {/foreach}
+						 </select>
+					   </span>
+					 </td>
+				     <td>
+				       <a class="small_button" href="javascript:void(0);" onclick="MassDelete($('md_source').value);"><span class="red_button"> <img src="images/icons/delete-tiny.png"> Delete</span></a>
+				     </td>
+				     <td>
+				       <img src="images/loading.gif" id="md_loading" style="display:none; float:left;">
+				     </td>
+				   </tr>
+				   </table>
+			       
+			     </fieldset>
+			     
+			     <br>
+			     
+			     <fieldset class="fieldset3" style="padding:5px; width:330px;">
+			       <table cellpadding="2" cellspacing="2">
+			       <tr>
+			         <td>
+				       <span style="float:left;">
+					     <b>or Delete all videos marked as broken:</b>
+					   </span>
+					 </td>
+				     <td>
+				       	<a class="small_button" href="javascript:void(0);" onclick="MassDelete('broken');"><span class="red_button"> <img src="images/icons/delete-tiny.png"> Delete</span></a>
+				     </td>
+				     <td>
+				       <img src="images/loading.gif" id="md_loading_broken" style="display:none; float:left;">
+				       <a href="javascript:void(0);" rel="<b>Be carefull using this feature.</b><br>The Check Video feature can't recognize FLVs from some sources.<br>You might delete working videos that were wrongly marked as broken."><img src="images/icons/help.png"></a>
+				     </td>
+				   </tr>
+				   </table>
+			       
+			     </fieldset>
+	           </td>
+	           <td background="images/modalbox/ir.png" width="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/ibl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/ib.png" height="10"></td>
+	           <td background="images/modalbox/ibr.png" width="10" height="10"></td>
+	         </tr>
+	       </table>         
+         </td>
+         <td background="images/modalbox/or.png" width="8"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/obl.png" width="8" height="11"></td>
+         <td background="images/modalbox/ob.png" height="11"></td>
+         <td background="images/modalbox/obr.png" width="8" height="1"></td>
+       </tr>
+     </table>
+  </td></tr>
+</table>
+</div>
+
+{include file="rtmp_servers_container.html"}
+
+<div id="comments_layer" style="display:none;" class="floating_layer">
+<table cellpadding="0" cellspacing="0" align="center" width="100%" height="100%">
+  <tr><td align="center">
+  
+     <table cellpadding="0" cellspacing="0" class="draggable">
+       <tr class="draggable_handle" style="cursor:pointer;">
+         <td background="images/modalbox/otl.png" width="8" height="25"></td>
+         <td background="images/modalbox/ot.png" height="25" valign="bottom">
+           <span class="modalbox_title">Manage Video Comments</span>
+           <span class="modalbox_buttons">
+             &nbsp;
+             <a href="javascript:void(0);" onclick="CloseLayer('comments_layer');"><img src="images/icons/close_big.png" onmouseover="this.src='images/icons/close_big_on.png';" onmouseout="this.src='images/icons/close_big.png';"></a>
+
+           </span>
+         </td>
+         <td background="images/modalbox/otr.png" width="8" height="25"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/ol.png" width="8"></td>
+         <td>
+           <table cellpadding="0" cellspacing="0">
+	         <tr>
+	           <td background="images/modalbox/itl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/it.png" height="10"></td>
+	           <td background="images/modalbox/itr.png" width="10" height="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/il.png" width="10"></td>
+	           <td bgcolor="#C9CDD0" width="750" class="modal_text">
+	             <div id="comments_contents" style="max-height:450px; overflow-y:auto;"></div>
+	           </td>
+	           <td background="images/modalbox/ir.png" width="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/ibl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/ib.png" height="10"></td>
+	           <td background="images/modalbox/ibr.png" width="10" height="10"></td>
+	         </tr>
+	       </table>         
+         </td>
+         <td background="images/modalbox/or.png" width="8"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/obl.png" width="8" height="11"></td>
+         <td background="images/modalbox/ob.png" height="11"></td>
+         <td background="images/modalbox/obr.png" width="8" height="1"></td>
+       </tr>
+     </table>
+  </td></tr>
+</table>
+</div>
+{* 
+<div id="rss_feeds_layer" style="display:none;" class="floating_layer">
+<table cellpadding="0" cellspacing="0" align="center" width="100%" height="100%">
+  <tr><td align="center">
+  
+     <table cellpadding="0" cellspacing="0" class="draggable">
+       <tr class="draggable_handle" style="cursor:pointer;">
+         <td background="images/modalbox/otl.png" width="8" height="25"></td>
+         <td background="images/modalbox/ot.png" height="25" valign="bottom">
+           <span class="modalbox_title">Manage RSS Feeds</span>
+           <span class="modalbox_buttons">
+             &nbsp;
+             <a href="javascript:void(0);" onclick="CloseLayer('rss_feeds_layer');"><img src="images/icons/close_big.png" onmouseover="this.src='images/icons/close_big_on.png';" onmouseout="this.src='images/icons/close_big.png';"></a>
+           </span>
+         </td>
+         <td background="images/modalbox/otr.png" width="8" height="25"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/ol.png" width="8"></td>
+         <td>
+           <table cellpadding="0" cellspacing="0">
+	         <tr>
+	           <td background="images/modalbox/itl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/it.png" height="10"></td>
+	           <td background="images/modalbox/itr.png" width="10" height="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/il.png" width="10"></td>
+	           <td bgcolor="#C9CDD0" width="750" class="modal_text">
+	             <div id="rss_feeds_contents" style="max-height:450px; overflow-y:auto;"></div>
+	           </td>
+	           <td background="images/modalbox/ir.png" width="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/ibl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/ib.png" height="10"></td>
+	           <td background="images/modalbox/ibr.png" width="10" height="10"></td>
+	         </tr>
+	       </table>         
+         </td>
+         <td background="images/modalbox/or.png" width="8"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/obl.png" width="8" height="11"></td>
+         <td background="images/modalbox/ob.png" height="11"></td>
+         <td background="images/modalbox/obr.png" width="8" height="1"></td>
+       </tr>
+     </table>
+  </td></tr>
+</table>
+</div>
+*}
+
+
+<div id="flv_players_layer" style="display:none;" class="floating_layer">
+<table cellpadding="0" cellspacing="0" align="center" width="100%" height="100%">
+  <tr><td align="center">
+  
+     <table cellpadding="0" cellspacing="0" class="draggable">
+       <tr class="draggable_handle" style="cursor:pointer;">
+         <td background="images/modalbox/otl.png" width="8" height="25"></td>
+         <td background="images/modalbox/ot.png" height="25" valign="bottom">
+           <span class="modalbox_title">FLV Players Settings</span>
+           <span class="modalbox_buttons">
+             <a href="javascript:void(0);" rel="FLV Players Settings Instructions"><img src="images/icons/help_big.png" onmouseover="this.src='images/icons/help_big_on.png';" onmouseout="this.src='images/icons/help_big.png';"></a>
+             <a href="javascript:void(0);" onclick="CloseLayer('flv_players_layer');"><img src="images/icons/close_big.png" onmouseover="this.src='images/icons/close_big_on.png';" onmouseout="this.src='images/icons/close_big.png';"></a>
+           </span>
+         </td>
+         <td background="images/modalbox/otr.png" width="8" height="25"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/ol.png" width="8"></td>
+         <td>
+           <table cellpadding="0" cellspacing="0">
+	         <tr>
+	           <td background="images/modalbox/itl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/it.png" height="10"></td>
+	           <td background="images/modalbox/itr.png" width="10" height="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/il.png" width="10"></td>
+	           <td bgcolor="#C9CDD0" width="690" class="modal_text">
+	           
+	           	<table cellpadding="0" cellspacing="0" width="680" align="center"><tr>
+				  <td align="left" width="1"><a class="button" href="javascript:void(0);" onclick="AddPlayer();"><span><img src="images/icons/add-tiny.png"> Add Player</span></a></td>
+				  <td align="center"></td>
+				  <td align="right" width="1"><a class="button" href="javascript:void(0);" onclick="RefreshPlayers();"><span><img src="images/icons/refresh.png"> Refresh</span></a></td>
+				</tr></table>				
+	           	<br style="clear:both;">
+	           	<br>
+
+			     <fieldset class="fieldset3" style="width:700px;">
+			       <div class="bottom" style="padding:10px; max-height:450px; overflow-x:auto;" id="flv_players_contents">
+			         {include file="flv_players.html"}
+				   </div>
+			     </fieldset>
+	           </td>
+	           <td background="images/modalbox/ir.png" width="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/ibl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/ib.png" height="10"></td>
+	           <td background="images/modalbox/ibr.png" width="10" height="10"></td>
+	         </tr>
+	       </table>         
+         </td>
+         <td background="images/modalbox/or.png" width="8"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/obl.png" width="8" height="11"></td>
+         <td background="images/modalbox/ob.png" height="11"></td>
+         <td background="images/modalbox/obr.png" width="8" height="1"></td>
+       </tr>
+     </table>
+  </td></tr>
+</table>
+</div>
+
+
+<div id="smart_recategorize_layer" style="display:none;" class="floating_layer">
+<table cellpadding="0" cellspacing="0" align="center" width="100%" height="100%">
+  <tr><td align="center">
+  
+     <table cellpadding="0" cellspacing="0" class="draggable">
+       <tr class="draggable_handle" style="cursor:pointer;">
+         <td background="images/modalbox/otl.png" width="8" height="25"></td>
+         <td background="images/modalbox/ot.png" height="25" valign="bottom">
+           <span class="modalbox_title">Smart Recategorization</span>
+           <span class="modalbox_buttons">
+             &nbsp;
+             <a href="javascript:void(0);" onclick="alertBox('<b>Help:</b> Smart Recategorize Instructions','icons/help.png',$('instructions_sr').innerHTML,500);" rel="Smart Recategorization Instructions"><img src="images/icons/help_big.png" onmouseover="this.src='images/icons/help_big_on.png';" onmouseout="this.src='images/icons/help_big.png';"></a>
+             <a href="javascript:void(0);" onclick="$('sr_mode').value=0; CloseLayer('smart_recategorize_layer');"><img src="images/icons/close_big.png" onmouseover="this.src='images/icons/close_big_on.png';" onmouseout="this.src='images/icons/close_big.png';"></a>
+           </span>
+         </td>
+         <td background="images/modalbox/otr.png" width="8" height="25"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/ol.png" width="8"></td>
+         <td>
+           <table cellpadding="0" cellspacing="0">
+	         <tr>
+	           <td background="images/modalbox/itl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/it.png" height="10"></td>
+	           <td background="images/modalbox/itr.png" width="10" height="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/il.png" width="10"></td>
+	           <td bgcolor="#C9CDD0" width="460" class="modal_text">
+	             <div class="modal_success" id="smart_recategorize_success" style="width:106%; display:none;"><span id="smart_recategorize_success_msg"></span></div>
+	             <div class="modal_error" id="smart_recategorize_error" style="width:106%; display:none;"><span id="mass_delete_error_msg"></span></div>
+
+	             <div class="hidden" id="instructions_sr"><b>Smart Recategorization</b> will attempt to assign each video, of the chosen group/category or selected videos, to one or more categories using the smart tags previously defined for each category and the title of the videos.<br><br class="br">
+			     If no matches are found, the videos will not be moved, and if any matches are found, the video will be assigned to the new ones, without deleting the old ones (only 'Uncategorized' category is removed, in this case).<br><br>
+			     If you want the videos of the selected group/category to be recategorized within the same group, make sure you have checked the correct option in Settings Module > Advanced Settings > Smart Recategorization.
+			     </div>
+			     
+			     <center>
+			     <fieldset class="fieldset3" style="padding:5px; width:410px;">
+			       <input type="hidden" id="sr_mode" value="0">
+			       <table cellpadding="2" cellspacing="2">
+			       <tr>
+			         <td width="400">
+				       <span style="float:left;" id="sr_videos_from_categ">
+					     <b>Videos from Category:</b>
+					     <select id="sr_categ" name="sr_categ">
+					       <option value="" style="font-weight:bold;">All Categories</option>
+						   <option value="" style="font-weight:bold;" disabled>-----------------------</option>
+						   {foreach from=$array_groups item=categories key=group_id}
+						     <option value="g_{$group_id}" style="font-weight:bold; {if $categories[0].group_status==0}color:#CC0000;{/if}">-- {$categories[0].group_name|upper}</option>
+							 {foreach from=$categories item=category}
+							   <option value="g_{$group_id}_c_{$category.category_id}" {if $categories[0].group_status==0 or $category.status==0}style="color:#CC0000;"{/if}>&nbsp;&nbsp;&nbsp;&nbsp;{$category.category_name}</option>
+							 {/foreach}
+							 <option value="" style="font-weight:bold;" disabled>-----------------------</option>
+						   {/foreach}
+						 </select>
+					   </span>
+					   <span style="float:left; display:none;" id="sr_videos_from_selection">
+					     <b>Videos from Selection: <span id="sr_videos_from_selection_amount"></span></b>
+					   </span>
+					 </td>
+				     <td>
+				       <a class="small_button" href="javascript:void(0);" onclick="SmartRecategorize($('sr_categ').value);"><span> <img src="images/icons/recategorize.png" id="img_sr_button"> Recategorize</span></a>
+				     </td>
+				   </tr>
+				   </table>
+			     </fieldset>
+			     </center>
+	           </td>
+	           <td background="images/modalbox/ir.png" width="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/ibl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/ib.png" height="10"></td>
+	           <td background="images/modalbox/ibr.png" width="10" height="10"></td>
+	         </tr>
+	       </table>         
+         </td>
+         <td background="images/modalbox/or.png" width="8"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/obl.png" width="8" height="11"></td>
+         <td background="images/modalbox/ob.png" height="11"></td>
+         <td background="images/modalbox/obr.png" width="8" height="1"></td>
+       </tr>
+     </table>
+  </td></tr>
+</table>
+</div>
+
+<div id="preview_layer" style="display:none;" class="floating_layer">
+<table cellpadding="0" cellspacing="0" align="center" width="100%" height="100%">
+  <tr><td align="center">
+  
+     <table cellpadding="0" cellspacing="0" class="draggable">
+       <tr class="draggable_handle" style="cursor:pointer;">
+         <td background="images/modalbox/otl.png" width="8" height="25"></td>
+         <td background="images/modalbox/ot.png" height="25" valign="bottom">
+           <span class="modalbox_title">Video Preview</span>
+           <span class="modalbox_buttons">
+             &nbsp;
+             <a href="javascript:void(0);" onclick="CloseLayer('preview_layer'); $('preview_player_code').innerHTML=''; "><img src="images/icons/close_big.png" onmouseover="this.src='images/icons/close_big_on.png';" onmouseout="this.src='images/icons/close_big.png';"></a>
+           </span>
+         </td>
+         <td background="images/modalbox/otr.png" width="8" height="25"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/ol.png" width="8"></td>
+         <td>
+           <table cellpadding="0" cellspacing="0">
+	         <tr>
+	           <td background="images/modalbox/itl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/it.png" height="10"></td>
+	           <td background="images/modalbox/itr.png" width="10" height="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/il.png" width="10"></td>
+	           <td bgcolor="#C9CDD0" width="820" class="modal_text">
+	           
+	             <div id="video_preview" style="max-height:500px; overflow-x:auto;">
+	               <input type="hidden" id="preview_id" value="">
+	               <table cellpadding="3" cellspacing="0" width="100%" align="center">
+	                 <tr>
+	                   <td width="250" valign="top">
+	                     <fieldset class="fieldset3" style="padding:10px; width:250px;">
+	                       <center>
+	                         <div style="position:relative; height:150px;">
+	                           <div id="preview_thumbnails" class="thumb" style="width:164px; height:124px; position:absolute; top:0px; left:40px;"></div>
+	                           <div id="preview_premium_layer" style="width:24px; height:26px; position:absolute; top:3px; left:43px;">
+	                             <a href="javascript:void(0);" rel="Premium Video"><img src="images/icons/premium_big.png"></a>
+	                           </div>
+	                           <div id="preview_nofile_layer" style="width:20px; height:20px; position:absolute; top:5px; left:45px;">
+	                             <a href="javascript:void(0);" rel="No video file was found"><img src="images/icons/file_missing.png"></a>
+	                           </div>
+	                           <div id="preview_hosted_layer" style="width:20px; height:20px; position:absolute; top:5px; left:45px;">
+	                             <a href="javascript:void(0);" rel="This video is Hosted Locally."><img src="images/icons/file_hosted.png"></a>
+	                           </div>
+	                           <div id="preview_hotlinked_layer" style="width:20px; height:20px; position:absolute; top:5px; left:45px;">
+	                             <a href="javascript:void(0);" rel="This video is Hotlinked"><img src="images/icons/file_hotlinked.png"></a>
+	                           </div>
+	                           <div id="preview_embedded_layer" style="width:20px; height:20px; position:absolute; top:5px; left:45px;">
+	                             <a href="javascript:void(0);" rel="This video is Embedded"><img src="images/icons/file_embedded.png"></a>
+	                           </div>
+	                           <div id="preview_rtmp_layer" style="width:20px; height:20px; position:absolute; top:5px; left:45px;">
+	                             <a href="javascript:void(0);" rel="This video is Hosted on RTMP Server"><img src="images/icons/file_rtmp.png"></a>
+	                           </div>
+	                           <div id="preview_m4v_ok_layer" style="width:35px; height:11px; position:absolute; text-align:right; right:45px; top:5px; padding:1px; background:url(images/white-60.png);">
+				                 <a href="javascript:void(0);" rel="M4V File Found<br>This video will be shown in mobile version"><img src="images/icons/m4v_ok.png"></a>
+				               </div>
+				               <div  id="preview_mp4_ok_layer" style="width:35px; height:11px; position:absolute; text-align:right; right:45px; top:{if $video.m4v_file!=''}18px{else}5px{/if}; padding:1px; background:url(images/white-60.png);">
+				                 <a href="javascript:void(0);" rel="MP4 File Found<br>This video will be shown in mobile version"><img src="images/icons/mp4_ok.png"></a>
+				               </div>
+	                           <br><br class="br">
+	                         </div>
+	                       </center>
+	                       <b>Title: <span id="preview_title" style="text-align:center;"></span></b><br><br class="br">
+	                       <b>Description:</b><br><span id="preview_description" style="text-align:justify; padding:10px; color:#666666;"></span><br><br class="br">
+	                       <b>Duration: </b> <span id="preview_duration_formated"></span><br><br class="br">
+	                       <b>Source: </b> <span id="preview_source_name"></span> (Ext Id: <span id="preview_ext_id"></span>)<br><br class="br">
+	                       <b>Groups:</b> <span id="preview_groups_names"></span><br><br class="br">
+	                       <b>Categories:</b> <span id="preview_categories_names"></span><br><br class="br">
+	                       <b>Channels:</b> <span id="preview_channels_names"></span><br><br class="br">
+	                       <b>Tags:</b> <span id="preview_tags"></span><br><br class="br">
+	                       <b>Viewed:</b> <span id="preview_views"></span> times. <br><br class="br">
+	                       <b>Favorited:</b> <span id="preview_favorited"></span> times.<br><br class="br">
+	                       <b>Rating:</b> <span id="preview_rating_formated"></span> <img src="" id="preview_stars_img" rel="" align="absmiddle"><br><br class="br">
+	                       <b>Premium Video:</b> <span id="preview_premium_formated"></span> <img src="" id="preview_stars_img" rel="" align="absmiddle"><br><br class="br">
+	                       <b>Warnings:</b> <span id="preview_warnings"></span><br><br class="br">
+	                       <b>Pending Cron Tasks:</b> <span id="preview_cron_tasks"></span>
+	                     </fieldset>
+	                   </td>
+	                   <td width="500" valign="top">
+	                     <fieldset class="fieldset3" style="padding:10px;">
+	                       <div id="preview_player_code" style="width:480px; height:360px;" class="border1"></div><br><br class="br">
+	                     </fieldset>
+	                     <br class="br">
+		                 <table align="center"><tr><td align="center">
+		                   <a class="button" href="javascript:void(0);" onclick="$('preview_layer').hide(); OpenEditLayer($('preview_id').value);"><span><img src="images/icons/edit.png"> Edit this Video</span></a>
+		                 </td></tr></table>
+	                   </td>	    
+	                 </tr>	               
+	               </table>
+	             </div>
+	             
+	           </td>
+	           <td background="images/modalbox/ir.png" width="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/ibl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/ib.png" height="10"></td>
+	           <td background="images/modalbox/ibr.png" width="10" height="10"></td>
+	         </tr>
+	       </table>         
+         </td>
+         <td background="images/modalbox/or.png" width="8"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/obl.png" width="8" height="11"></td>
+         <td background="images/modalbox/ob.png" height="11"></td>
+         <td background="images/modalbox/obr.png" width="8" height="1"></td>
+       </tr>
+     </table>
+     
+  </td></tr>
+</table>
+</div>
+
+<div id="simple_preview_layer" style="display:none; background:none;" class="floating_layer">
+<table cellpadding="0" cellspacing="0" align="center" width="100%" height="100%">
+  <tr><td align="center">
+  
+     <table cellpadding="0" cellspacing="0" class="draggable">
+       <tr class="draggable_handle" style="cursor:pointer;">
+         <td background="images/modalbox/otl.png" width="8" height="25"></td>
+         <td background="images/modalbox/ot.png" height="25" valign="bottom">
+           <span class="modalbox_title">Video Preview</span>
+           <span class="modalbox_buttons">
+             &nbsp;
+             <a href="javascript:void(0);" onclick="CloseLayer('simple_preview_layer'); $('simple_preview_player_code').innerHTML='';"><img src="images/icons/close_big.png" onmouseover="this.src='images/icons/close_big_on.png';" onmouseout="this.src='images/icons/close_big.png';"></a>
+           </span>
+         </td>
+         <td background="images/modalbox/otr.png" width="8" height="25"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/ol.png" width="8"></td>
+         <td>
+           <table cellpadding="0" cellspacing="0">
+	         <tr>
+	           <td background="images/modalbox/itl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/it.png" height="10"></td>
+	           <td background="images/modalbox/itr.png" width="10" height="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/il.png" width="10"></td>
+	           <td bgcolor="#C9CDD0" width="280" class="modal_text">
+	           
+	             <div id="video_simple_preview">
+	               <input type="hidden" id="simple_preview_id" value="">
+	               <table cellpadding="3" cellspacing="0" width="100%" align="center">
+	                 <tr>
+	                   <td valign="top">
+	                     <fieldset class="fieldset3" style="padding:10px;">
+	                       <b><span id="simple_preview_title" style="text-align:center;"></span></b><br><br class="br">
+	                       <div id="simple_preview_player_code" style="width:240px; height:180px; border:1px solid #999999; padding:1px; "></div><br><br class="br">
+	                       <b>Duration: </b> <span id="simple_preview_duration_formated"></span><br><br class="br">
+	                     </fieldset>
+	                   </td>	                   
+	                 </tr>	               
+	               </table>
+	             </div>
+	             
+	           </td>
+	           <td background="images/modalbox/ir.png" width="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/ibl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/ib.png" height="10"></td>
+	           <td background="images/modalbox/ibr.png" width="10" height="10"></td>
+	         </tr>
+	       </table>         
+         </td>
+         <td background="images/modalbox/or.png" width="8"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/obl.png" width="8" height="11"></td>
+         <td background="images/modalbox/ob.png" height="11"></td>
+         <td background="images/modalbox/obr.png" width="8" height="1"></td>
+       </tr>
+     </table>
+     
+  </td></tr>
+</table>
+</div>
+
+<div style="width:90%; position:relative; z-index:2; margin-bottom:-1px; text-align:left; padding-left:30px;">
+<table cellpadding="0" cellspacing="0">
+  <tr>
+    <td class="tab_active" id="videos_1" onclick="SwitchTab('videos',1); $('filter_options').reset(); $('status_filter').show(); $('status_override').value=0; $('premium_videos').value=0; Paginate(1);">Approved Videos</td>
+    <td width="5"></td>
+    <td class="tab" id="videos_2" onclick="SwitchTab('videos',2); $('filter_options').reset(); $('status_filter').hide(); $('status_override').value=1; $('premium_videos').value=0; Paginate(1);">Pending Videos <span id="total_pending_videos">{if $total_pending_videos>0}<span class="red">({$total_pending_videos})</span>{else}(0){/if}</span></td>
+    <td width="5"></td>
+    <td class="tab" id="videos_3" onclick="SwitchTab('videos',3); $('filter_options').reset(); $('status_filter').show(); $('status_override').value=0; $('premium_videos').value=1; Paginate(1);">Premium Videos</td>
+  </tr>
+</table>
+</div>
+
+<fieldset class="blue">
+<br><br>
+	<fieldset class="fieldset2">
+	<legend class="legend2"> <b>Filters and Options</b>&nbsp;</legend>
+	<div class="bottom">
+	<form id="filter_options" action="javascript:Paginate(1);">
+	<table cellpadding="3" cellspacing="0" width="100%">
+	<tr>
+	  <td>
+		<b class="red">Category:</b>
+		<select id="categ" name="categ">
+		  <option value="" style="font-weight:bold;">All Categories</option>
+		  <option value="" style="font-weight:bold;" disabled>-----------------------</option>
+		  {foreach from=$array_groups item=categories key=group_id}
+		    <option value="_{$group_id}" style="font-weight:bold; {if $categories[0].group_status==0}color:#CC0000;{/if}">-- {$categories[0].group_name|upper}</option>
+			{foreach from=$categories item=category}
+			  <option value="{$category.category_id}" {if $categories[0].group_status==0 or $category.status==0}style="color:#CC0000;"{/if}>&nbsp;&nbsp;&nbsp;&nbsp;{$category.category_name}</option>
+			{/foreach}
+			<option value="" style="font-weight:bold;" disabled>-----------------------</option>
+		  {/foreach}
+		</select>
+	  </td>
+	  <td>
+		<b class="red">Channel:</b>
+		<select id="channel" name="channel">
+		  <option value="" style="font-weight:bold;">All Channels</option>
+			{foreach from=$array_channels item=channel}
+			  <option value="{$channel.id}" {if $channel.status==0}style="color:#CC0000;"{/if}>{$channel.name}</option>
+			{/foreach}
+		</select>
+	  </td>
+	  <td>
+		<b class="red">Sources:</b>
+		<select id="source" name="source">
+		   <option value="">All Sources</option>
+		   <option value="-1">No Source</option>
+		 {foreach from=$array_sources item=source}
+		   <option value="{$source.id}">{$source.name}</option>
+		 {/foreach}
+		</select>
+	  </td>
+	  <td>
+		<b class="red">Order By:</b>
+		<select id="order" name="order">
+		   <option value="">Relevance|Date</option>
+		   <option value="1">Date Added</option>
+		   <option value="6">Activation Date</option>
+		   <option value="2">Popularity</option>
+		   <option value="3">Rating</option>
+		   <option value="4">Title</option>
+		   <option value="5">Duration</option>
+		</select>
+	  </td>
+	  <td>
+	    <div id="status_filter">
+		<b class="red">Show:</b>
+		<select id="status" name="status">
+		  <option value="">All Videos</option>
+		  <option value="1">Active Videos</option>
+		  <option value="O">Inctive Videos</option>
+		  <option value="2">Reported Videos</option>
+		</select>
+		</div>
+	  </td>
+	  <td valign="bottom">
+	    <a class="small_button" href="javascript:void(0);" onclick="Paginate(1);"><span>Apply Filters</span></a>
+	  </td>
+	</tr>
+	<tr>
+	  <td colspan="6">
+	  <div  id="more_filters" style="display:none;">
+	  	<div class="dotted_hor_line"></div>
+	  	<span style="float:left;">
+	  	  <b class="red">Search Video:</b>
+	  	  <input type="text" name="tag" id="tag" value="{$tag}">&nbsp;
+	  	</span>
+	  	<span style="float:left;">
+	  	  <a class="small_button" href="javascript:void(0);" onclick="Paginate(1);"><span><img src="images/icons/view-tiny.png" style="margin-top:-1px;"> Search</span></a>
+	  	</span>
+
+	  	
+	  	<span style="float:right;">
+		  <b class="red">Show:</b>
+		  <select id="amount" name="amount">
+		    <option value="12">12 Videos/Page</option>
+			<option value="24">24 Videos/Page</option>
+			<option value="32">32 Videos/Page</option>
+			<option value="48">48 Videos/Page</option>
+			<option value="60">60 Videos/Page</option>
+			<option value="72">72 Videos/Page</option>
+			<option value="84">84 Videos/Page</option>
+			<option value="96">96 Videos/Page</option>
+		  </select>
+		</span>
+		
+		
+		<span style="float:right; margin-right:10px;">
+		  <b class="red">Special Filters:</b>
+		  <select id="special_filter" name="special_filter">
+			<option value="">-- Select --</option>
+			<option value="13">Locally Hosted Videos</option>
+			<option value="14">CDN/RTMP Hosted Videos</option>
+			<option value="15">Not Hosted Videos</option>
+			<option value="" disabled>-------------------------------</option>
+			<option value="1">Videos with no Video File</option>
+			<option value="9">Videos with Missing FLV</option>
+			<option value="2">Videos with no Image Preview</option>
+			<option value="3">Videos with no Thumbnail(s)</option>
+			<option value="4">Videos with only One Thumbnail</option>
+			<option value="5">Videos with No Description</option>
+			<option value="12">Videos with No Categories</option>
+			<option value="6">Videos with Missing Translations</option>
+			<option value="7">Videos with Warnings</option>
+			<option value="8">Videos with Pending Cron Tasks</option>
+			<option value="10">Videos with Failed Cron Tasks</option>
+			<option value="11">Videos with Pending Comments</option>
+		  </select>
+		</span>
+	  </div>
+	  </td>
+	</tr>
+	<tr>
+	  <td>
+	    <b>Simple View</b>
+	    <input type="checkbox" value="1" id="simplifyed" name="simplifyed">
+	  </td>	  
+	</tr>
+	</table>
+	</form>
+	</div>
+  </fieldset>
+  <div class="pull"><a href="javascript:void(0);" rel="Click to expand and show more filters and options" onclick="TogglePull('more_filters','pull_filters',2);"><img src="images/pull_down2.png" id="pull_filters"></a></div>
+
+  <div align="center" style="text-align:center; width:85%; padding:10px;">
+    <table cellpadding="0" cellspacing="8" align="center"><tr>
+      <td align="center"><a class="button" href="javascript:void(0);" onclick="GetSourcesVideos();"><span><img src="images/icons/am_star.png" id="get_sources_icon"> Get Sources Videos</span></a></td>
+      <td align="center"><a class="button" href="javascript:void(0);" onclick="CheckVideo();"><span><img src="images/icons/check.png"> Check Broken Videos</span></a></td>
+      <td align="center"><a class="button" href="javascript:void(0);" onclick="OpenLayer('flv_players_layer');"><span><img src="images/icons/videos_player.png"> FLV Players Settings</span></a></td>
+      <td align="center"><a class="button" href="javascript:void(0);" onclick="OpenRTMPServersManager();"><span><img src="images/icons/server.png"> Open Servers Manager</span></a></td>
+    </tr>
+    <tr>
+      <td align="center"><a class="button" href="javascript:void(0);" onclick="$('import_layer_fields_count').value='1'; OpenLayer('import_layer');"><span><img src="images/icons/import.png"> Import Videos</span></a></td>
+      <td align="center"><a class="button" href="javascript:void(0);" onclick="$('sr_videos_from_selection').hide(); $('sr_videos_from_categ').show(); OpenLayer('smart_recategorize_layer'); $('sr_mode').value=0;"><span><img src="images/icons/recategorize.png"> Smart Recategorization</span></a></td>
+      <td align="center"><a class="button" href="javascript:void(0);" onclick="OpenLayer('mass_delete_layer');"><span><img src="images/icons/delete-tiny.png"> Videos Mass Delete</span></a></td>
+      <td align="center"><a class="button" href="javascript:void(0);" onclick="SetTranslationsCron();"><span><img src="images/icons/translate.gif" id="translate_all_icon"> Translate Videos</span></a></td>
+      
+    </tr>
+    {* <tr>
+      <td></td>
+	  <td align="center"><a class="button" href="javascript:void(0);" onclick="OpenRSSFeedsManager();"><span><img src="images/icons/rss-tiny.png"> Open Feeds Manager</span></a></td>
+	  <td align="center"><a class="button" href="javascript:void(0);" onclick="OpenTasksManager();"><span><img src="images/icons/cron_tasks.png" id="set_tasks_all_icon"> Open Tasks Manager</span></a></td>
+	  <td></td>
+    </tr> *}
+    <tr>
+      <td colspan="4" height="4"></td>
+    </tr>
+    <tr>    
+      <td align="center"></td>
+      <td align="center"><a class="small_button" href="javascript:void(0);" onclick="OpenTasksQueue();"><span><img src="images/icons/cron_tasks.png" id="tasks_queue_icon"> View Tasks Queue List</span></a></td>
+      <td align="center"><a class="small_button" href="javascript:void(0);" onclick="OpenTasksLog();"><span><img src="images/icons/cron_log.png" id="tasks_log_icon"> Open Tasks Cron Log</span></a></td>
+      <td align="center"></td>
+    <tr>
+    </table>
+  </div>
+  
+<div class="dotted_hor_line"></div>
+
+<table cellpadding="0" cellspacing="0" width="80%"><tr>
+  <td align="left" width="1"><a class="button" href="javascript:void(0);" onclick="OpenEditLayer('','add');"><span><img src="images/icons/add-tiny.png"> Add New Video</span></a></td>
+  <td align="center"></td>
+  <td align="right" width="80">
+    <div class="right" style="width:80px;">
+      <a class="button" href="javascript:void(0);" onclick="Paginate($('page').value);"><span><img src="images/icons/refresh.png"> Refresh</span></a>
+	</div>	 
+  </td>
+</tr></table><br>
+
+<div id="video_contents" class="bottom">
+{/if}
+
+	<table cellpadding="2" cellspacing="4" width="100%" align="center" style="margin-top:-65px;">
+	<tr>
+	  <td width="25%"></td>
+	  <td width="50%" align="center"><b>Showing <span class="bluetext">{$from}-{$to}</span> of <span class="bluetext">{$total_videos}</span> videos</b></td>
+	  <td width="25%"></td>
+	</tr>
+	<tr>
+	  <td width="25%"></td>
+	  <td width="50%" align="center">{$pagination}</td>
+	  <td width="25%"></td>
+	</tr>
+	</table>
+  
+	<input type="hidden" id="page" value="{$page}">
+	<input type="hidden" id="status_override" value="{$status_override}">
+	<input type="hidden" id="premium_videos" value="{$premium_videos}">
+	<table cellpadding="2" cellspacing="8" width="100%" align="center">
+	<tr>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	</tr>
+	<tr>
+	{foreach from=$array_videos name=videos item=video key=i}
+	  <td align="center" id="row_{$video.id}" class="thumb_container" style="width:200px;">
+	  <div class="bottom" style="height:{if !$simplifyed}242{else}200{/if}px;">
+	    <table cellpadding="0" cellspacing="1" width="170">
+	      <tr>
+	        <td id="title_td_{$video.id}"><a href="javascript:void(0);" onclick="VideoPreview({$video.id});" class="{if $video.status==0}red{else}link{/if}" rel="Id: {$video.id} - {$video.title}" id="title_{$video.id}">{if $mb_function_exists==1}{$video.title|mb_truncate:22:"...":"utf-8":true}{else}{$video.title|truncate:22:"...":true}{/if}</a></td>
+	        <td width="22" align="right">
+	          {if $video.user_id>0}
+	          	<a href="index.php?module=users&trigger_profile={$video.user_id}" target="_blank" rel="Added by <b>{$video.user_name}</b><br>Click to view user's profile."><img src="images/icons/user.png"></a>
+	          {/if}
+	        </td>
+	      </tr>
+	      <tr><td colspan="2" align="center">
+	        <div id="thumb_td_{$video.id}" class="thumb{if $video.status==0}_error{/if}" style="position:relative; height:124px; cursor:pointer;" onclick="VideoPreview({$video.id});" onmouseover="StartThumbRotation('thumb_{$video.id}','{$video.id}');" onmouseout="StopThumbRotation('thumb_{$video.id}','{$video.id}');">
+	          <img src="{if preg_match("@^thumbs/[^\.]*\.jpg$@",$video.thumbs[0])}../{/if}{$video.thumbs[0]}" id="thumb_{$video.id}" width="164" height="124" style="position:absolute; top:1px; left:1px;">
+	          {if $video.premium==1}
+              <div style="width:24px; height:26px; position:absolute; top:3px; left:3px;">
+                <a href="javascript:void(0);" rel="Premium Video"><img src="images/icons/premium_big.png"></a>
+              </div>
+              {/if}
+              
+              {if !$simplifyed}
+	              {if $video.embed_code!=''}
+	                <div style="width:20px; height:20px; position:absolute; top:3px; left:{if $video.premium==1}32{else}3{/if}px;">
+	                 <a href="javascript:void(0);" rel="This video is Embedded"><img src="images/icons/file_embedded.png"></a>
+	                </div>
+	              {elseif $video.file!=''}
+	                {if $video.rtmp_server>0}
+	                	<div style="width:20px; height:20px; position:absolute; top:3px; left:{if $video.premium==1}32{else}3{/if}px;">
+			              <a href="javascript:void(0);" rel="This video is Hosted on RTMP Server."><img src="images/icons/file_rtmp.png"></a>
+			            </div>
+	                {else}
+		              	{if (preg_match("/^videos\//",$video.file))}
+			              <div style="width:20px; height:20px; position:absolute; top:3px; left:{if $video.premium==1}32{else}3{/if}px;">
+			                <a href="javascript:void(0);" rel="This video is Hosted Locally."><img src="images/icons/file_hosted.png"></a>
+			              </div>
+		                {else}
+		                  <div style="width:20px; height:20px; position:absolute; top:3px; left:{if $video.premium==1}32{else}3{/if}px;">
+		                    <a href="javascript:void(0);" rel="This video is Hotlinked"><img src="images/icons/file_hotlinked.png"></a>
+		                  </div>
+			            {/if}
+			        {/if}
+		          {else}
+	              	<div style="width:20px; height:20px; position:absolute; top:3px; left:{if $video.premium==1}32{else}3{/if}px;">
+		              <a href="javascript:void(0);" rel="No video file was found"><img src="images/icons/file_missing.png"></a>
+		            </div>
+	              {/if}
+	              
+	              {if $video.m4v_file!=''}
+	                <div style="width:35px; height:11px; position:absolute; text-align:right; top:3px; right:3px; padding:1px; background:url(images/white-60.png);">
+	                  <a href="javascript:void(0);" rel="M4V File Found<br>This video will be shown in mobile version"><img src="images/icons/m4v_ok.png"></a>
+	                </div>
+	              {/if}
+	              {if $video.mp4_file!=''}
+	                <div style="width:35px; height:11px; position:absolute; text-align:right; top:{if $video.m4v_file!=''}16{else}3{/if}px; right:3px; padding:1px; background:url(images/white-60.png);">
+	                  <a href="javascript:void(0);" rel="MP4 File Found<br>This video will be shown in mobile version"><img src="images/icons/mp4_ok.png"></a>
+	                </div>
+	              {/if}
+	          {/if}
+              <div style="width:auto; height:15px; position:relative; top:103px; text-align:right;margin-right:2px;">
+                <span class="disabled" style="color:#FFFFFF; background:#000000; padding:2px;">{$video.duration_formated}</span>
+              </div>
+	        </div>
+	      </td></tr>
+	      {* <tr>
+	        <td  id="duration_td_{$video.id}">
+	          <b>{$video.duration_formated}</b>
+	        </td>
+	        <td id="rating_td_{$video.id}" align="right">
+	          <a href="javascript:void(0);" rel="Rating: {$video.rating} of 5, with {$video.votes} votes"><img src="images/stars/star_image_{$video.star_image}.png"></a>
+	        </td>
+	      </tr>
+	    </table>
+	    <div class="hr"></div> *}
+	    <table cellpadding="0" cellspacing="1">
+		  <tr id="div_options_{$video.id}">
+	        <td align="center" colspan="2">
+	          <table cellpadding="0" cellspacing="3" align="center" width="100%">
+	            <tr height="22" align="center">
+	              <td width="22" class="option_button"><a href="javascript:void(0);" rel="Select this Video"><input type="checkbox" id="video_cb_{$video.id}" class="video_cb" value="{$video.id}" onchange="SelectThumb(this.checked,{$video.id});"></a></td>
+	              <td width="22" class="option_button"><a href="javascript:void(0);" rel="Video Preview and Info" onclick="VideoPreview({$video.id});"><img src="images/icons/videos.png" id="img_preview_{$video.id}"></a></td>
+	              <td width="22"></a></td>
+	              <td width="22"></a></td>
+	              <td width="22" class="option_button"><a href="javascript:void(0);" rel="Change Video Status{if $video.reported==1}<font size='1'><br><img src='images/icons/warning-tiny.png'> This video has been reported</font>{/if}"><span id="video_status_option_{$video.id}"><img id="img_status_{$video.id}" {if $video.status==0}src="images/icons/inactive.png" onmouseover="this.src='images/icons/go.png';" onmouseout="this.src='images/icons/inactive.png';"{else}src="images/icons/active.png"  onmouseover="this.src='images/icons/stop.png';" onmouseout="this.src='images/icons/active.png';"{/if} onclick="SetVideoStatus({$video.id},{if $video.status==0}1{else}0{/if});"></span></a></td>
+	              <td width="22" class="option_button"><a href="javascript:void(0);" rel="Edit this Video" onclick="OpenEditLayer({$video.id},'edit');"><img src="images/icons/edit.png" id="edit_video_{$video.id}"></a></td>
+	              <td width="22" class="option_button"><a href="javascript:void(0);" rel="Delete this Video" onclick="DeleteVideo({$video.id});"><img src="images/icons/delete.png" id="img_delete_{$video.id}"></a></td>
+	            </tr>
+	            {if !$simplifyed}
+	            <tr><td height="2"></td></tr>
+	            <tr height="22" align="center">
+	              <td width="22" class="option_button"><a href="javascript:void(0);" rel="Check for broken video" onclick="CheckVideo({$video.id});"><img src="images/icons/check.png" id="img_check_{$video.id}"></a></td>
+	              <td width="22" class="option_button"><a href="javascript:void(0);" rel="Recategorize this video using 'Smart Tags'" onclick="SmartRecategorize('{$video.id}');"><img src="images/icons/recategorize.png" id="img_recategorize_{$video.id}"></a></td>
+	              <td width="22" class="option_button"><a href="javascript:void(0);" rel="Autogenerate Thumbnails for this video (amount configured in settings)." onclick="AutoGenerateThumbs({$video.id});"><img src="images/icons/autothumb.png" id="autothumb_icon_{$video.id}"></a></td>
+	              <td width="22" class="option_button"><a href="javascript:void(0);" rel="Moderate Comments for this video<br>{if $video.comments_count>0}Pending for Moderation: {$video.comments_count}{else}No pending comments{/if}" onclick="PaginateComments(1,{$video.id});"><div style="position:relative; width:22px; height:22px;"><img src="images/icons/comments.png" style="position:absolute; top:3px; left:3px;">{if $video.comments_count>5}<img src="images/icons/comm_5_plus.png" style="position:absolute; top:3px; left:3px;">{else}<img src="images/icons/comm_{$video.comments_count}.png" style="position:absolute; top:3px; left:3px;">{/if}</div></a></td>
+	              <td width="22" class="option_button"><a href="javascript:void(0);" rel="Reset Stats for this video (views, rating, votes, favorited, etc)" onclick="ResetStats({$video.id});"><img src="images/icons/recycle.png" id="img_recycle_{$video.id}"></a></td>
+	              <td width="22" class="option_button">
+	                <a href="javascript:void(0);" id="activation_date_tip_{$video.id}" rel="Select Activation Date for this video (or leave empty)<br>Current Value: {if $video.activation_date>0}{$video.activation_date|date_format:"%Y-%m-%d"}{else}None{/if}"><input type="hidden" id="activation_date_input_{$video.id}" value="{if $video.activation_date>0}{$video.activation_date|date_format:"%Y-%m-%d"}{/if}" onchange="SetStatusDate({$video.id},this.value,'activation');"><img src="images/icons/calendar_activation.png" id="activation_date_img_{$video.id}"></a>
+	                <input type="hidden" id="activation_date_{$video.id}" rel="activation_date" value="{$video.id}" class="recalendar">
+	                {* <script type="text/javascript">Calendar.setup({ldelim}inputField: "activation_date_input_{$video.id}", button: "activation_date_img_{$video.id}",ifFormat:"%Y-%m-%d", align: "Tr"{rdelim});</script> *}
+	              </td>
+	              <td width="22" class="option_button">
+	                <a href="javascript:void(0);" id="deactivation_date_tip_{$video.id}" rel="Select Dectivation Date for this video (or leave empty)<br>Current Value: {if $video.deactivation_date>0}{$video.deactivation_date|date_format:"%Y-%m-%d"}{else}None{/if}"><input type="hidden" id="deactivation_date_input_{$video.id}" value="{if $video.deactivation_date>0}{$video.deactivation_date|date_format:"%Y-%m-%d"}{/if}" onchange="SetStatusDate({$video.id},this.value,'deactivation');"><img src="images/icons/calendar_deactivation.png" id="deactivation_date_img_{$video.id}"></a>
+	                <input type="hidden" id="deactivation_date_{$video.id}" rel="deactivation_date" value="{$video.id}" class="recalendar">
+	                {* <script type="text/javascript">Calendar.setup({ldelim}inputField: "deactivation_date_input_{$video.id}", button: "deactivation_date_img_{$video.id}",ifFormat:"%Y-%m-%d", align: "Tr"{rdelim});</script> *}
+	              </td>
+	            </tr>
+	            <tr><td height="2"></td></tr>
+	            <tr>
+	            	{if $video.warnings.missing_player}
+						<td class="option_button"><a href="javascript:void(0);" rel="{$video.warnings.missing_player}" id="missing_player_warning"><img src="images/icons/warning_video.png"></a></td>
+					{/if}
+					{if $video.warnings.reported_video}
+						<td class="option_button"><a href="javascript:void(0);" rel="{$video.warnings.reported_video}" id="reported_video_warning" onclick="GetReportedReasons('{$video.id}');"><img src="images/icons/warning_report.png" id="reported_video_icon_{$video.id}"></a></td>
+					{/if}
+					{if $video.warnings.missing_preview}
+						<td class="option_button"><a href="javascript:void(0);" rel="{$video.warnings.missing_preview}" id="missing_preview_warning"><img src="images/icons/warning_thumbs.png"></a></td>
+					{/if}
+					{if $video.warnings.less_thumbs}
+						<td class="option_button"><a href="javascript:void(0);" rel="{$video.warnings.less_thumbs}" id="less_thumbs_warning"><img src="images/icons/warning_thumbs.png"></a></td>
+					{/if}
+					{if $video.warnings.no_description}
+						<td class="option_button"><a href="javascript:void(0);" rel="{$video.warnings.no_description}" id="no_description_warning"><img src="images/icons/warning_langs.png"></a></td>
+					{/if}
+					{if $video.warnings.less_translations}
+						<td class="option_button"><a href="javascript:void(0);" rel="{$video.warnings.less_translations}" id="less_translations_warning"><img src="images/icons/warning_langs.png"></a></td>
+					{/if}
+					{if preg_match("/((^|,)+[1-9A-Z]+(,|$)+)+/",$video.cron_status)}
+						<td class="option_button"><a href="javascript:void(0);" rel="This video has Cron Tasks pending:<br>
+						{if preg_match("/((^|,)+1(,|$)+)+/",$video.cron_status)}- Download & Host Video File<br>{/if}
+						{if preg_match("/((^|,)+7(,|$)+)+/",$video.cron_status)}- Add Converted M4V Video File<br>{/if}
+						{if preg_match("/((^|,)+9(,|$)+)+/",$video.cron_status)}- Add Converted MP4 Video File<br>{/if}
+						{if preg_match("/((^|,)+2(,|$)+)+/",$video.cron_status)}- Download Preview Image<br>{/if}
+						{if preg_match("/((^|,)+3(,|$)+)+/",$video.cron_status)}- Download Thumbnails<br>{/if}
+						{if preg_match("/((^|,)+4(,|$)+)+/",$video.cron_status)}- Extract Random Preview Image<br>{/if}
+						{if preg_match("/((^|,)+5(,|$)+)+/",$video.cron_status)}- Extract Secuence of Thumbs<br>{/if}
+						{if preg_match("/((^|,)+6(,|$)+)+/",$video.cron_status)}- Get Video Duration<br>{/if}
+						{if preg_match("/((^|,)+8(,|$)+)+/",$video.cron_status)}- Translate Video Title and Description<br>{/if}
+						{if preg_match("/((^|,)+A(,|$)+)+/",$video.cron_status)}- Move video to any Active Streaming Server<br>{/if}
+						{if preg_match("/((^|,)+B(,|$)+)+/",$video.cron_status)}- Add Keyframes to Video (if FLV)<br>{/if}
+"><img src="images/icons/cron_tasks.png"></a></td>
+					{/if}
+					{if preg_match("/((^|,)+-[1-9A-Z]+(,|$)+)+/",$video.cron_status)}
+						<td class="option_button"><a href="javascript:void(0);" onclick="OpenTasksLog({$video.id});" rel="This video has Failed Cron Tasks:<br>
+						{if preg_match("/((^|,)+-1(,|$)+)+/",$video.cron_status)}- Failed Download & Host Video File<br>{/if}
+						{if preg_match("/((^|,)+-7(,|$)+)+/",$video.cron_status)}- Failed to Add Converted M4V Video File<br>{/if}
+						{if preg_match("/((^|,)+-9(,|$)+)+/",$video.cron_status)}- Failed to Add Converted MP4 Video File<br>{/if}
+						{if preg_match("/((^|,)+-2(,|$)+)+/",$video.cron_status)}- Failed Download Preview Image<br>{/if}
+						{if preg_match("/((^|,)+-3(,|$)+)+/",$video.cron_status)}- Failed Download Thumbnails<br>{/if}
+						{if preg_match("/((^|,)+-4(,|$)+)+/",$video.cron_status)}- Failed Extract Random Preview Image<br>{/if}
+						{if preg_match("/((^|,)+-5(,|$)+)+/",$video.cron_status)}- Failed Extract Secuence of Thumbs<br>{/if}
+						{if preg_match("/((^|,)+-6(,|$)+)+/",$video.cron_status)}- Failed Get Video Duration<br>{/if}
+						{if preg_match("/((^|,)+-8(,|$)+)+/",$video.cron_status)}- Failed Translate Video<br>{/if}
+						{if preg_match("/((^|,)+-A(,|$)+)+/",$video.cron_status)}- Failed Move to Streaming Server<br>{/if}
+						{if preg_match("/((^|,)+-B(,|$)+)+/",$video.cron_status)}- Failed to Add Keyframes to Video<br>{/if}
+<br>Check Tasks Log.<br>Click to view relevant lines in Tasks Log."><img src="images/icons/cron_tasks_failed.png" id="tasks_failed_icon_{$video.id}"></a></td>
+					{/if}
+	            </tr>
+	            {/if}
+	          </table>	            
+	      </tr>
+		</table>
+		</div>
+	  </td>
+	  {if ($i+1)%4==0}</tr><tr>{/if}
+	{/foreach}
+	</tr></table>
+	
+	<div class="dotted_hor_line"></div>
+	
+	<table cellpadding="2" cellspacing="4" width="95%" align="center">
+	<tr>
+	  <td width="31%">
+	    <input type="checkbox" id="check_uncheck_all" value="1" onclick="CheckUncheck();" style="margin-left:30px;"> <label for="check_uncheck_all"><b>Select/Unselect All</b></label><br>
+	    
+	    <select id="selected_action" class="left" style="width:180px;">
+	      <option value="">- Select Action for Selected Videos</option>
+	      <option value="1">Activate Selected Videos</option>
+	      <option value="2">Dectivate Selected Videos</option>
+	      <option value="3">Delete Selected Videos</option>
+	      {* <option value="4">Set Activation Date for Selected Videos</option>
+	      <option value="5">Set Deactivation Date for Selected Videos</option> *}
+	      <option value="" disabled>-----------------------</option>
+	      <option value="6">Check for Broken on Selected Videos</option>
+	      <option value="7">Reset Stats for Selected Videos</option>
+	      <option value="8">Smart Recategorize Selected Videos</option>
+	      <option value="9">Auto-Capture Preview Image for Selected Videos</option>
+	      <option value="10">Auto-Generate Thumbnail Secuence for Selected Videos</option>
+	      <option value="13">Autotranslate Selected Videos</option>
+	      <option value="12">Set Cron Tasks for Selected Videos.</option>
+	      <option value="11">Run Tasks Cron for Selected Videos</option>
+	    </select>
+	    <a class="small_button ml5" href="javascript:void(0);" onclick="ActionOnSelected();"><span> Go</span></a>
+	    <img src="images/loading.gif" id="selected_action_loading_img" style="display:none;" class="m3 left">
+	    
+	  </td>
+	  <td width="39%" align="center">{$pagination}</td>
+	  <td width="30%">
+	    <div class="right" style="width:100px;">
+	      <a class="button" href="javascript:void(0);" onclick="Paginate($('page').value);"><span><img src="images/icons/refresh.png"> Refresh</span></a>
+	    </div>
+	  </td>
+	</tr>
+	</table>
+
+	<script type="text/javascript" class="evaljs">
+	  {if $total_pending_videos>0}
+		$('total_pending_videos').innerHTML='<span class="red">({$total_pending_videos})</span>';
+	  {else}
+		$('total_pending_videos').innerHTML='(0)';
+	  {/if}
+	</script>
+  {if !$onlymod}
+  </div>
+  
+  
+</fieldset>
+
+<br>
+<script type="text/javascript">
+ReTip();
+ReCalendar();
+{if $total_pending_videos>0}
+	$('total_pending_videos').innerHTML='<span class="red">({$total_pending_videos})</span>';
+{else}
+	$('total_pending_videos').innerHTML='(0)';
+{/if}
+</script>
+{/if}

@@ -1,0 +1,27 @@
+<div class="container_box shadow_box rounded5 draggable" style="width:270px; max-height:300px; overflow-x:auto; line-height:18px;" id="login_box">
+
+  <div style="width:270px; text-align:right;" class="left">
+  
+    <div class="draggable_handle bar rounded3 title_text" style="text-align:left;">
+	  <span class="left">{$aLabels.login|capitalize}</span>
+	  <span class="right"><a href="javascript:void(0);" onclick="$('login_layer').hide(); $('login_info_msg').hide();"><img src="templates/{$template}/images/close_big.png" onmouseover="this.src='templates/{$template}/images/close_big_on.png';" onmouseout="this.src='templates/{$template}/images/close_big.png';" class="m3"></a></span>
+	</div>
+    
+	<div id="login_info_msg" class="warning" style="text-align:center; display:none;"><img src="templates/{$template}/images/warning.png"> <b>{$aLabels.login_info_msg}</b></div>
+	
+    <form id="login_form" action="javascript:UserLogin();" style="margin:10px;">
+    <b>{$aLabels.username}:</b> <input type="text" name="user_login" class="input-text"><br>
+    <b>{$aLabels.password}:</b> <input type="password" name="pass_login" class="input-text"><br><br class="break">
+    <div class="left"><a href="javascript:void(0);" onclick="$('login_layer').hide(); $('forgot_layer').show(); ">{$aLabels.forgot_password}</a></div>
+	<a class="button_small rounded3 right mr5" onclick="$('login_form').submit()">{$aLabels.login|capitalize}</a>
+	<br class="break"><br>
+	
+	<div id="login_error_msg" class="red" style="text-align:center; font-weight:bold;"></div>
+	<br class="break">
+	
+	<a class="button_small rounded3 right mr5" onclick="$('login_layer').hide(); $('register_layer').show();">{$aLabels.create_account|capitalize}</a>
+	<br>
+    <input type="submit" style="display:none;">
+    </form>    
+  </div> 
+</div>

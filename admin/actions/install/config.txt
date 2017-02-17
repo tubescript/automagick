@@ -1,0 +1,46 @@
+<?
+// -----------------------------
+// Database Connection (you may edit them)
+// -----------------------------
+$db_host='{*host*}'; 		// DB Host
+$db_user='{*user*}';		// DB Username
+$db_pass='{*pass*}';		// DB Password
+$db_name='{*name*}';		// DB Name
+
+if(!get_magic_quotes_gpc()) {
+    $process = array(&$_GET, &$_POST, &$_COOKIE, &$_REQUEST);
+    while (list($key, $val) = each($process)) {
+        foreach ($val as $k => $v) {
+            unset($process[$key][$k]);
+            if (is_array($v)) {
+                $process[$key][addslashes($k)] = $v;
+                $process[] = &$process[$key][addslashes($k)];
+            } else {
+                $process[$key][addslashes($k)] = addslashes($v);
+            }
+        }
+    }
+    unset($process);
+}
+
+// -----------------------------
+// DO NOT EDIT NOTHING FROM HERE
+// -----------------------------
+header('Content-type: text/html; charset=utf-8');
+$host=preg_replace("_https?://|^www\.|https?://www\._","",$_SERVER['HTTP_HOST']);
+$ip=$_SERVER['REMOTE_ADDR'];
+
+$protocol=$_SERVER['HTTPS'] ? "https://" : "http://";
+
+if(!$_SESSION['language']) $_SESSION['language']=1;
+
+// Database Connection
+// -------------------
+$link = mysql_connect($db_host,$db_user,$db_pass) or die("Could not connect: " . mysql_error());
+mysql_select_db($db_name) or die(mysql_error());
+mysql_query("SET NAMES 'utf8'");
+
+// Settings inclusion.
+include_once("settings.php");
+include_once("sources.php");
+include_once("labels.php");

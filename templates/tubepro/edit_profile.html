@@ -1,0 +1,158 @@
+<div class="rounded3 container_box draggable" style="width:720px; padding:0px; margin-bottom:10px;">
+  <div class="bar rounded3 title_text m3 draggable_handle" style="text-align:left;">
+	<span class="left">{$aLabels.edit_my_profile|capitalize}</span>
+	<span class="right"><a href="javascript:void(0);" onclick="$('edit_profile_layer').hide(); $('login_info_msg').hide();"><img src="templates/{$template}/images/close_big.png" onmouseover="this.src='templates/{$template}/images/close_big_on.png';" onmouseout="this.src='templates/{$template}/images/close_big.png';" class="m3"></a></span>
+  </div>
+  <div class="m5" style="padding:10px;">
+	
+	<div style="max-height:350px; overflow-x:auto; line-height:18px;">
+
+		<div id="file_upload_fieldset">
+		  
+		  <div style="width:300px; height:320px; padding:10px;" class="left container_box rounded3">
+		  
+			<b style="font-size:16px;">{$aLabels.edit_profile|capitalize}</b><br><br>
+			<form id="edit_form" action="javascript:EditUserProfile();">
+				<table cellpadding="4" cellspacing="1" width="100%" style="text-align:left; line-height:20px;">
+				  <tr valign="top">
+					<td align="right" style="line-height:20px;"><b>{$aLabels.username|capitalize}:</b></td>
+					<td>
+					  <input type="text" name="edit_user_username" id="edit_user_username" class="rounded3 text" value="" maxlength="25" tabindex="1" readonly>
+					  <img src="templates/{$template}/images/help.png" title="{$aLabels.username_tip}">
+					</td>
+				  </tr>
+				  <tr valign="top">
+					<td align="right" style="line-height:20px;"><b>{$aLabels.password|capitalize}:</b></td>
+					<td>
+					  <input type="text" name="edit_user_password" id="edit_user_password" class="rounded3 text" value="" maxlength="25" tabindex="2">
+					  <a href="javascript:void(0);" onclick="GenerateRandomPassword('edit_user_password');" title="{$aLabels.generate_random_password}"><img src="templates/{$template}/images/generate_pass.png"></a>
+					  <img src="templates/{$template}/images/help.png" title="{$aLabels.password_tip}">
+					</td>
+				  </tr>
+				  <tr valign="top">
+					<td align="right" style="line-height:20px;"><b>{$aLabels.email}:</b></td>
+					<td>
+					  <input type="text" name="edit_user_email" id="edit_user_email" class="rounded3 text" value="" maxlength="255" tabindex="3" readonly>
+					  <img src="templates/{$template}/images/help.png" title="{$aLabels.email_tip}">
+					</td>
+				  </tr>
+				  <tr valign="top">
+					<td align="right" style="line-height:20px;"><b>{$aLabels.country}:</b></td>
+					<td>
+					  <select name="edit_user_country" class="rounded3 text" id="edit_user_country" tabindex="5" style="width:200px;">
+						<option value="0">{$aLabels.no_country_selected}</option>
+					  {foreach from=$aCountries item=country}
+						<option value="{$country.id}">{$country.name}</option>
+					  {/foreach}
+					  </select>
+					</td>
+				  </tr>
+				  <tr valign="top">
+					<td align="right" style="line-height:20px;"><b>{$aLabels.gender}:</b></td>
+					<td>
+					  <select name="edit_user_gender" id="edit_user_gender"  class="rounded3 text" tabindex="6">
+						<option value="0">{$aLabels.male}</option>
+						<option value="1">{$aLabels.female}</option>
+					  </select>
+					</td>
+				  </tr>
+				  <tr valign="top">
+					<td align="right" style="line-height:20px;"><b>{$aLabels.birthdate}:</b></td>
+					<td>
+					  <input type="text" name="edit_user_birthdate_formated" id="edit_user_birthdate_formated" class="rounded3 text" value="" tabindex="7">
+					  <img src="templates/{$template}/images/help.png" title="{$aLabels.birthday_tip}">
+					</td>
+				  </tr>
+				  <tr valign="top">
+					<td align="right"></td>
+					<td align="right" style="padding-right:53px;">
+					  <a href="javascript:void(0);" onclick="$('edit_form').submit();"><div class="rounded3 button_small">{$aLabels.edit_profile|capitalize}</div></a>
+					</td>
+				  </tr>
+				  <tr valign="top">
+					<td colspan="2" align="center">
+						<div id="edit_user_error_msg" class="red" style="font-weight:bold;"></div>
+						<div id="edit_user_success_msg" class="green" style="font-weight:bold;"></div>
+					</td>
+				  </tr>
+				</table>
+				<input type="submit" style="display:none;">		
+			</form>	
+		  </div>
+	    
+		  <div style="width:300px; height:320px; padding:10px;" class="right container_box rounded3">
+			<b style="font-size:16px;">{$aLabels.edit_avatar|capitalize}</b><br><br>
+			
+			<form id="avatar_upload_form" name="avatar_upload_form" action="actions/profile/avatar_upload.php" enctype="multipart/form-data" method="post" target="avatar_upload_iframe">
+			
+			  <center>
+				<b>{$aLabels.current_avatar}</b><br>
+				  <div class="avatar" align="center">
+					<img src="{$user.avatar}" id="user_avatar_img">
+				  </div>
+			  </center>
+			  <br>
+			   
+			  <table cellpadding="0" cellspacing="0" align="center">
+				<tr>
+				  <td align="left" colspan="2">
+					<b>{$aLabels.upload_image}:&nbsp;</b>
+				  </td>
+				</tr>
+				<tr><td height="5"></td></tr>
+				<tr>
+				  <td align="right" style="line-height:20px;">
+					<input type="text" name="user_avatar_filename" id="user_avatar_filename" value="" class="rounded3 text left ml5" readonly>
+					<label class="cabinet left ml5 dark_text">
+					  <span style="text-align:center;" class="rounded3 button_small">{$aLabels.browse|capitalize}</span>
+					  <input type="file" name="user_avatar" id="user_avatar" class="file" onchange="$('user_avatar_filename').value=this.value; CheckUploadButton(this.value);">
+					</label>
+				  </td>
+				</tr>
+				<tr><td height="10"></td></tr>
+				<tr>
+				  <td align="right" colspan="2" style="padding-right:17px;">
+					<a href="javascript:void(0);" onclick="AvatarUpload();" id="avatar_upload_button" style="display:none;"><div class="rounded3 button">{$aLabels.upload|capitalize}</div></a>
+					<div class="rounded3 button disabled" id="avatar_upload_button_disabled">{$aLabels.upload|capitalize}</div>
+				  </td>
+				</tr>
+			  </table>
+		
+			  <iframe src="" id="avatar_upload_iframe" name="avatar_upload_iframe" style="display:none;"></iframe>
+			</div>
+			</form>
+		  </div> 
+	  
+	  
+		  <div id="image_crop_fieldset" class="left ml5" style="display:none;">
+			<div style="width:auto; height:auto; max-width:530px; max-height:400px; overflow:hidden; overflow-x: hidden; border:1px solid #999999; padding:1px;" id="uploaded_avatar_container">
+			  <img src="" border="0" id="uploaded_avatar" rel="">
+			  <input type="hidden" id="cropped_x1" value="">
+			  <input type="hidden" id="cropped_y1" value="">
+			  <input type="hidden" id="cropped_x2" value="">
+			  <input type="hidden" id="cropped_y2" value="">
+			  <input type="hidden" id="cropped_width" value="">
+			  <input type="hidden" id="cropped_height" value="">					 
+			  <input type="hidden" id="real_width" value="">
+			  <input type="hidden" id="real_height" value="">					 
+			</div>
+		  </div>
+		
+		  <div id="image_preview_fieldset" class="left" style="width:150px; display:none;">
+			<center>
+			  <div class="avatar" style="padding:0px;">
+				<div id="avatar_preview"></div>
+			  </div>
+			  <br>
+			  <a href="javascript:void(0);" onclick="CropAvatar();"><div class="rounded3 button">{$aLabels.crop_save}</div></a>
+			  <br class="clear"><br class="break">
+			  <a href="javascript:void(0);" onclick="CancelCropAvatar(); cropper.remove(); cropper=null;"><div class="rounded3 button">{$aLabels.cancel|capitalize}</div></a>
+			</center>
+		  </div>
+		
+	</div>
+  </div>
+</div>
+<div style="margin-top:-40px;">
+  <a href="javascript:void(0);" onclick="CloseLayer('edit_profile_layer');"><div class="input-button">{$aLabels.close|capitalize}</div></a>
+<div>

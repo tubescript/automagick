@@ -1,0 +1,89 @@
+{if !$onlymod}
+<br>
+<div id="comments_contents">
+{/if}
+
+<center><b>Showing <b class="bluetext">{$from}</b> to <b class="bluetext">{$to}</b> of <b class="red">{$total_comments}</b> total comments</b></center>
+<br>
+
+<input type="hidden" id="comments_page" value="{$page}">
+<input type="hidden" id="comments_video_id" value="{$video_id}">
+
+{foreach from=$aComments item=comment}
+
+{if $total_pages>1}
+  <center>{$pagination}</center>
+  <br>
+{/if}
+
+<fieldset style="width:99%;" {if $comment.status!=1}class="border_red"{/if} id="comment_fieldset_{$comment.id}">
+  <div class="bottom">
+    <table width="100%">
+      <tr valign="top">
+        <td width="130">
+          {if $comment.user_id}
+            <a href="index.php?module=users&trigger_profile={$comment.user_id}" target="_blank"><img src="images/icons/user.png"> <b>{$comment.username}</b></a>
+            <br><br class="br">
+            <div class="avatar" align="center">
+              <a href="index.php?module=users&trigger_profile={$comment.user_id}" target="_blank">
+              <img src="../{$comment.avatar}">
+              </a>
+            </div>
+            <center><b>{$comment.date_added|date_format}</b></center>
+          {else}
+            <img src="images/icons/ghost.png"> <b>Anonymus</b>
+            <br><br class="br">
+            <div class="avatar"></div>            
+          {/if}
+          
+        </td>
+        <td>
+          <div class="right" style="margin-right:30px; margin-bottom:5px;">
+            <a class="small_button right" {if $comment.status==1}style="display:none;"{/if} href="javascript:void(0);" onclick="SetStatus({$comment.id},1)" id="activate_comment_button_{$comment.id}"><span><img src="images/icons/active.png" id="activate_comment_icon_{$comment.id}" width="12"> Approve Comment</span></a>
+            <a class="small_button right" {if $comment.status!=1}style="display:none;"{/if} href="javascript:void(0);" onclick="SetStatus({$comment.id},0)" id="deactivate_comment_button_{$comment.id}"><span><img src="images/icons/inactive.png" id="deactivate_comment_icon_{$comment.id}" width="12"> Deactivete Comment</span></a>
+            <a class="small_button right ml5" style="display:none;" href="javascript:void(0);" onclick="SaveComment({$comment.id})" id="save_comment_button_{$comment.id}"><span><img src="images/icons/little_check.png" id="save_comment_icon_{$comment.id}" width="12"> Finish Edition</span></a>
+            <a class="small_button right ml5" href="javascript:void(0);" onclick="EnterEditMode({$comment.id});" id="edit_comment_button_{$comment.id}"><span><img src="images/icons/edit-tiny.png" id="edit_comment_icon_{$comment.id}"> Edit Comment</span></a>
+            <a class="small_button right ml5" href="javascript:void(0);" onclick="DeleteComment({$comment.id},{$video_id})" id="delete_comment_button_{$comment.id}"><span class="red_button"><img src="images/icons/delete-tiny.png" id="delete_comment_icon_{$comment.id}"> Delete Comment</span></a>
+          </div>
+          
+          <img src="images/icons/comment_stem.png" class="left" style="margin-right:-1px; margin-top:40px;">
+          <fieldset class="fieldset2" style="width:97%; margin-bottom:5px;">
+           <div class="bottom" style="min-height:25px; padding:15px;">
+           
+             <b>{$comment.date|date_format:"%b %e, %Y - %H:%M"}</b><br>
+             <div id="comment_text_{$comment.id}">
+               {$comment.comment|regex_replace:"/[\r\n]/":"<br>"}
+             </div>
+             <textarea id="edit_comment_{$comment.id}" style="display:none; min-height:25px; width:98%; line-height:18px;">{$comment.comment}</textarea>
+             
+           </div>
+          </fieldset>
+          <div class="left" style="margin-left:30px;">
+            <div class="option_button left pt3"><a href="javascript:void(0);"rel="Comment Liked"><img src="images/icons/thumb_up.gif"></a></div>
+            <span class="left ml5">{$comment.thumb_up} times&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <div class="option_button left pt3"><a href="javascript:void(0);" rel="Comment Disliked"><img src="images/icons/thumb_down.gif"></a></div>
+            <span class="left ml5">{$comment.thumb_down} times</span>
+          </div>
+          <div class="right" style="margin-right:30px;">
+            <b>Reported as Spam:</b> {if $comment.spam}<b class="red">{$comment.spam} times</b>{else}{$comment.spam} times{/if}
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</fieldset>
+<br>
+{foreachelse}
+<center><b>No comments added yet to this video</b></center>
+{/foreach}
+
+{if $total_pages>1}
+  <center>{$pagination}</center>
+{/if}
+
+{if !$onlymod}
+</div>
+<script>
+ReTip();
+</script>
+{/if}

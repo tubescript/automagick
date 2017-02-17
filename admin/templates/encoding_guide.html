@@ -1,0 +1,144 @@
+<div id="encoding_guide_layer" style="display:none;" class="floating_layer">
+<table cellpadding="0" cellspacing="0" align="center" width="100%" height="100%">
+  <tr><td align="center">
+  
+     <table cellpadding="0" cellspacing="0" class="draggable">
+       <tr class="draggable_handle" style="cursor:pointer;">
+         <td background="images/modalbox/otl.png" width="8" height="25"></td>
+         <td background="images/modalbox/ot.png" height="25" valign="bottom">
+           <span class="modalbox_title">Encoding Guide</span>
+           <span class="modalbox_buttons">
+             &nbsp; 
+             <a href="javascript:void(0);" onclick="CloseLayer('encoding_guide_layer');"><img src="images/icons/close_big.png" onmouseover="this.src='images/icons/close_big_on.png';" onmouseout="this.src='images/icons/close_big.png';"></a>
+           </span>
+         </td>
+         <td background="images/modalbox/otr.png" width="8" height="25"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/ol.png" width="8"></td>
+         <td>
+           <table cellpadding="0" cellspacing="0">
+	         <tr>
+	           <td background="images/modalbox/itl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/it.png" height="10"></td>
+	           <td background="images/modalbox/itr.png" width="10" height="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/il.png" width="10"></td>
+	           <td bgcolor="#C9CDD0" class="modal_text" style="width:auto; padding:0px; ">
+			     <div style="width:auto; min-width:500px; max-width:700px; max-height:450px; overflow-y:auto; padding:10px;">
+					This guide will cover the concepts of encoding with the goal of hosting and serving videos with Pseudo-Streaming or CDN/RTMP server.<br><br>
+					
+					<h2 class="bluetext">Basic Facts of Encoding</h2>
+					First of all, let's review some basic facts for streaming videos the right way:<br><br>
+					<fieldset class="simple_fs">
+					  1) Currently, only FLV and MP4 videos can be played (using Flash and HTML5 players).<br><br class="br">
+					  2) FLV needs to be encoded using H.264 codec to be streamed correctly.<br><br class="br">
+					  3) For FLV videos to be streamed well, we need to add some metadata (called keyframes or cuePoints). This is achieved with the help of additional tools, later explained.<br><br class="br">
+					  4) For MP4 videos to be streamed well, we need to make some metadata (called moov-atom) to exist at the begining of the file (by default, the encoding puts it at the end). We'll check later how to fix this.
+					</fieldset><br>
+					
+					<b>In a few words:</b> <i>Enconding</i> the video and <i>streaming</i> it are two different stages. Though, the latter needs the first to be executed correctly in order to work as expected, keeping into considerantion the different formats (FLV or MP4).
+					<br><br>
+					
+					
+					<h2 class="bluetext">Server Requirements</h2>
+									
+					If you want to run a hosted videos tubesite with automagick, you will need to meet several requirements:<br><br>
+					
+					1) FFMPEG must be installed (for video encoding/conversion, duration and thumbnails extraction, etc).<br><br class="br">
+					2) Depending on the version of FFMPEG, the encoding comands need to be correct.<br><br class="br">
+					3) If you want to allow Pseudo-Streaming, you will need <i>mod_h264_streaming</i> enabled (for Apache. If you have other web server, it's different.)<br><br class="br">
+					4) FLVTool2 is optional but useful tool. Will help adding the needed keyframes to FLV videos to allow Pseudo-Streaming, when uploading videos already in FLV format.<br><br>
+					
+					
+					<h2 class="bluetext">Common Scenarios</h2>
+					
+					With FFMPEG installed, you are now able to encode/convert the videos.<br>
+					Let's take a look at the commands FFMPEG uses and how to properly adjust them, always with the goal of pseudo-streaming.<br>
+					In Automagick Settings, you only need to put the additional parameters of conversion, and not the whole command.<br><br>
+
+					<fieldset class="simple_fs">
+					  <b>Encoding to FLV, using updated version of FFMEPG</b><br><br class="br">
+					  <div class="warning" style="font-family:courier; width:320px;">-c:v libx264 -preset veryslow -ar 44100 -g 1</div>
+					  These parameters will make FFMPEG use the H.264 codec, using a preset for good quality, an audio rate of 44100 (standard audio quality) and making the video to have 1 keyframe every second (the <i>-g 1</i> part).<br>
+					  You can also play with the <i>-preset</i> values: <i>ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow</i> for different results. Veryslow is the best quality. Medium is default.
+					</fieldset>
+					<br>
+					
+					<fieldset class="simple_fs">
+					  <b>Encoding to FLV, using older versions of FFMEPG</b><br>
+					  Some older versions of FFMPEG doesn't use the same format for the parameters. This is an alternative to test with:<br><br class="br">
+					  <div class="warning" style="font-family:courier; width:285px;">-vcodec libx264 -crf 22 -ar 44100 -g 1</div>
+					  You can play with the quality here by changing the value of <i>-crf</i> param. The lower the value, the higher the output quality.
+					</fieldset>
+					<br>
+					
+					<fieldset class="simple_fs">
+					  <b>Encoding to MP4, using updated version of FFMEPG</b><br><br class="br">
+					  <div class="warning" style="font-family:courier; width:420px;">-c:v libx264 -preset veryslow -ar 44100 -g 1 -movflags faststart</div>
+					  Here, the only difference with the FLV encoding, is the <i>-moveflags faststart</i> part.<br>
+					  This is because MP4 videos doesn't need keyframes (or CuePoints), like FLVs need. MP4 videos need the metadata at the beginning, and this parameter makes it happen.
+					  You need an updated version of FFMPEG for this to work. If you don't have it updated, additional tools are required to move this metadata to the beginning of the file.
+					</fieldset>
+					<br>
+					
+					<fieldset class="simple_fs">
+					  <b>Encoding to MP4, using older versions of FFMEPG</b><br><br class="br">
+					  <div class="warning" style="font-family:courier; width:285px;">-vcodec libx264 -crf 22 -ar 44100 -g 1</div>
+					  As you can see here, older version of FFMPEG can't move the metadata to the beginning of the file, thus the video will not play until it is fully doenloaded.<br>
+					  This is absolutely not recommended unless you use MP4 files only for mobile version downloads.
+					</fieldset>
+					<br><br>
+					
+					
+					<h2 class="bluetext">Installing mod_h264_streaming Pseudo-Streaming Module (for Apache)</h2>
+					
+					The only way to offer pseudo-streaming without a CDN/RTMP server is to install mod_h264_streaming module for apache. This is absolutely mandatory if you wish to offer pseudo-streaming.<br><br>
+					To install it, follow the instructions directly from the <a href="http://h264.code-shop.com/trac/wiki/Mod-H264-Streaming-Apache-Version2" target="_blank">official website</a>.<br><br>
+					
+					Only one note is important to consider:<br>
+					For FLVs to be also kept into account for pseudo-streaming, make sure you <b>add this line</b>, in the part of the configuration of apache:<br><br class="br">
+					
+					<div class="warning" style="font-family:courier; width:300px;">AddHandler h264-streaming.extensions <b>.flv</b></div>
+					<br class="br">
+					
+					
+					<h2 class="bluetext">Fixing pseudo-streaming problems of user uploads (FLV videos)</h2>
+					When a user uploads an FLV video without keyframes, Automagick will need to process this video with <b>FLVTool2</b>.<br>
+					You will need FLVTool2 installed, of course.<br><br>
+					The script will attempt to read the keyframes of the uploaded FLVs, and if they are not found, it will add a task to the video, so it can be processed later.
+					In order for this to work, you only need to make sure the tasks cronjob is propperly installed (check installation guide), and it's recommended to run it every 5 minutes, if you allow user uploads.<br><br>
+					
+					
+					<h2 class="bluetext">Fixing pseudo-streaming problems of user uploads (MP4 videos)</h2>
+					When a user uploads an MP4 video, improperly encoded, the video might have problems not only to pseudo-stream but to start playing immediately.<br>
+					This happens when the video doesn't have a piece of metadata at the beggining (called moov-atom), and in order to fix this, Automagick will use qt-faststart tool.<br>
+					Qt-faststart will process the video and move the metadata to the beggining and solve the problem.<br>
+					The script will recognize those video that doesn't have the metadata 
+					
+					
+					
+
+				</div>
+	           </td>
+	           <td background="images/modalbox/ir.png" width="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/ibl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/ib.png" height="10"></td>
+	           <td background="images/modalbox/ibr.png" width="10" height="10"></td>
+	         </tr>
+	       </table>         
+         </td>
+         <td background="images/modalbox/or.png" width="8"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/obl.png" width="8" height="11"></td>
+         <td background="images/modalbox/ob.png" height="11"></td>
+         <td background="images/modalbox/obr.png" width="8" height="1"></td>
+       </tr>
+     </table>
+  </td></tr>
+</table>
+</div>

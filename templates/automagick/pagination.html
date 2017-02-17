@@ -1,0 +1,27 @@
+{*
+This template recieves the next variables:
+- {$page}: Actual Page.
+- {$total_pages}: Number of total pages.
+- {links}: Links array with index=page.
+*}
+<div style="display:table;">
+  <div style="display:table-row;"> 
+{if $page>1}
+  <div style="display:table-cell;"><a href="{$first_page}" class="page_button_big"><b>{$aLabels.first}</b></a>&nbsp;</div>
+  <div style="display:table-cell;"><a href="{$links[$prev_page]}" class="page_button">&laquo;</a>&nbsp;</div>
+{else}
+  <div style="display:table-cell;"><b class="page_button_big disabled">{$aLabels.first}</b>&nbsp;</div>
+  <div style="display:table-cell;"><b class="page_button disabled">&laquo;</b>&nbsp;</div>
+{/if}
+{foreach from=$links item=link key=i}
+  <div style="display:table-cell;">{if $i!=$page}<a href="{$link}"><b class="page_button">{$i}</b></a>&nbsp;{else}<b class="page_button current_page">{$i}</b>&nbsp;{/if}</div>
+{/foreach}
+{if $page<$total_pages}
+  <div style="display:table-cell;"><a href="{$links[$next_page]}" class="page_button">&raquo;</a>&nbsp;</div>
+  <div style="display:table-cell;"><a href="{$last_page}" class="page_button_big"><b>{$aLabels.last}</b></a></div>
+{else}
+  <div style="display:table-cell;"><b class="page_button disabled">&raquo;</b>&nbsp;</div>
+  <div style="display:table-cell;"><b class="page_button_big disabled">{$aLabels.last}</b></div>
+{/if}
+  </div>
+</div>

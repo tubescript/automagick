@@ -1,0 +1,103 @@
+{if $access_granted}
+<table cellpadding="0" cellspacing="0" background="images/menu_bar.gif"  boreder=1 width="100%" height="28">
+  <tr><td align="center">
+	  <table cellpadding="0" cellspacing="0" width="1000">
+	    <tr><td>
+	    
+	      	<table cellpadding="0" cellspacing="0">
+	      	  <tr align="center">
+				<td class="menu_separator"></td>
+				{*<td>
+					<div id="menu_videos"><a class="menu_link" href="index.php?module=videos"><img src="images/icons/videos.png" border="0"> Videos</a></div>
+				    <div id="menu_videos_child" class="menu_child">
+				      <table cellpadding="0" cellspacing="0">
+				        <tr align="center">
+				          <td><a class="submenu_link" href="index.php?module=videos"><img src="images/icons/videos.png" border="0"> Main</a></td><td width="21">|</td>
+				          <td><a class="submenu_link" href="index.php?module=videos_stats"><img src="images/icons/stats-tiny.png" border="0"> Video Stats</a></td></td><td width="21">|</td>
+						  <td><a class="submenu_link" href="index.php?module=comments"><img src="images/icons/comments-tiny.png" border="0"> Videos Comments</a></td>
+					  </table>
+					</div>
+				    <script type="text/javascript">at_attach("menu_videos", "menu_videos_child", "hover", "y", "pointer");</script>
+				</td>*}
+				<td><a href="index.php?module=videos" class="menu_link"><img src="images/icons/videos.png" align="middle" border="0"> Videos</a>
+				<td class="menu_separator"></td>
+				<td><a href="index.php?module=categories" class="menu_link"><img src="images/icons/folder.png" align="middle" border="0"> Categories</a>
+				<td class="menu_separator"></td>
+				<td><a href="index.php?module=channels" class="menu_link"><img src="images/icons/channels.png" align="middle" border="0"> Channels</a>
+				<td class="menu_separator"></td>
+				<td><a href="index.php?module=sources" class="menu_link"><img src="images/icons/am_star.png" align="middle" border="0"> Sources</a>
+				<td class="menu_separator"></td>
+				<td><a href="index.php?module=users" class="menu_link"><img src="images/icons/user.png" align="middle" border="0"> Users</a>
+				<td class="menu_separator"></td>
+	      	    <td><a href="index.php?module=ads" class="menu_link"><img src="images/icons/ads.png" align="middle" border="0"> Ads</a>
+				<td class="menu_separator"></td>				
+				<td>
+					<div id="menu_templates"><a class="menu_link" href="index.php?module=templates"><img src="images/icons/templates.png" border="0"> Templates</a></div>
+				    <div id="menu_templates_child" style="margin-left:-80px;" class="menu_child">
+				      <table cellpadding="0" cellspacing="0">
+				        <tr align="center">
+				          <td><a class="submenu_link" href="index.php?module=templates"><img src="images/icons/templates-tiny.png" border="0"> Templates Main</a></td><td width="21">|</td>
+						  <td><a class="submenu_link" href="index.php?module=templates_sc"><img src="images/icons/brush-tiny.png" border="0"> Want a brand new Template?</a></td>
+					  </table>
+					</div>
+				    <script type="text/javascript">at_attach("menu_templates", "menu_templates_child", "hover", "y", "pointer");</script>
+				</td>
+				<td class="menu_separator"></td>				
+				<td>
+					<div id="menu_plugins"><a class="menu_link" href="index.php?module=plugins"><img src="images/icons/plugins.png" border="0"> Plugins</a></div>
+				    <div id="menu_plugins_child" style="margin-left:-40px;" class="menu_child">
+				      <table cellpadding="0" cellspacing="0">
+				        <tr align="center">
+				          <td><a class="submenu_link" href="index.php?module=plugins_videochat"><img src="images/icons/webcam.png" border="0"> Videochat Plugin</a></td>
+					  </table>
+					</div>
+				    <script type="text/javascript">at_attach("menu_plugins", "menu_plugins_child", "hover", "y", "pointer");</script>
+				</td>
+	      	    <td class="menu_separator"></td>
+	      	    <td>
+					<div id="menu_extras"><a href="javascript:void(0);" class="menu_link"><img src="images/icons/extras.png" border="0"> Extras</a></div>
+				    <div id="menu_extras_child" style="margin-left:-100px;" class="menu_child">
+				      <table cellpadding="0" cellspacing="0">
+				        <tr align="center">
+				          {*<td><a class="submenu_link" href="index.php?module=db_backup"><img src="images/icons/backup.png" border="0"> Database Back Up</a></td><td width="21">|</td>
+				          <td><a class="submenu_link" href="index.php?module=rss_feeds"><img src="images/icons/rss-tiny.png" border="0"> RSS Feeds</a></td><td width="21">|</td>
+				          <td><a class="submenu_link" href="index.php?module=sitemap"><img src="images/icons/sitemap-tiny.png" border="0"> Sitemap Generator</a></td><td width="21">|</td>
+						  <td><a class="submenu_link" href="index.php?module=plugins"><img src="images/icons/plugins.png" border="0"> Plugins</a></td><td width="21">|</td> *}
+						  <td><a class="submenu_link" href="index.php?module=migration"><img src="images/icons/import.png" border="0"> Migration Module</a></td><td width="21">|</td>	
+						  <td><a class="submenu_link" href="javascript:void(0);" onclick="OpenMailForm('support@automagick.com','Bug Report');"><img src="images/icons/bug.png" border="0"> Bugs Report</a></td>
+						  
+					  </table>
+					</div>
+				    <script type="text/javascript">at_attach("menu_extras", "menu_extras_child", "hover", "y", "pointer");</script>
+				</td>
+	      	    <td class="menu_separator"></td>
+			  </tr>
+			</table>
+	      
+	      </td>
+	      <td align="right">
+	        <table cellpadding="0" cellspacing="0">
+	      	  <tr align="center">
+	      	    <td class="menu_separator"></td>
+	      		<td><a href="index.php?module=settings" class="menu_link"><img src="images/icons/settings.png" align="middle" border="0"> Settings</a>
+	      	    <td class="menu_separator"></td>
+	      		<td><a href="index.php?module=updates" class="menu_link"><img src="images/icons/updates.png" align="middle" border="0"> Updates</a>
+	      	    <td class="menu_separator"></td>
+	      		<td><a href="actions/logout.php" class="menu_link" onmouseover="document.img_logout.src='images/icons/close_big_on.png';" onmouseout="document.img_logout.src='images/icons/close_big.png';"><img src="images/icons/close_big.png" border="0" name="img_logout" align="middle"> Logout</a>
+	      		<td class="menu_separator"></td>
+	      	  </tr>
+	      	</table>
+	      </td>
+	   </tr>
+	  </table>
+    </td>
+  </tr>
+</table>
+<table cellpadding="0" cellspacing="0" width="100%" height="28">
+  <tr><td background="images/msh_bg.gif"></td></tr>
+</table>
+{else}
+<table cellpadding="0" cellspacing="0" width="100%">
+  <tr><td background="images/bar.gif" height="14" width="100%" align="center"></td></tr>
+</table>   
+{/if}

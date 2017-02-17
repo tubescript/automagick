@@ -1,0 +1,215 @@
+
+<div id="sources_browser_layer" style="display:none;" class="floating_layer">
+<table cellpadding="0" cellspacing="0" align="center" width="100%" height="100%">
+  <tr><td align="center">
+  
+     <table cellpadding="0" cellspacing="0" class="draggable">
+       <tr class="draggable_handle" style="cursor:pointer;">
+         <td background="images/modalbox/otl.png" width="8" height="25"></td>
+         <td background="images/modalbox/ot.png" height="25" valign="bottom">
+           <span class="modalbox_title" id="sources_browser_title">Videos</span>
+           <span class="modalbox_buttons">
+             &nbsp;
+             <a href="javascript:void(0);" rel="Videos Browser Instructions" onclick="alertBox('<b>Help:</b> Sources\' Videos Browser Instructions','icons/help.png',$('instructions_sources_browser').innerHTML,500);"><img src="images/icons/help_big.png" onmouseover="this.src='images/icons/help_big_on.png';" onmouseout="this.src='images/icons/help_big.png';"></a>
+             <a href="javascript:void(0);" onclick="CloseLayer('sources_browser_layer');"><img src="images/icons/close_big.png" onmouseover="this.src='images/icons/close_big_on.png';" onmouseout="this.src='images/icons/close_big.png';"></a>
+           </span>
+         </td>
+         <td background="images/modalbox/otr.png" width="8" height="25"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/ol.png" width="8"></td>
+         <td>
+           <table cellpadding="0" cellspacing="0">
+	         <tr>
+	           <td background="images/modalbox/itl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/it.png" height="10"></td>
+	           <td background="images/modalbox/itr.png" width="10" height="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/il.png" width="10"></td>
+	           <td bgcolor="#C9CDD0" width="820" class="modal_text">
+	           
+	              <div class="hidden" id="instructions_sources_browser"></div>
+
+	              <table cellpadding="0" cellspacing="0" width="800" align="center"><tr>
+				    <td align="left" width="1"><a class="button" href="javascript:void(0);" onclick="GetVideos('add', $('source').value, $('page').value, $('categ').value, $('tag').value, $('lang').value, $('amount').value);"><span><img src="images/icons/add.png"> Add Selected Videos</span></a></td>
+				    <td align="center">
+				      <div class="warning" id="warning_msg" style="width:320px; margin-bottom:0px;"></div>
+				      <div class="error" id="error_msg" style="width:320px; margin-bottom:0px;"></div>
+				    </td>
+				    <td align="right" width="1"><a class="button" href="javascript:void(0);" onclick="GetVideos('list', $('source').value, $('page').value, $('categ').value, $('tag').value, $('lang').value, $('amount').value);"><span><img src="images/icons/refresh.png"> Refresh</span></a></td>
+				  </tr></table>
+	           
+				  <form id="get_videos_form" action="actions/sources/get_videos.php" target="get_videos_iframe" method="post">
+				  <center><div class="dotted_hor_line"></div>
+				  <br>				  
+				  <fieldset class="fieldset2">
+				    <legend class="legend2"><b>Options</b></legend>
+				    <div class="bottom" style="padding:10px;">
+				      <div id="options_div">
+					    <table width="100%">
+					      <tr>
+							<td>
+							  <b>Video Files:</b>
+							  <br>
+							  <select name="video_mode" id="video_mode" onclick="CheckVideoModeValue(this.value);">
+								<option value="1">Hotlink Video</option>					
+								<option value="2">Donwload & Host</option>
+							  </select>
+							  <a href="javascript:void(0);" rel="If you choose to hotlink video, it would be like using the 'Embed Code' the source shares, using the source's player<br>If you choose to download and host the video file, you will be able to use your player.<br>Also, the download will be ran only by the cron job, in a later stage."><img src="images/icons/help.png"></a>
+							</td>
+							
+							<td>
+							  <b>Preview Images:</b>
+							  <br>
+							  <select name="preview_mode" id="preview_mode">
+								<option value="1">Hotlink Preview Image</option>
+								<option value="2">Donwload & Host</option>
+								<option value="3">Frame Capture</option>
+							  </select>
+							  <a href="javascript:void(0);" rel="Choose whether to hotlink, download or capture a preview image.<br><br>If you choose to capture, the task will be ran by the cron job, later."><img src="images/icons/help.png"></a>
+							</td>
+					
+							<td>
+							  <b>Thumbnails:</b>
+							  <br>
+							  <select name="thumb_mode" id="thumb_mode">
+								<option value="1">Hotlink Thumbnails</option>
+								<option value="2">Donwload & Host</option>
+								<option value="3">Frames Secuence Captured</option>					
+							  </select>
+							  <a href="javascript:void(0);" rel="Choose whether to hotlink, download or generate a secuence of thumbnails from the video file.<br><br>If you choose to capture, the task will be ran by the cron job, later."><img src="images/icons/help.png"></a>
+							</td>
+							
+							<td>
+							  <b>FLV Player:</b>
+							  <br>
+							  <select name="player_id" id="player_id">
+							  {foreach from=$array_players item=player}
+							  {if $player.editable==1 or $player.id==1}<option value="{$player.id}">{$player.name}</option>{/if}
+							  {/foreach}
+					
+							  </select>
+							  <a href="javascript:void(0);" rel="Select the Player you want the videos from this source to run with.<br>This value will be applied only if 'Video File' is set to 'Download & Host'."><img src="images/icons/help.png"></a>
+							</td>
+						  </tr>
+						  <tr>
+						    <td>
+							  <b>Add as:</b>
+							  <br>
+							  <select name="status" id="status">
+							   <option value="1">Active</option>					
+							   <option value="0">Inactive</option>
+							  </select>
+							  <a href="javascript:void(0);" rel="Select whether you want these videos to be added as active or inactive."><img src="images/icons/help.png"></a>
+							</td>
+							<td>
+							  <div id="premium_row">
+							    <br>
+							    <input type="checkbox" id="premium" name="premium" value="1"> <b>Make Premium:</b>
+							    <a href="javascript:void(0);" rel="Select whether you want these videos to be set as Premium Videos."><img src="images/icons/help.png"></a>
+							  </div>
+							</td>
+							<td>
+							  <b>Search:</b>
+							  <br>
+							  <input type="text" id="tag" class="left" style="margin-right:3px;">
+							  <a class="small_button" href="javascript:void(0);" onclick="GetVideos('list', $('source').value, $('page').value, $('categ').value, $('tag').value, $('lang').value, $('amount').value);"><span><img src="images/icons/view-tiny.png" style="margin-top:-1px;"> Search</span></a>
+							</td>
+							<td>
+							   <b>Show:</b>
+							  <br>
+							  <select name="amount" id="amount">
+							   <option value="24">24 Videos</option>					
+							   <option value="36">36 Videos</option>
+							   <option value="48">48 Videos</option>
+							   <option value="96">96 Videos</option>							  
+							  </select>
+							  <a href="javascript:void(0);" rel="Select whether you want these videos to be added as active or inactive."><img src="images/icons/help.png"></a>
+							</td>
+						  </tr>
+						</table>
+						<iframe id="get_videos_iframe" name="get_videos_iframe" style="width:0px; height:0px; display:none;"></iframe>
+					  </div>
+				    </div>
+				  </fieldset>
+				  <div class="pull"><a href="javascript:void(0);" rel="Click to Expand/Collapse" onclick="TogglePull('options_div','pull_filters',2);"><img src="images/pull_up2.png" id="pull_filters"></a></div>
+				  
+				  				  
+				  <div class="dotted_hor_line"></div></center>
+	              <div id="sources_browser_contents" style="max-height:300px; overflow-x:auto;"></div>
+	              
+	              </form>
+	           </td>
+	           <td background="images/modalbox/ir.png" width="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/ibl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/ib.png" height="10"></td>
+	           <td background="images/modalbox/ibr.png" width="10" height="10"></td>
+	         </tr>
+	       </table>         
+         </td>
+         <td background="images/modalbox/or.png" width="8"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/obl.png" width="8" height="11"></td>
+         <td background="images/modalbox/ob.png" height="11"></td>
+         <td background="images/modalbox/obr.png" width="8" height="1"></td>
+       </tr>
+     </table>
+  </td></tr>
+</table>
+</div>
+
+
+<br><br>
+<div style="width:90%; position:relative; z-index:2; margin-bottom:-1px; text-align:left; padding-left:20px;">
+<table cellpadding="0" cellspacing="0">
+  <tr>
+    <td class="tab_active" id="source_1" onclick="SwitchTab('source',1); HideByClassName('.source_div'); $('source_div_1').show();">Mainstream Sources</td>
+    <td width="5"></td>
+    <td class="tab" id="source_2" onclick="SwitchTab('source',2); HideByClassName('.source_div'); $('source_div_2').show();">Adult Sources</td>
+    <td width="5"></td>
+    {* <td class="tab" id="source_3" onclick="SwitchTab('source',3); HideByClassName('.source_div'); $('source_div_3').show();"><img src="images/icons/premium.png"> Premium Mainstream Sources</td>
+    <td width="5"></td> *}
+    <td class="tab" id="source_4" onclick="SwitchTab('source',4); HideByClassName('.source_div'); $('source_div_4').show();"><img src="images/icons/premium.png"> Premium Adult Sources</td>
+    <td width="5"></td> 
+    <td class="tab" id="source_5" onclick="SwitchTab('source',5); HideByClassName('.source_div'); $('source_div_5').show();">Adult Sponsors</td>
+  </tr>
+</table>
+</div>
+
+
+<fieldset class="blue">
+  <form action="javascript:void(0);" id="sources_form">
+
+  <div class="bottom" style="padding:20px;">
+
+    <table cellpadding="0" cellspacing="0" align="right" style="margin-right:30px;"><tr>
+      {* <td id="undo_source_enabled" style="display:none;"><a class="button" href="javascript:void(0);" onclick="UndoChanges();"><span><img src="images/icons/undo.png" id="undo_icon"> Undo Changes</span></a></td>
+  	  <td id="undo_source_disabled" style="cursor:default;" class="disabled"><a class="button"><span><img src="images/icons/undo.png" id="undo_icon_disabled"> Undo Changes</span></a></td> *}
+  	  <td width="25">
+      <td>
+        <a class="button disabled" href="javascript:void(0);" id="sources_save_button_disabled"><span><img src="images/icons/save.png"> Save Sources Config</span></a>
+        <a class="button" href="javascript:void(0);" onclick="SaveConfig($('sources_form'));" style="display:none;" id="sources_save_button"><span><img src="images/icons/save.png" id="save_icon"> Save Sources Config</span></a>        
+      </td>
+    </tr></table><br><br><br>
+    
+    <div id="source_div_1" class="source_div">{$aStructure[1]}</div>
+    <div id="source_div_2" class="source_div" style="display:none;">{$aStructure[2]}</div>
+    <div id="source_div_3" class="source_div" style="display:none;">{$aStructure[3]}</div>
+    <div id="source_div_4" class="source_div" style="display:none;">{$aStructure[4]}</div>
+    <div id="source_div_5" class="source_div" style="display:none;">{$aStructure[5]}</div>
+
+	<br><br><br><br>
+  </div>
+  </form>
+
+</fieldset>
+
+<script type="text/javascript">
+GetConfig();
+CheckVideoModeValue($('video_mode').value);
+ReTip();
+</script>

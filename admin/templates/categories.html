@@ -1,0 +1,377 @@
+<div id="edit_category_layer" style="display:none;" class="floating_layer">
+<table cellpadding="0" cellspacing="0" align="center" width="100%" height="100%">
+  <tr><td align="center">
+  
+     <table cellpadding="0" cellspacing="0" class="draggable">
+       <tr class="draggable_handle" style="cursor:pointer;">
+         <td background="images/modalbox/otl.png" width="8" height="25"></td>
+         <td background="images/modalbox/ot.png" height="25" valign="bottom">
+           <span class="modalbox_title" id="sources_browser_title">Edit Category</span>
+           <span class="modalbox_buttons">
+             &nbsp;
+             {* <a href="javascript:void(0);" rel="Videos Browser Instructions" onclick="alertBox('<b>Help:</b> Sources\' Videos Browser Instructions','icons/help.png',$('instructions_sources_browser').innerHTML,500);"><img src="images/icons/help_big.png" onmouseover="this.src='images/icons/help_big_on.png';" onmouseout="this.src='images/icons/help_big.png';"></a> *}
+             <a href="javascript:void(0);" onclick="CloseLayer('edit_category_layer');"><img src="images/icons/close_big.png" onmouseover="this.src='images/icons/close_big_on.png';" onmouseout="this.src='images/icons/close_big.png';"></a>
+           </span>
+         </td>
+         <td background="images/modalbox/otr.png" width="8" height="25"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/ol.png" width="8"></td>
+         <td>
+           <table cellpadding="0" cellspacing="0">
+	         <tr>
+	           <td background="images/modalbox/itl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/it.png" height="10"></td>
+	           <td background="images/modalbox/itr.png" width="10" height="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/il.png" width="10"></td>
+	           <td bgcolor="#C9CDD0" width="380" class="modal_text">
+	           
+	           		<form name="edit_categ_form" id="edit_categ_form" action="actions/categories/edit_categ.php" method="POST" target="edit_categ_iframe" enctype="multipart/form-data">
+	           		<input type="hidden" name="edit_categ_id" id="edit_categ_id" value="">
+	           		<input type="hidden" name="edit_categ_group_id" id="edit_categ_group_id" value="">
+	           
+	             	<table cellpadding="4" cellspacing="1" style="border:1px solid #AAAAAA;" bgcolor="#EEEEEE" width="100%">
+                      <tr bgcolor="#D1D1D1" valign="top">
+                        <td align="right" width="100"><b class="mandatory">*</b> <b>Name:</b></td>
+                        <td>
+                          <input type="text" name="edit_categ_name" id="edit_categ_name" value="" maxlength="40" style="width:200px;">
+                          <a href="javascript:void(0);" rel="<b>Category Name:</b><br>Can't use an already picked name.<br>Up to 40 chars."><img src="images/icons/help.png"></a>
+                        </td>
+                      </tr>
+                      {foreach from=$array_languages item=lang}
+                      {if $lang.default==0}
+                      <tr bgcolor="#D1D1D1" valign="top">
+                        <td align="right" width="100"><b class="mandatory">*</b> <b><img src="images/flags/{$lang.code}.gif" title="{$lang.name}"> Name:</b></td>
+                        <td>
+                          <input type="text" name="edit_categ_name_lang[{$lang.id}]" id="edit_categ_name_lang_{$lang.id}" value="" maxlength="40" style="width:200px;">
+                          <a href="javascript:void(0);" rel="<b>{$lang.name} Category Name:</b><br>Can't use an already picked name.<br>Up to 40 chars."><img src="images/icons/help.png"></a>
+                        </td>
+                      </tr>
+                      {/if}
+                      {/foreach}
+                      <tr bgcolor="#D1D1D1" valign="top">
+                        <td align="right"><b>Thumbnail:</b></td>
+                        <td>
+                        {* <input type="text" name="edit_categ_thumb_name" id="edit_categ_thumb_name" value="" style="width:100px; float:left;"> *}
+                          <label class="cabinet left ml5">
+                            <span><img src="images/icons/upload.png" id="edit_categ_upload_img"></span>
+                            <span id="edit_categ_upload_text">Browse...</span>
+                            <input type="file" name="edit_categ_thumb" id="edit_categ_thumb" class="file" size="1">
+                          </label>
+                          <a href="javascript:void(0);" class="ml5" rel="<b>Thumbnail Image:</b><br>Upload any JPG, GIF or PNG image.<br>Leave empty if you don't want to edit it."><img src="images/icons/help.png"></a>
+                        </td>
+                      </tr>
+                      <tr bgcolor="#D1D1D1" valign="top">
+                        <td align="right"><b>Smart Tags:</b></td>
+                        <td>
+                          <input type="text" name="edit_categ_smart_tags" id="edit_categ_smart_tags" value="" style="width:200px;">
+                          <a href="javascript:void(0);" rel="<b>Smart Tags:</b><br>These will be used for Smart Recateorization of the videos,<br>in case they could not be properly assigned to a category when added.<br>Comma separated.<br>"><img src="images/icons/help.png"></a>
+                        </td>
+                      </tr>
+                      <tr bgcolor="#D1D1D1" valign="top">
+                        <td align="right"><b>Forward to:</b></td>
+                        <td>
+                          <select id="edit_categ_forward_to" name="edit_categ_forward_to">
+					       <option value="0" id="no_forwarding" style="font-weight:bold;">- No Forwarding -</option>
+						   {foreach from=$array_groups item=categories key=group_id}
+						     <option value="" id="edit_group_option_{$group_id}" style="font-weight:bold;" {if $categories[0].group_status==0}class="red"{/if} disabled>-- {$categories[0].group_name|upper}</option>
+							 {foreach from=$categories item=category}
+							 {if $category.category_id}
+							   <option value="{$category.category_id}" id="edit_cd_option_{$category.category_id}" {if $categories[0].group_status==0 or $category.status==0}class="red"{/if}>&nbsp;&nbsp;&nbsp;&nbsp;{$category.category_name}</option>
+							 {/if}
+							 {/foreach}
+							 <option value="" style="font-weight:bold;" disabled>-----------------------</option>
+						   {/foreach}
+						  </select>
+                          <a href="javascript:void(0);" rel="<b>Forward To Category:</b><br>Use this field if you want to send all videos assigned<br>from the original category to the forwarded one.<br>You can use this function, for example,<br>to create inactive categories that will be able to catch<br>videos and distribute them to other active categories."><img src="images/icons/help.png"></a>
+                        </td>
+                      </tr>
+                      <tr bgcolor="#D1D1D1" valign="top">
+                        <td align="right"><b>Status:</b></td>
+                        <td>
+                          <select name="edit_categ_status" id="edit_categ_status">
+                            <option value="0">Inactive</option>
+                            <option value="1">Active</option>
+                          </select>
+                          <a href="javascript:void(0);" rel="<b>Status:</b><br>Select whether you want this category to be active or inactive.<br>If you deactivate this category, none of the videos will be shown in the site."><img src="images/icons/help.png"></a>
+                        </td>
+                      </tr>
+                    </table><br>
+                    
+                    <table align="center"><tr><td>
+                      <a class="button" href="javascript:void(0);" onclick="EditCateg();"><span><img src="images/icons/edit.png" id="edit_categ_icon"> Edit Category</span></a>
+                    </td></tr></table>
+
+                    </form>
+                    <iframe style="display:none; width:0px; height:0px;" src="" id="edit_categ_iframe" name="edit_categ_iframe"></iframe>
+                                        
+	           </td>
+	           <td background="images/modalbox/ir.png" width="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/ibl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/ib.png" height="10"></td>
+	           <td background="images/modalbox/ibr.png" width="10" height="10"></td>
+	         </tr>
+	       </table>         
+         </td>
+         <td background="images/modalbox/or.png" width="8"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/obl.png" width="8" height="11"></td>
+         <td background="images/modalbox/ob.png" height="11"></td>
+         <td background="images/modalbox/obr.png" width="8" height="1"></td>
+       </tr>
+     </table>
+  </td></tr>
+</table>
+</div>
+
+
+<div id="group_delete_layer" style="display:none;" class="floating_layer">
+<table cellpadding="0" cellspacing="0" align="center" width="100%" height="100%">
+  <tr><td align="center">
+  
+     <table cellpadding="0" cellspacing="0" class="draggable">
+       <tr class="draggable_handle" style="cursor:pointer;">
+         <td background="images/modalbox/otl.png" width="8" height="25"></td>
+         <td background="images/modalbox/ot.png" height="25" valign="bottom">
+           <span class="modalbox_title" id="sources_browser_title">Delete Group</span>
+           <span class="modalbox_buttons">
+             &nbsp;
+             {* <a href="javascript:void(0);" rel="Videos Browser Instructions" onclick="alertBox('<b>Help:</b> Sources\' Videos Browser Instructions','icons/help.png',$('instructions_sources_browser').innerHTML,500);"><img src="images/icons/help_big.png" onmouseover="this.src='images/icons/help_big_on.png';" onmouseout="this.src='images/icons/help_big.png';"></a> *}
+             <a href="javascript:void(0);" onclick="$('group_delete_id').value=''; CloseLayer('group_delete_layer');"><img src="images/icons/close_big.png" onmouseover="this.src='images/icons/close_big_on.png';" onmouseout="this.src='images/icons/close_big.png';"></a>
+           </span>
+         </td>
+         <td background="images/modalbox/otr.png" width="8" height="25"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/ol.png" width="8"></td>
+         <td>
+           <table cellpadding="0" cellspacing="0">
+	         <tr>
+	           <td background="images/modalbox/itl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/it.png" height="10"></td>
+	           <td background="images/modalbox/itr.png" width="10" height="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/il.png" width="10"></td>
+	           <td bgcolor="#C9CDD0" width="500" class="modal_text">
+
+	             <input type="hidden" name="group_delete_id" id="group_delete_id" value="">
+	           
+			     Are you sure you want to delete this group?<br><br>
+			     
+			     <b>Categories of this group will be:</b>
+			     <select name="gd_group_action" id="gd_group_action" {literal}onchange="if(this.value==2){$('gd_group_id').show();} else {$('gd_group_id').hide();}"{/literal}>
+			       <option value="1">Deleted and Videos deassigned.</option>
+			       <option value="2">Moved to Group...</option>
+			     </select>
+			     <a href="javascript:void(0);" rel="If you choose to delete the categories of the group, the videos assigned to those categories will be deassigned from them."><img src="images/icons/help.png"></a>
+			     
+			     <select id="gd_group_id" name="gd_group_id" style="display:none;">
+				 {foreach from=$groups_map item=group key=group_id}
+				   <option value="{$group_id}" id="gd_option_{$group_id}" style="font-weight:bold;" {if $group.status==0}class="red"{/if}>{$group.name}</option>
+				 {/foreach}
+				 </select>
+				 
+				 <br><br>
+				 
+				 <table align="center">
+				   <tr>
+				 	<td><a class="small_button" href="javascript:void(0);" onclick="DeleteGroup();"><span class="red_button"> <img src="images/icons/delete-tiny.png" id="gd_delete_icon"> Delete Group</span></a></td>
+				 	<td width="20"></td>
+				 	<td><a class="small_button" href="javascript:void(0);" onclick="$('group_delete_id').value=''; CloseLayer('group_delete_layer');"><span>Cancel</span></a></td>
+				   </tr>
+				 </table>
+	           
+	           </td>
+	           <td background="images/modalbox/ir.png" width="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/ibl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/ib.png" height="10"></td>
+	           <td background="images/modalbox/ibr.png" width="10" height="10"></td>
+	         </tr>
+	       </table>         
+         </td>
+         <td background="images/modalbox/or.png" width="8"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/obl.png" width="8" height="11"></td>
+         <td background="images/modalbox/ob.png" height="11"></td>
+         <td background="images/modalbox/obr.png" width="8" height="1"></td>
+       </tr>
+     </table>
+  </td></tr>
+</table>
+</div>
+
+
+<div id="categ_delete_layer" style="display:none;" class="floating_layer">
+<table cellpadding="0" cellspacing="0" align="center" width="100%" height="100%">
+  <tr><td align="center">
+  
+     <table cellpadding="0" cellspacing="0" class="draggable">
+       <tr class="draggable_handle" style="cursor:pointer;">
+         <td background="images/modalbox/otl.png" width="8" height="25"></td>
+         <td background="images/modalbox/ot.png" height="25" valign="bottom">
+           <span class="modalbox_title" id="sources_browser_title">Delete Category</span>
+           <span class="modalbox_buttons">
+             &nbsp;
+             {* <a href="javascript:void(0);" rel="Videos Browser Instructions" onclick="alertBox('<b>Help:</b> Sources\' Videos Browser Instructions','icons/help.png',$('instructions_sources_browser').innerHTML,500);"><img src="images/icons/help_big.png" onmouseover="this.src='images/icons/help_big_on.png';" onmouseout="this.src='images/icons/help_big.png';"></a> *}
+             <a href="javascript:void(0);" onclick="$('categ_delete_id').value=''; CloseLayer('categ_delete_layer');"><img src="images/icons/close_big.png" onmouseover="this.src='images/icons/close_big_on.png';" onmouseout="this.src='images/icons/close_big.png';"></a>
+           </span>
+         </td>
+         <td background="images/modalbox/otr.png" width="8" height="25"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/ol.png" width="8"></td>
+         <td>
+           <table cellpadding="0" cellspacing="0">
+	         <tr>
+	           <td background="images/modalbox/itl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/it.png" height="10"></td>
+	           <td background="images/modalbox/itr.png" width="10" height="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/il.png" width="10"></td>
+	           <td bgcolor="#C9CDD0" width="500" class="modal_text">
+
+	             <input type="hidden" name="categ_delete_id" id="categ_delete_id" value="">
+	           
+			     Are you sure you want to delete this Category?<br><br>
+			     
+			     <b>Videos of this category will be:</b>
+			     <select name="cd_categ_action" id="cd_categ_action" {literal}onchange="if(this.value==2){$('cd_categ_id').show();} else {$('cd_categ_id').hide();}"{/literal}>
+			       <option value="1">Deassigned from the Category</option>
+			       <option value="2">Moved to Category...</option>
+			     </select>
+			     
+			     <select id="cd_categ_id" name="cd_categ_id" style="display:none;">
+			      <option value="" id="select_categ" style="font-weight:bold;">- Select Category -</option>
+				  {foreach from=$array_groups item=categories key=group_id}
+				    <option value="" id="group_option_{$group_id}" style="font-weight:bold;" {if $categories[0].group_status==0}class="red"{/if} disabled>-- {$categories[0].group_name|upper}</option>
+					{foreach from=$categories item=category}
+					  {if $category.category_id}
+					  <option value="{$category.category_id}" id="cd_option_{$category.category_id}" {if $categories[0].group_status==0 or $category.status==0}class="red"{/if}>&nbsp;&nbsp;&nbsp;&nbsp;{$category.category_name}</option>
+					  {/if}
+					{/foreach}
+					<option value="" style="font-weight:bold;" disabled>-----------------------</option>
+				  {/foreach}
+				 </select>
+				 
+				 <br><br>
+				 
+				 <table align="center">
+				   <tr>
+				 	<td><a class="small_button" href="javascript:void(0);" onclick="DeleteCategory();"><span class="red_button"> <img src="images/icons/delete-tiny.png" id="cd_delete_icon"> Delete Category</span></a></td>
+				 	<td width="20"></td>
+				 	<td><a class="small_button" href="javascript:void(0);" onclick="$('categ_delete_id').value=''; CloseLayer('categ_delete_layer');"><span>Cancel</span></a></td>
+				   </tr>
+				 </table>
+	           
+	           </td>
+	           <td background="images/modalbox/ir.png" width="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/ibl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/ib.png" height="10"></td>
+	           <td background="images/modalbox/ibr.png" width="10" height="10"></td>
+	         </tr>
+	       </table>         
+         </td>
+         <td background="images/modalbox/or.png" width="8"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/obl.png" width="8" height="11"></td>
+         <td background="images/modalbox/ob.png" height="11"></td>
+         <td background="images/modalbox/obr.png" width="8" height="1"></td>
+       </tr>
+     </table>
+  </td></tr>
+</table>
+</div>
+
+
+<br>
+<div style="width:90%; position:relative; top:-28px; z-index:2; margin-bottom:-1px; text-align:left; padding-left:20px;">
+<table cellpadding="0" cellspacing="6" style="float:left;">
+  <tr id="categories_tab_container">
+  {foreach from=$groups_map item=group name=groups}
+    <td class="droppable tab" id="group_{$group.id}" style="white-space:nowrap; padding-left:3px; padding-right:16px;">
+      <div style="float:left; margin-top:4px; margin-right:2px;">
+        {if $group.status==0}
+          <img id="img_status_group_{$group.id}" src="images/icons/inactive_tiny.png" onmouseover="this.src='images/icons/go_tiny.png';" onmouseout="this.src='images/icons/inactive_tiny.png';" onclick="SetStatus('group','{$group.id}',1);">
+        {else}
+          <img id="img_status_group_{$group.id}" src="images/icons/active_tiny.png"  onmouseover="this.src='images/icons/stop_tiny.png';" onmouseout="this.src='images/icons/active_tiny.png';" onclick="SetStatus('group','{$group.id}',0);">
+        {/if}
+      </div>
+      <div style="float:left; margin-right:15px;" onclick="SwitchGroupTab({$group.id});" id="group_label_div_{$group.id}"><a href="javascript:void(0);" rel="Double Click to Edit Name" ondblclick="ShowNameEditor({$group.id},$('group_label_{$group.id}').innerHTML);" id="group_label_link_{$group.id}"><b id="group_label_{$group.id}" {if $group.status==0}class="red"{/if} style="margin:1px;">{$group.name}</b></a></div>
+      <div style="float:left; margin-right:15px; display:none;" onclick="SwitchGroupTab({$group.id});" id="group_label_editor_{$group.id}">
+        <span id="group_label_hidden_value_{$group.id}" style="display:none;"></span>
+        <input type="text" class="tab_transparent" id="group_label_new_value_{$group.id}" onkeyup="FixTextWidth({$group.id}); checkKeyPress(event,{$group.id});" maxlength="30">
+        <a href="javascript:void(0);" onclick="EditGroupName({$group.id});" rel="Save"><img src="images/icons/little_check.png" onmouseover="this.src='images/icons/little_check_on.png';" onmouseout="this.src='images/icons/little_check.png';"></a>
+        <a href="javascript:void(0);" onclick="RemoveNameEditor({$group.id});" rel="Cancel"><img src="images/icons/close_big.png" onmouseover="this.src='images/icons/close_big_on.png';" onmouseout="this.src='images/icons/close_big.png';"></a>
+      </div>
+      
+      <div style="text-align:right; margin:5px;"><a href="javascript:void(0);" onclick="OpenDeleteGroupLayer({$group.id});" rel="<b>Delete this Group.</b><br>Categories can be moved or deleted."><img src="images/icons/close_on.png" onmouseover="this.src='images/icons/close_on.png';" onmouseout="this.src='images/icons/close.png';"></a></div>
+    </td>
+  {/foreach}
+  </tr>
+</table>
+
+<table cellpadding="0" cellspacing="6" style="float:left;">
+  <tr>
+    <td width="5"></td>
+    <td class="tab" onclick="AddGroup();"><a href="javascript:void(0);" rel="Add a new Group"><img src="images/icons/add-tiny.png" id="gd_add_icon"></td>
+  </tr>
+</table>
+</div>
+
+
+<fieldset class="blue">
+
+  <div style="padding:20px; min-height:300px;">
+	  <table cellpadding="0" cellspacing="0" width="680" align="center"><tr>
+	    <td align="left" width="1"><a class="button" href="javascript:void(0);" onclick="AddCateg();"><span><img src="images/icons/add.png" id="add_categ_icon"> Add New Category</span></a></td>
+	    <td align="center"></td>
+	    <td align="right" width="1"><a class="button" href="javascript:void(0);" onclick="SwitchGroupTab($('current_group').value,1);"><span><img src="images/icons/refresh.png" id="refresh_icon"> Refresh</span></a></td>
+	  </tr></table>			
+	  <br>
+	  <input type="hidden" id="current_group" value="1">
+	  
+	    <div id="categories_divs_container">
+	      {foreach from=$groups_map item=group name=groups}
+		    <div id="categs_div_{$group.id}" class="categs_div" {if $group.id!=1}style="display:none;"{/if}></div>
+		  {/foreach}
+	    </div>
+	  
+  </div>
+</fieldset>
+
+{literal}
+<script type="text/javascript">
+ReTip();
+SwitchGroupTab(1);
+
+$$('.droppable').each(function(element){
+	Droppables.add(element.id, {
+		accept: 'draggable2',
+		hoverclass: 'tab_hover',
+		onDrop: function(dragged, dropped, event) {
+			var categ_id=parseInt(dragged.id.replace("categ_",""));
+			var old_group_id=$('current_group').value;
+			var group_id=parseInt(dropped.id.replace("group_",""));
+			var copy=event.ctrlKey;
+			MoveCateg(categ_id,old_group_id,group_id,copy);
+		}
+	});
+
+});
+//]]>
+
+{/literal}
+</script>

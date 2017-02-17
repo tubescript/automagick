@@ -1,0 +1,38 @@
+{if $array_related_videos}
+  <br><b class="title">{$aLabels.related_videos}</b><br>
+  <div style="width:auto; text-align:center; padding:10px;">
+    {foreach from=$array_related_videos item=video name=videos}
+	<table cellpadding="0" cellspacing="5" class="text left thumb_table m3">
+	  <tr><td colspan="2" align="left">
+		<a href="javascript:void(0);" class="left mr5" onclick="{if $smarty.session.user_logged}FavAddVideo({$video.id},1);{else}OpenLayer('login_register_layer');{/if}" id="favstar_off_{$video.id}" title="Add Video to Favorites." {if in_array($video.id,$array_favorites)}style="display:none;"{/if}><img src="templates/{$template}/images/star_off_small.png" border="0"></a>
+		<a href="javascript:void(0);" class="left mr5" onclick="{if $smarty.session.user_logged}FavRemoveVideo({$video.id},1);{else}OpenLayer('login_register_layer');{/if}" id="favstar_on_{$video.id}"  title="Remove Video from Favorites." {if !in_array($video.id,$array_favorites)}style="display:none;"{/if}><img src="templates/{$template}/images/star_on_small.png" border="0"></a>
+		<a href="video/{$video.id}/{$video.title|regex_replace:'/[ \/"]/':'-'}" class="link" title="{$video.title|replace:'"':'&quot;'}" style="font-weight:0;">
+		  {if $mb_available}
+		    {if $language==$default_language or !$video.translations.$language.title}
+				{$video.title|mb_truncate:15:"...":"UTF-8":true}
+			{else}
+				{$video.translations.$language.title|mb_truncate:15:"...":"UTF-8":true}
+			{/if}
+		  {else}
+		  	{if ($language==$default_language or !$video.translations.$language.title)}
+				{$video.title|truncate:10:"...":true}
+			{else}
+				{$video.translations.$language.title|truncate:10:"...":true}
+			{/if}
+		  {/if}
+		</a>
+	  </td></tr>
+	  <tr><td colspan="2" align="center" class="thumb_small" style="width:110px; height:87px;" onmouseover="StartThumbRotation('thumb_{$video.id}','{$video.id}');" onmouseout="StopThumbRotation('thumb_{$video.id}','{$video.id}');">
+	  	<div style="position:relative; height:83px;">
+	      <div style="position:absolute; top:0px; left:0px; z-index:1;"><a href="video/{$video.id}/{$video.title|regex_replace:'/[ \/"]/':'-'}" title="{$video.title|replace:'"':'&quot;'}"><img src="{$video.thumbs[0]}" width="110" height="83" id="thumb_{$video.id}"></a></div>
+	      {if $video.premium}<div class="premium_icon" style="position:absolute; z-index:2;" title="{$aLabels.premium_video}"></div>{/if}
+	    </div>
+	  <tr><td>{$video.duration_formated}</td><td align="right">{$video.activation_date|date_format:"%D"}</td></tr>
+	  <tr><td>{$video.votes} ratings</td><td align="right"><img src="templates/{$template}/images/star_image_{$video.star_image}.png" title="Rating: {$video.rating} of 5"></td></tr>
+	</table>
+    {if ($smarty.foreach.videos.index+1)%$aSettings.related_cols==0}<br class="clear">{/if}
+  {foreachelse}
+    <center><br><b>No videos where found.</b><br></center>
+  {/foreach}
+  </div>
+{/if}

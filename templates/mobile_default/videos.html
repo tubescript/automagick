@@ -1,0 +1,45 @@
+<div style="width:100%; padding:3px; display:table; text-align:center;">
+	<input type="hidden" name="page" id="page" value="{$page}">
+	<input type="hidden" name="order" id="order" value="{$order}">
+	<br>
+	<font size="3"><b>{$title_string}</b></font>
+	<br>
+	({$aLabels.showing} {$start}-{$end} {$aLabels.of} {$total_videos} {$aLabels.videos})
+	<br><br>
+
+	{foreach from=$array_videos item=video name=videos}
+	{if ($language==$default_language or !$video.translations.$language.title)}
+	  {assign var="video_title" value=$video.title}
+	{else}
+	  {assign var="video_title" value=$video.translations.$language.title}
+	{/if}
+			
+	<div class="rounded10" style="background:#{$aSettings.mobile_item_bgcolor}; border:1px solid #{$aSettings.mobile_item_border}; width:90%; line-height:18px; display:table; margin-bottom:6px; text-align:justify;">
+	 <div style="display:table-row;">
+	  <div class="left" style="display:table-cell;">
+	    <div style="width:{$aSettings.mobile_thumb_width}px; height:{$aSettings.mobile_thumb_height}px; padding:1px; border:1px solid #{$aSettings.mobile_thumb_border_color};"><a href="{if $video.mp4_file!=''}{$video.mp4_file}{else}{$video.file}{/if}" class="link"><img src="{$video.thumbs[0]}" width="{$aSettings.mobile_thumb_width}" height="{$aSettings.mobile_thumb_height}"></a></div>
+	  </div>
+	  
+	  <div class="left" style="display:table-cell; padding-left:10px;">
+		<a href="{$video.mp4_file}" class="link">
+		  <b>{$video_title}</b>
+		</a>
+		<br>
+		<b class="text2">{$aLabels.duration}:</b> {$video.duration_formated}<br>
+		<b class="text2">{$aLabels.date}:</b> {$video.activation_date|date_format}<br>
+		<b class="text2">{$aLabels.rating}:</b> {$video.rating}/5<br><br>
+		
+		{if $video.m4v_file}<a href="{$video.m4v_file}" class="link">Download M4V</a>{/if} {if $video.mp4_file}{if $video.m4v_file} - {/if}<a href="{$video.mp4_file}" class="link">Download MP4</a>{/if}
+	  </div>
+	  
+	 </div>
+	 <br class="br clear">
+	</div>
+	
+	{foreachelse}
+	<center><br><b>No videos where found.</b><br></center>
+	{/foreach}
+	<br class="clear">
+	<center>{$pagination}</center>
+	<br>
+</td

@@ -1,0 +1,5 @@
+<div style="text-align:justify;">
+{foreach from=$smarty.session.tags_cloud key="tag" item="size"}
+  <a href="tag/{$tag}" style="font-size:{$size}px">{$tag}</a>
+{/foreach}  
+</div>

@@ -1,0 +1,100 @@
+form{margin:0px; vertical-align:middle;}
+img {border:0px; vertical-align:middle;}
+h1{font-size:15pt; line-height:15pt;}
+.left {float:left;}
+.right {float:right;}
+.disabled{-moz-opacity:0.5; filter:alpha(opacity=50); opacity: 0.5}
+
+
+.header_bg {background:url(images/light_header_bg.png) repeat-x; height:55px;}
+.header_logo {background:url(images/light_logo.png) no-repeat center bottom; width:166px; height:41px;}
+.bar_bg {background:url(images/light_bar.png) repeat-x; height:35px;}
+
+.tl {background:url(images/black_tab_left.png) no-repeat; width:4px; height:22px; float:left;}
+.tm {background:url(images/black_tab_mid.png) repeat-x; height:22px; float:left; text-align:center; padding:3px 10px 0px 10px; margin-bottom:-3px;}
+.tr {background:url(images/black_tab_right.png) no-repeat; width:4px; height:22px; float:right;}
+
+.bar {background:#0066CC; height:8px; color:#FFFFFF; font-family:arial,tahoma,verdana; font-weight:bold;}
+.bl {background:url(images/black_bar_left.png) no-repeat; width:4px; height:8px; float:left;}
+.bm {background:url(images/black_bar_mid.png) repeat-x; width:992px; height:8px; float:left;}
+.br {background:url(images/black_bar_right.png) no-repeat; width:4px; height:8px; float:right;}
+
+.hr {background:url(images/dots.gif); height:3px; width:100%;}
+.break {line-height:10px;}
+.clear {clear:both;}
+.m3 {margin:3px;}
+.mr5 {margin-right:5px;}
+.mandatory {color:#CC0000;}
+.red {color:#CC0000;}
+.green {color:#009900;}
+
+.search_field {
+	font-size:8pt;
+	padding-left:3px;
+	line-height:10px;
+	background:url(images/light_input_bg.png) no-repeat;
+	width:100px;
+	height:20px;
+	border:0px;
+}
+
+.search_button {
+	background:url(images/light_search_button.png) center center no-repeat;
+	width:22px;
+	height:20px;
+}
+
+.button {
+	background:url(images/light_button.png) center center no-repeat;
+	width:102px;
+	height:20px;
+	text-align:center;
+	vertical-align:middle;
+	display:table-cell;
+}
+option {background:#EEEEEE; height:17px; line-height:17px;}
+
+
+.textarea {
+	border:1px solid #000000;
+	background:#FAFAFA url(images/input_bg.gif) repeat-x;
+	padding:3px;
+}
+
+.black-input-text {
+	border:0px;
+	color:#999999;
+	font-size:8pt;
+	font-weight:bold;
+	padding:2px;
+	background:url(images/black_input_bg_gray.png) center center no-repeat;
+	width:304px;
+	height:20px;
+}
+
+.page_button{
+	background:url(images/black_page_button.png) center center no-repeat;
+	width:33px;
+	height:23px;
+	display:table-cell;
+	text-align:center;
+	vertical-align:middle;
+}
+.page_button:hover{background-color:#111111;}
+
+.page_button_big{
+	background:url(images/black_page_button_big.png) center center no-repeat;
+	width:47px;
+	height:23px;
+	display:table-cell;
+	text-align:center;
+	vertical-align:middle;
+}
+.page_button_big:hover{background-color:#111111;}
+
+.current_page{color:#111111; background-color:#0066CC;}
+.current_page:hover{color:#111111; background-color:#0066CC;}
+
+.rounded3 {border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px; padding:3px;}
+.rounded5 {border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; padding:5px;}
+.rounded10 {border-radius:5px; -moz-border-radius:10px; -webkit-border-radius:10px; padding:10px;}

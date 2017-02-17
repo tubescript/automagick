@@ -1,0 +1,47 @@
+{foreach from=$array_players item=player name=players_loop}
+{if $smarty.foreach.players_loop.index%2==0}
+  {assign var="bgcolor" value="#D1D1D1"}
+{else}
+  {assign var="bgcolor" value="#D1D1D1"}
+{/if}
+
+{if $player.editable==1 || $player.id==1}
+	<table cellpadding="5" cellspacing="1" style="border:1px solid #999999;" class="left" height="254">
+	  <tr bgcolor="{$bgcolor}">
+		<td>
+		 <a href="javascript:void(0);" rel="<b>Player Name</b><br>Click to edit"><input type="text" id="player_name_{$player.id}" value="{$player.name}" class="editable" {if $player.id==1}readonly{/if} style="width:200px; font-weight:bold;" onfocus="this.removeClassName('editable');" onblur="this.addClassName('editable');" tabindex="{$player.id + 1}" maxlength="40"></a>
+		</td>
+		<td width="70">
+		 <a class="option_button" href="javascript:void(0);" rel="Preview this Player" onclick="PreviewPlayer({$player.id});"><span><img src="images/icons/view.png"></span></a>
+		 
+		 {if $player.id==1}
+		   <a class="option_button disabled" href="javascript:void(0);" rel="This player can't be edited"><span><img src="images/icons/save.png"></span></a>
+		   <a class="option_button disabled" href="javascript:void(0);" rel="This player can't be deleted"><span class="red_button"><img src="images/icons/delete.png"></span></a>
+		 {else}	   
+		   <a class="option_button" href="javascript:void(0);" rel="Save" onclick="SavePlayer({$player.id});"><span><img src="images/icons/save.png" id="player_save_icon_{$player.id}"></span></a>
+		   <a class="option_button" href="javascript:void(0);" rel="Delete this player" onclick="DeletePlayer({$player.id});"><span class="red_button"><img src="images/icons/delete.png"></span></a>
+		 {/if}
+		</td>
+	  </tr>
+	  <tr bgcolor="{$bgcolor}">	
+		<td colspan="2">
+		  <a href="javascript:void(0);" rel="<b>Player Code</b><br>Click to edit"><textarea id="player_code_{$player.id}" {if ($player.editable==0 || $player.id==1)}readonly{/if} wrap="off" style="width:300px; height:120px;" class="editable" onfocus="this.removeClassName('editable');" onblur="this.addClassName('editable');" tabindex="{$player.id + 2}">{$player.code}</textarea></a>
+		</td>
+	  </tr>
+	  <tr bgcolor="{$bgcolor}">
+		<td colspan="2">
+		  <a href="javascript:void(0);" rel="<b>Comments</b><br>Click to edit"><textarea id="player_comments_{$player.id}" style="width:300px; height:50px;" class="editable" onfocus="this.removeClassName('editable');" onblur="this.addClassName('editable');" tabindex="{$player.id + 3}">{$player.comments}</textarea></a>
+		</td>
+	  </tr>
+	</table>
+	
+	<table cellpadding="5" cellspacing="1" style="border:1px solid #999999;" class="left ml5">
+	  <tr bgcolor="{$bgcolor}" valign="top">
+	    <td width="320" height="250" id="player_preview_{$player.id}">
+	    </td>
+	  </tr>
+	</table>
+	<br style="clear:both;">
+	<br>
+{/if}
+{/foreach}

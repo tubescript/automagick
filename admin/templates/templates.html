@@ -1,0 +1,199 @@
+{if !$onlymod}
+<div id="edit_template_layer" style="display:none;" class="floating_layer">
+<table cellpadding="0" cellspacing="0" align="center" width="100%" height="100%">
+  <tr><td align="center">
+  
+     <table cellpadding="0" cellspacing="0" class="draggable">
+       <tr class="draggable_handle" style="cursor:pointer;">
+         <td background="images/modalbox/otl.png" width="8" height="25"></td>
+         <td background="images/modalbox/ot.png" height="25" valign="bottom">
+           <span class="modalbox_title"><img src="images/icons/file.png"> Edit Template <span id="edit_file_name"></span></span>
+           <span class="modalbox_buttons">
+             &nbsp;
+             <a href="javascript:void(0);" onclick="CloseLayer('edit_template_layer'); DeleteTemp();"><img src="images/icons/close_big.png" onmouseover="this.src='images/icons/close_big_on.png';" onmouseout="this.src='images/icons/close_big.png';"></a>
+           </span>
+         </td>
+         <td background="images/modalbox/otr.png" width="8" height="25"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/ol.png" width="8"></td>
+         <td>
+           <table cellpadding="0" cellspacing="0">
+	         <tr>
+	           <td background="images/modalbox/itl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/it.png" height="10"></td>
+	           <td background="images/modalbox/itr.png" width="10" height="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/il.png" width="10"></td>
+	           <td bgcolor="#C9CDD0" class="modal_text" width="750">
+	           
+	             <input type="hidden" id="template_name" value="">
+	             <input type="hidden" id="file_name" value="">
+         
+				 <table cellpadding="0" cellspacing="0" style="position:relative; z-index:2; left:15px;">
+				 <tr>
+					<td class="tinytab_active" id="tab_1" onclick="SwitchTinyTab('tab',1); EditMode();">Edit HTML</td>
+					<td width="5"></td>
+					<td class="tinytab" id="tab_2" onclick="SwitchTinyTab('tab',2); TempPreview();">Preview HTML</td>
+				 </tr>
+				 </table>
+						
+	             <fieldset class="fieldset3 tinyblue">
+	               <div class="bottom" style="padding:15px;">
+	                <div id="html_edition"><textarea id="template_editor" class="input_text dark_text" style="width:700px;height:350px;" wrap="off"></textarea></div>
+	                <div id="html_preview" style="width:700px; height:350px; overflow:auto; display:none; border:1px solid gray; padding:1px;"></div>
+	               </div>
+	             </fieldset>
+	             <br>
+	             
+	             <table cellpadding="5" cellspacing="0" align="center"><tr>
+				   <td align="center" id="editor_mode_button" style="display:none;"><a class="button" href="javascript:void(0);" onclick="SwitchTinyTab('tab',1); EditMode();"><span><img src="images/icons/edit.png"> Back to Editor</span></a></td>
+				   <td align="center" id="preview_mode_button"><a class="button" href="javascript:void(0);" onclick="SwitchTinyTab('tab',2); TempPreview();"><span><img src="images/icons/view.png"> Preview Template</span></a></td>
+				   <td align="center"><a class="button" href="javascript:void(0);" onclick="SaveTemplate();"><span><img src="images/icons/save.png" id="save_template_icon"> Save Template</span></a></td>
+				   <td align="center"><a class="button" href="javascript:void(0);" onclick="var x=confirm('Are you sure you want to undo all changes?\r\nThis will bring back the contents of the file since it was last saved.'); if (x) EditFile('0',$('template_name').value,$('file_name').value);"><span><img src="images/icons/undo.png" id="undo_template_icon"> Undo Changes</span></a></td>
+				 </tr></table>
+	             
+	           </td>
+	           <td background="images/modalbox/ir.png" width="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/ibl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/ib.png" height="10"></td>
+	           <td background="images/modalbox/ibr.png" width="10" height="10"></td>
+	         </tr>
+	       </table>         
+         </td>
+         <td background="images/modalbox/or.png" width="8"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/obl.png" width="8" height="11"></td>
+         <td background="images/modalbox/ob.png" height="11"></td>
+         <td background="images/modalbox/obr.png" width="8" height="1"></td>
+       </tr>
+     </table>
+  </td></tr>
+</table>
+</div>
+
+<fieldset>
+<legend><b>Templates</b></legend>
+<div class="bottom">
+
+<br>
+<div class="modal_text" style="width:740px;">
+To make a new template to appear in this list, just create a new folder under 'templates/' folder and upload the contents or upload a zip file with the template to 'templates/' folder.
+Then refresh this page and you should see the templates list updated. You will be able to install or activate the template.
+</div>
+<br>
+  
+	<table cellpadding="0" cellspacing="0">
+	  <tr>
+	    <td background="images/modalbox/otl.png" width="8" height="25"></td>
+	    <td background="images/modalbox/ot.png" height="25" valign="bottom">
+	      <span class="modalbox_title" id="sources_browser_title"><img src="images/icons/templates.png"> Templates</span>
+	      <span class="modalbox_buttons">
+	      &nbsp;
+	      <a href="javascript:void(0);" onclick="RefreshTemplates();" rel="Refresh Templates Table"><img src="images/icons/modal_refresh.png" onmouseover="this.src='images/icons/modal_refresh_on.png';" onmouseout="this.src='images/icons/modal_refresh.png';"></a>
+	      </span>
+	    </td>
+	    <td background="images/modalbox/otr.png" width="8" height="25"></td>
+	  </tr>
+	  <tr>
+	    <td background="images/modalbox/ol.png" width="8"></td>
+	    <td bgcolor="#C9CDD0" width="500" id="templates_contents">
+	    {/if}
+	    	<table cellpadding="3" cellspacing="1" width="100%" style="background:#EEEEEE;" class="datatable">
+	    	  {foreach from=$aTemplates item=template name=tpls}
+	    	  {if $smarty.foreach.tpls.index%2==0}
+			  	{assign var="bgcolor" value="#D1D1D1"}
+			  {else}
+			  	{assign var="bgcolor" value="#C9C9C9"}
+			  {/if}
+	 	  	  <tr bgcolor="{$bgcolor}">
+	 	  	    <td>
+	 	  	      {if $template.status}<img src="images/icons/active_tiny.png">{else}<img src="images/icons/inactive_tiny.png">{/if} <b {if $template.status}class="green"{/if}>{$template.name|replace:".zip":""|replace:".ZIP":""|replace:"_":" "|capitalize}</b>
+	 	  	    </td>
+	 	  	    <td align="center">
+	 	  	      {if $template.installed}
+	 	  	        {if $template.status}
+	 	  	          <b class="green">Active</b>
+	 	  	        {else}
+	 	  	          <b>Installed</b>
+	 	  	        {/if}
+	 	  	      {else}
+	 	  	        <b class="red">Not Installed</b>
+	 	  	      {/if}
+	 	  	    </td>
+	 	  	    <td width="200">
+				{if $template.name|lower!="tubepro"}
+	 	  	      {if $template.styles_amount>0 && $aSettings.template_name==$template.name}
+	 	  	        <b>Style:</b>
+	 	  	        <select id="style_name_{$template.name}" class="input_text" onchange="SaveStyle('{$template.name}',this.value);">
+	 	  	        {foreach from=$template.styles item=style_name}
+	 	  	          <option value="{$style_name|replace:'.css':''}" {if $aSettings.style_name==str_replace('.css','',$style_name)}selected{/if}>{$style_name|replace:".css":""}</option>
+	 	  	        {/foreach}
+	 	  	        </select>
+	 	  	      {/if}
+				{/if}
+				
+	 	  	    {if $template.installed}<div class="option_button right ml5 pt3"><a href="../index.php?template={$template.name}&style_name={if $template.name|lower=="tubepro"}styles{else}{$style_name|replace:'.css':''}{/if}&force_compile=1" target="_blank" rel="View Template"><img src="images/icons/view.png"></a></div>{/if}
+				
+				{if $template.name|lower!="tubepro"} 
+	 	  	      {if $template.installed}<div class="option_button right ml5 pt3"><a href="javascript:void(0);" onclick="OpenFilesManager({$template.id},'{$template.name}');" rel="Edit Template Files"><img src="images/icons/edit.png" id="edit_icon_{$template.id}"></a></div>{/if}
+	 	  	      {if !$template.installed && $template.zip}<div class="option_button right ml5 pt3"><a href="javascript:void(0);" onclick="InstallTemplate({$template.id},'{$template.name}');" rel="Install Template"><img src="images/icons/gear.png" id="install_icon_{$template.id}"></a></div>{/if}
+	 	  	      {if !$template.installed && !$template.zip}<div class="option_button right ml5 pt3"><a href="javascript:void(0);" rel="Can't Install Template. No ZIP file found.<br>Only the folder."><img src="images/icons/warning.png" id="warning_icon_{$template.id}"></a></div>{/if}
+				{/if}
+	 	  	    {if $template.installed && !$template.status}<div class="option_button right ml5 pt3"><a href="javascript:void(0);"  onclick="ActivateTemplate({$template.id},'{$template.name}');" rel="Use this template as default."><img src="images/icons/success.png" id="activate_icon_{$template.id}"></a></div>{/if}
+
+	 	  	    </td>
+	     	  </tr>
+	     	  {foreachelse}
+	     	  <tr bgcolor="#D1D1D1"><td align="center"><b>No templates added</td></tr>
+	     	  {/foreach}
+		    </table>
+		    {if !$onlymod}
+	    </td>
+	    <td background="images/modalbox/or.png" width="8"></td>
+	  </tr>
+	  <tr>
+	    <td background="images/modalbox/obl.png" width="8" height="11"></td>
+	    <td background="images/modalbox/ob.png" height="11"></td>
+	    <td background="images/modalbox/obr.png" width="8" height="1"></td>
+	  </tr>
+	</table>
+	<br>
+	
+	<div  id="files_container"  style="display:none;">
+	<table cellpadding="0" cellspacing="0">
+	  <tr>
+	    <td background="images/modalbox/otl.png" width="8" height="25"></td>
+	    <td background="images/modalbox/ot.png" height="25" valign="bottom">
+	      <span class="modalbox_title" id="sources_browser_title"><img src="images/icons/folder.png"> Template Files for <span id="files_template_name"></span></span>
+	      <span class="modalbox_buttons"></span>
+	    </td>
+	    <td background="images/modalbox/otr.png" width="8" height="25"></td>
+	  </tr>
+	  <tr>
+	    <td background="images/modalbox/ol.png" width="8"></td>
+	    <td bgcolor="#C9CDD0" width="500" id="templates_contents">
+	      <table cellpadding="3" cellspacing="1" width="100%" style="background:#EEEEEE;" class="datatable" id="files_table"></table>
+	    </td>
+	    <td background="images/modalbox/or.png" width="8"></td>
+	  </tr>
+	  <tr>
+	    <td background="images/modalbox/obl.png" width="8" height="11"></td>
+	    <td background="images/modalbox/ob.png" height="11"></td>
+	    <td background="images/modalbox/obr.png" width="8" height="1"></td>
+	  </tr>
+	</table>
+	</div>
+	
+<br>
+</div>
+</fieldset>
+
+<script>
+ReTip();
+</script>
+{/if}

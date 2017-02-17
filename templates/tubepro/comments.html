@@ -1,0 +1,118 @@
+{if !$onlymod}
+<input type="hidden" id="comments_video_id" value="{$video.id}">
+<div id="comments_contents">
+{/if}
+
+  {if $total_comments>0}
+	<center><b>{$aLabels.showing} <b class="bluetext">{$from}</b> {$aLabels.to} <b class="bluetext">{$to}</b> {$aLabels.of} <b class="red">{$total_comments}</b> {$aLabels.total_comments}</b></center>
+	<br>
+  {/if}
+	
+	<input type="hidden" id="comments_page" value="{$page}">
+	
+	{foreach from=$aComments item=comment name=comments}
+	{if $comment.status==1}
+	<div id="comment_{$comment.id}" style="width:600px;">
+	    <table width="100%">
+	      <tr valign="top">
+	        <td width="70">
+	          {if $comment.user_id}
+	            <a href="profile/{$comment.user_id}/{$comment.username}/" target="_blank">{$comment.username}</a>
+	            <br><br style="line-height:5px;">
+	            <div class="avatar_small" align="center">
+	              <a href="profile/{$comment.user_id}/{$comment.username}/" target="_blank">
+	              <img src="{$comment.avatar}" width="60" height="60">
+	              </a>
+	            </div>
+	          {else}
+	            Guest
+	            <br><br style="line-height:5px;">
+	            <div class="avatar_small"></div>
+	          {/if}
+	          
+	        </td>
+	        <td>
+	          <img src="templates/{$template}/images/comment_stem.png" class="left" style="margin-right:-1px; margin-top:20px;">
+	          <fieldset class="fieldset2" style="width:97%; margin-bottom:5px;">
+	           <div class="bottom" style="min-height:25px; padding:15px;">
+	           
+	             <b>{$comment.date|date_format:"%b %e, %Y - %H:%M"}</b><br><br>
+	             <div id="comment_text_{$comment.id}" class="dark_text">
+	               {$comment.comment|regex_replace:"/[\r\n]/":"<br>"}
+	             </div>
+	             <textarea id="edit_comment_{$comment.id}" style="display:none; min-height:25px; width:98%; line-height:18px;">{$comment.comment}</textarea>
+	             
+	           </div>
+	          </fieldset>
+	          
+	          <div class="left" style="margin-left:30px;">
+	            <div class="option_button left pt3"><a href="javascript:void(0);" onclick="LikeComment({$comment.id});"><img src="templates/{$template}/images/like.png" class="m3"></a></div>
+	            <span class="left m3 mr5" id="like_label_{$comment.id}">{$comment.thumb_up} {$aLabels.times}</span>
+	            <div class="option_button left pt3"><a href="javascript:void(0);" onclick="DislikeComment({$comment.id});"><img src="templates/{$template}/images/dislike.png" class="m3"></a></div>
+	            <span class="left m3 mr5" id="dislike_label_{$comment.id}">{$comment.thumb_down} {$aLabels.times}</span>
+	          </div>
+	          <div class="right" style="margin-right:30px;">
+	            <b id="report_label_{$comment.id}"><a href="javascript:void(0);" onclick="ReportComment({$comment.id});">{$aLabels.report_spam}</a></b>
+	          </div>
+	        </td>
+	      </tr>
+	    </table>
+	</div>
+	<br>
+	<div class="hr" style="width:90%;"></div>
+	<br>
+	
+	{/if}
+	{foreachelse}
+	  <center><b>No comments added to this video yet.</b></center>
+	{/foreach}
+	
+	{if $total_pages>1}
+	  <center>{$pagination}</center>
+	{/if}
+	
+{if !$onlymod}
+</div>
+<br>
+<div class="hr" style="width:90%;"></div>
+
+<br>
+
+<div class="left rounded3 container_box" style="padding:0px; margin-bottom:10px;">
+	<div class="bar rounded3 title_text m3">{$aLabels.add_comment}</div>
+	<div style="padding:8px;">
+		<br><font size="1">{$aLabels.comment_explanation}</font>
+		<br><br class="break">
+
+		<textarea id="comment" name="comment" class="left container_box text rounded5" style="width:280px; height:113px; margin-top:3px;"></textarea>
+
+		{if (!$aSettings.comments_anonymus_allowed and !$smarty.session.user_logged) or $aSettings.comments_captcha}
+		<div class="right">
+		  <script type="text/javascript" src="http://www.google.com/recaptcha/api/challenge?k={$aSettings.recaptcha_public_key}"></script>
+		  <noscript>
+			 <iframe src="http://www.google.com/recaptcha/api/noscript?k={$aSettings.recaptcha_public_key}" height="300" width="500" frameborder="0"></iframe><br>
+			 <textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
+			 <input type="hidden" name="recaptcha_response_field" value="manual_challenge">
+		  </noscript>
+		</div>
+		{/if}
+
+		<br class="clear"><br class="break">
+		{if $aSettings.comments_anonymus_allowed or $smarty.session.user_logged==1}
+		  <a href="javascript:void(0);" onclick="PostComment();" class="right" id="comment_button"><div class="input-button-long">{$aLabels.post_comment}</div></a>
+		  <a href="javascript:void(0);" class="right disabled" id="comment_button_disabled" style="display:none;"><div class="input-button-long">{$aLabels.post_comment}</div></a>
+		{else}
+		  <div class="right">
+		    <a class="button_small rounded3 mr5" onclick=" $('register_layer').hide(); $('login_layer').show();">{$aLabels.login|capitalize}</a>
+		    {$aLabels.or}
+		    <a class="button_small rounded3 mr5" onclick="$('login_layer').hide(); $('register_layer').show();">{$aLabels.register_to_comment|capitalize}</a>
+		  </div>
+		{/if}
+
+		<div class="red right mr5" style="margin-top:3px; display:none;" id="comment_error"></div>
+		<div class="green right mr5" style="margin-top:3px; display:none;" id="comment_success"></div>
+		</form>
+		<br class="clear">
+		{/if}
+	</div>
+</div>

@@ -1,0 +1,23 @@
+div.menu_style, a.menu_style{}
+
+.submenu{
+	margin-top:-2px;
+	z-index:100;
+	font-family:tahoma,verdana,arial;
+	font-size:8pt;
+	font-weight:bold;
+	padding:0px;	
+	padding-left:15px;
+	line-height:24px;
+	text-align:left;	
+	float:left;
+}
+
+a.menu_style{
+  color:#0F3756;
+  text-decoration: none;
+}
+
+a.menu_style:hover{
+  color:#246AB0;
+}

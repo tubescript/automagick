@@ -1,0 +1,2238 @@
+{if !$onlymod}
+{include file="../libs/colourmod/colourmod.html"}
+
+{include file="encoding_guide.html"}
+
+<div id="add_language_layer" style="display:none;" class="floating_layer">
+<table cellpadding="0" cellspacing="0" align="center" width="100%" height="100%">
+  <tr><td align="center">
+  
+     <table cellpadding="0" cellspacing="0" class="draggable">
+       <tr class="draggable_handle" style="cursor:pointer;">
+         <td background="images/modalbox/otl.png" width="8" height="25"></td>
+         <td background="images/modalbox/ot.png" height="25" valign="bottom">
+           <span class="modalbox_title">Add Language</span>
+           <span class="modalbox_buttons">
+             &nbsp; 
+             <a href="javascript:void(0);" onclick="CloseLayer('add_language_layer');"><img src="images/icons/close_big.png" onmouseover="this.src='images/icons/close_big_on.png';" onmouseout="this.src='images/icons/close_big.png';"></a>
+           </span>
+         </td>
+         <td background="images/modalbox/otr.png" width="8" height="25"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/ol.png" width="8"></td>
+         <td>
+           <table cellpadding="0" cellspacing="0">
+	         <tr>
+	           <td background="images/modalbox/itl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/it.png" height="10"></td>
+	           <td background="images/modalbox/itr.png" width="10" height="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/il.png" width="10"></td>
+	           <td bgcolor="#C9CDD0" class="modal_text" style="width:auto;">
+	           
+	              Enter the name of the new language and select a flag for it.
+	              <br><br>
+	              <table cellpadding="5" cellspacing="1"  width="100%" style="border:1px solid #AAAAAA; background:#EEEEEE;">
+	      			<tr bgcolor="#D1D1D1">
+	      			  <td align="right"><b class="red">*</b> <b>Name:</b></td>
+	      			  <td>
+	      			    <input type="text" id="add_lang_name" class="input-text" style="width:200px;" maxlength="30">
+	      			    <a href="javascript:void(0);" rel="Language Name.<br>Max: 30 Chars"><img src="images/icons/help.png"></a>
+	      			  </td>
+	      			</tr>
+	      			<tr bgcolor="#C9C9C9">
+	      			  <td align="right"><b class="red">*</b> <b>Flag:</b></td>
+	      			  <td>
+	      			    <input type="hidden" id="add_lang_code" value="{$aLangs[0]}">
+	      			    <div id="flags_select" class="left"></div>
+	      			    <script>
+	      			    new Proto.IPS('flags_select', {ldelim}
+	      			      afterUpdate:function(v){ldelim}setLangCodeValue(v);{rdelim},
+						  options: [
+						    {foreach from=$aFlags item=flag}
+						    {ldelim}text: '<img src="images/flags/{$flag}"> {$flag}', className: ''{rdelim},
+						    {/foreach}
+						  ]
+						{rdelim});
+						</script>
+	      			    <a href="javascript:void(0);" rel="Select a flag for this Language.<br>It will be shown in the site." class="m3"><img src="images/icons/help.png"></a>
+	      			  </td>
+	      			</tr>      			
+	      		  </table>
+	      		  <br>
+	      		  <a class="small_button" id="add_language_button" href="javascript:void(0);" onclick="AddLanguage();"><span><img src="images/icons/add-tiny.png" id="add_language_icon"> Add Language</span></a>
+	             	             
+	           </td>
+	           <td background="images/modalbox/ir.png" width="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/ibl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/ib.png" height="10"></td>
+	           <td background="images/modalbox/ibr.png" width="10" height="10"></td>
+	         </tr>
+	       </table>         
+         </td>
+         <td background="images/modalbox/or.png" width="8"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/obl.png" width="8" height="11"></td>
+         <td background="images/modalbox/ob.png" height="11"></td>
+         <td background="images/modalbox/obr.png" width="8" height="1"></td>
+       </tr>
+     </table>
+  </td></tr>
+</table>
+</div>
+
+<div id="autotranslate_layer" style="display:none;" class="floating_layer">
+<table cellpadding="0" cellspacing="0" align="center" width="100%" height="100%">
+  <tr><td align="center">
+  
+     <table cellpadding="0" cellspacing="0" class="draggable">
+       <tr class="draggable_handle" style="cursor:pointer;">
+         <td background="images/modalbox/otl.png" width="8" height="25"></td>
+         <td background="images/modalbox/ot.png" height="25" valign="bottom">
+           <span class="modalbox_title">Autotranslate Labels</span>
+           <span class="modalbox_buttons">
+             &nbsp;
+             <a href="javascript:void(0);" onclick="CloseLayer('autotranslate_layer');"><img src="images/icons/close_big.png" onmouseover="this.src='images/icons/close_big_on.png';" onmouseout="this.src='images/icons/close_big.png';"></a>
+           </span>
+         </td>
+         <td background="images/modalbox/otr.png" width="8" height="25"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/ol.png" width="8"></td>
+         <td>
+           <table cellpadding="0" cellspacing="0">
+	         <tr>
+	           <td background="images/modalbox/itl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/it.png" height="10"></td>
+	           <td background="images/modalbox/itr.png" width="10" height="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/il.png" width="10"></td>
+	           <td bgcolor="#C9CDD0" class="modal_text" style="width:auto;">
+	           
+	              Autotranslate feature will allow you to translate all selected labels from English to the installed languages you choose here.<br>
+	              You will need to 'Save Settings' in order for the new labels to be saved. Other way, they will be lost.<br>
+	              You can also press 'Undo Changes' to reset all values.
+	              <br><br>
+	              It uses Google Translate API and it might not be 100% accurate nor all Automagick languages might be recognized.<br>
+	              Make sure you double check the results before saving.<br><br>
+
+	              {if count($array_languages>1)}
+	              <table cellpadding="5" cellspacing="1" style="border:1px solid #AAAAAA; background:#EEEEEE;">
+	              {foreach from=$array_languages item=lang name="at_langs"}
+	                {if $smarty.foreach.at_langs.index%2==0}
+				      {assign var='bgcolor' value='#C9C9C9'}
+				    {else}
+				      {assign var='bgcolor' value='#D1D1D1'}	    
+				    {/if}
+				    {if $lang.id>1}
+	      			  <tr bgcolor="{$bgcolor}">
+	      			    <td><input type="checkbox" id="at_to_lang_{$lang.id}" value="{$lang.id}" class="at_to_lang_checkbox"></td>
+	      			    <td width="150"><img src="images/flags/{$lang.code}.gif" align="absmiddle"> <b>{$lang.name}</b></td>
+	      			  </tr>
+	      			{/if}
+	      			{/foreach}
+	      		  </table>
+	      		  <br>
+	      		  <a class="small_button" id="autotranslate_button" href="javascript:void(0);" onclick="AutoTranslate();"><span><img src="images/icons/translate.gif" id="autotranslate_icon"> Autotranslate Now</span></a>
+	      		  {/if}
+	             	             
+	           </td>
+	           <td background="images/modalbox/ir.png" width="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/ibl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/ib.png" height="10"></td>
+	           <td background="images/modalbox/ibr.png" width="10" height="10"></td>
+	         </tr>
+	       </table>         
+         </td>
+         <td background="images/modalbox/or.png" width="8"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/obl.png" width="8" height="11"></td>
+         <td background="images/modalbox/ob.png" height="11"></td>
+         <td background="images/modalbox/obr.png" width="8" height="1"></td>
+       </tr>
+     </table>
+  </td></tr>
+</table>
+</div>
+
+{include file="rtmp_servers_container.html"}
+
+{include file="tags_archive.html"}
+
+<br><br>
+
+<div style="width:90%; position:relative; z-index:2; margin-bottom:-1px; text-align:left; padding-left:20px;">
+<table cellpadding="0" cellspacing="0">
+  <tr>
+    <td class="tab_active" id="settings_1" onclick="SwitchTab('settings',1); HideByClassName('.settings_div'); $('settings_div_1').show(); document.cookie='settings_active_tab=1'; $('tubepro_logo_upload_form').hide();">Basic Settings</td>
+    <td width="5"></td>
+    <td class="tab" id="settings_2" onclick="SwitchTab('settings',2); HideByClassName('.settings_div'); $('settings_div_2').show(); document.cookie='settings_active_tab=2'; $('tubepro_logo_upload_form').hide();">Advanced Site Settings</td>
+   	<td width="5"></td>
+    <td class="tab" id="settings_5" onclick="SwitchTab('settings',5); HideByClassName('.settings_div'); $('settings_div_5').show(); document.cookie='settings_active_tab=5'; $('tubepro_logo_upload_form').hide();">Mobile Settings</td>
+    <td width="5"></td>
+	<td class="tab" id="settings_7" onclick="SwitchTab('settings',7); HideByClassName('.settings_div'); $('settings_div_7').show(); document.cookie='settings_active_tab=7'; ShowTubeproForm(); RefreshTubeProPreview();">TubePro Template</td>
+    <td width="5"></td>
+    <td class="tab" id="settings_3" onclick="SwitchTab('settings',3); HideByClassName('.settings_div'); $('settings_div_3').show(); document.cookie='settings_active_tab=3'; $('tubepro_logo_upload_form').hide();">Default Player</td>
+    <td width="5"></td>
+    <td class="tab" id="settings_4" onclick="SwitchTab('settings',4); HideByClassName('.settings_div'); $('settings_div_4').show(); document.cookie='settings_active_tab=4'; $('tubepro_logo_upload_form').hide();">Language Settings</td>
+    <td width="5"></td>
+    <td class="tab" id="settings_6" onclick="SwitchTab('settings',6); HideByClassName('.settings_div'); $('settings_div_6').show(); document.cookie='settings_active_tab=6'; $('tubepro_logo_upload_form').hide();">Premium Access</td>
+  </tr>
+</table>
+</div>
+
+<fieldset class="blue">
+  <form action="javascript:void(0);" id="settings_form">
+
+  <input type="hidden" name="aSettings[template_name]" id="settings_template_name" value="{$aSettings.template_name|replace:'"':'&quot;'}">
+  <input type="hidden" name="aSettings[current_version]" id="settings_current_version" value="{$aSettings.current_version|replace:'"':'&quot;'}">
+  
+  <div class="bottom" style="padding:20px;">
+  
+    <table cellpadding="0" cellspacing="0" align="right" style="margin-right:60px;"><tr>
+  	  <td id="undo_settings_enabled" style="display:none;"><a class="button" href="javascript:void(0);" onclick="UndoChanges();"><span><img src="images/icons/undo.png" id="undo_icon"> Undo Changes</span></a></td>
+  	  <td id="undo_settings_disabled" style="cursor:default;" class="disabled"><a class="button"><span><img src="images/icons/undo.png" id="undo_icon_disabled"> Undo Changes</span></a></td>
+  	  <td width="25">
+      <td><a class="button" href="javascript:void(0);" onclick="SaveSettings($('settings_form'));"><span><img src="images/icons/save.png" id="save_icon"> Save Settings</span></a></td>
+    </tr></table><br><br><br>
+    
+
+    {* Basic Settings *}
+	<div class="settings_div" align="center" id="settings_div_1">
+	
+	  <fieldset class="fieldset2" style="width:800px; text-align:left;">
+	  <legend class="legend2"><b>License Number & Admin Access</b></legend>
+	  <div class="bottom" style="padding:20px;">
+	    <table cellpadding="5" cellspacing="1"  width="100%" style="border:1px solid #AAAAAA; background:#EEEEEE;">
+	      <tr bgcolor="#D1D1D1">
+	        <td align="right" width="200"><b class="red">*</b> <b>License Number:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[license_number]" id="settings_license_number" value="{$aSettings.license_number|replace:'"':'&quot;'}" class="input-text" style="width:200px;" onchange="EnableUndoButton();" tabindex="1">
+	          {if $aSettings.license_status=="KO"}<a href="javascript:void(0);" id="license_check_button" rel="Site is Blocked due to wrong License.<br>Click to ReCheck License Number and Unlock Site." onclick="CheckLicenseStatus();"><img src="images/icons/warning.png" id="license_check_icon"></a>{/if}
+	          <a href="javascript:void(0);" rel="License Number provided in your Automagick.com Account"><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9">
+	        <td align="right"><b class="red">*</b> <b>Admin Username:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[admin_user]" id="settings_admin_user" value="{$aSettings.admin_user|replace:'"':'&quot;'}" class="input-text" style="width:200px;" onchange="EnableUndoButton();" tabindex="1">
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1">
+	        <td align="right"><b class="red">*</b> <b>Admin Password:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[admin_pass]" id="settings_admin_pass" value="{$aSettings.admin_pass|replace:'"':'&quot;'}" class="input-text" style="width:200px;" onchange="EnableUndoButton();" tabindex="1">
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9">
+	        <td align="right"><b class="red">*</b> <b>Admin Name:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[admin_name]" id="settings_admin_name" value="{$aSettings.admin_name|replace:'"':'&quot;'}" class="input-text" style="width:200px;" onchange="EnableUndoButton();" tabindex="1">
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1">
+	        <td align="right"><b class="red">*</b> <b>Admin E-mail:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[admin_email]" id="settings_admin_email" value="{$aSettings.admin_email|replace:'"':'&quot;'}" class="input-text" style="width:200px;" onchange="EnableUndoButton();" tabindex="1">
+	        </td>
+	      </tr>
+	    </table>
+	  </div>
+	  </fieldset>
+	  <br>
+	  
+	  <fieldset class="fieldset2" style="width:800px; text-align:left;">
+	  <legend class="legend2"><b>Basic Site Info</b></legend>
+	  <div class="bottom" style="padding:20px;">
+	    <table cellpadding="5" cellspacing="1" width="100%" style="border:1px solid #AAAAAA; background:#EEEEEE;">
+	      <tr bgcolor="#C9C9C9">
+	        <td align="right" width="200"><b class="red">*</b> <b>Installation URL:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[installation_url]" id="settings_installation_url" value="{$aSettings.installation_url|replace:'"':'&quot;'}" class="input-text left" style="width:200px;" onchange="EnableUndoButton();" tabindex="1">
+	          {if $installation_url_error}<a href="javascript:void(0);" rel="Current value of 'Installation URL' is different than the automatically recognized.<br>Click this icon to update the value to: {$recognized_url}" class="option_button left pt3 ml5 mr5" onclick="$('settings_installation_url').value='{$recognized_url}';"><img src="images/icons/warning.png"></a>{/if}
+	          <a href="javascript:void(0);" rel="URL where the script is installed, including ending slash.<br>I.E: http://www.mydomain.com/tube/" class="left"><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1">
+	        <td align="right"><b class="red">*</b> <b>Site Title:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[site_title]" id="settings_site_title" value="{$aSettings.site_title|replace:'"':'&quot;'}" class="input-text" style="width:200px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" rel="Title of the site. Will be shown in all pages, before the page particular title."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9">
+	        <td align="right"><b class="red">*</b> <b>Home Page Title:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[home_title]" id="settings_home_title" value="{$aSettings.home_title|replace:'"':'&quot;'}" class="input-text" style="width:200px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" rel="Title of the home page (&amp;lt;title&amp;gt; tag).<br>Video Page will have as title the title of the video."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1">
+	        <td align="right"><b class="red">*</b> <b>Videos per Page:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[videos_amount]" id="settings_videos_amount" value="{$aSettings.videos_amount|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px;"  tabindex="1">
+              <div style="float:left; border:1px solid #999999;">
+                <div class="spinner_up" id="settings_videos_amount_up"></div>
+                <div class="spinner_down" id="settings_videos_amount_down"></div>
+              </div>
+              {literal}<script type="text/javascript">new SpinnerControl('settings_videos_amount', 'settings_videos_amount_up', 'settings_videos_amount_down', {interval:1, min:1, max:100, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	          <a href="javascript:void(0);" rel="Amount of videos per page."><img src="images/icons/help.png" class="ml5"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9">
+	        <td align="right"><b class="red">*</b> <b>Columns:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[videos_cols]" id="settings_videos_cols" value="{$aSettings.videos_cols|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px;" tabindex="1">
+              <div style="float:left; border:1px solid #999999;">
+                <div class="spinner_up" id="settings_videos_cols_up"></div>
+                <div class="spinner_down" id="settings_videos_cols_down"></div>
+              </div>
+              {literal}<script type="text/javascript">new SpinnerControl('settings_videos_cols', 'settings_videos_cols_up', 'settings_videos_cols_down', {interval:1, min:1, max:20, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	          <a href="javascript:void(0);" rel="Amount of video columns per page."><img src="images/icons/help.png" class="ml5"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1">
+	        <td align="right"><b class="red">*</b> <b>Player Width:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[player_width]" id="settings_player_width" value="{$aSettings.player_width|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px;" tabindex="1">
+              <div style="float:left; border:1px solid #999999;">
+                <div class="spinner_up" id="settings_player_width_up"></div>
+                <div class="spinner_down" id="settings_player_width_down"></div>
+              </div>
+              {literal}<script type="text/javascript">new SpinnerControl('settings_player_width', 'settings_player_width_up', 'settings_player_width_down', {interval:1, min:1, max:1024, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	          <a href="javascript:void(0);" rel="Width of the FLV Video Player, in pixels."><img src="images/icons/help.png" class="ml5"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9">
+	        <td align="right"><b class="red">*</b> <b>Player Height:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[player_height]" id="settings_player_height" value="{$aSettings.player_height|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px;" tabindex="1">
+              <div style="float:left; border:1px solid #999999;">
+                <div class="spinner_up" id="settings_player_height_up"></div>
+                <div class="spinner_down" id="settings_player_height_down"></div>
+              </div>
+              {literal}<script type="text/javascript">new SpinnerControl('settings_player_height', 'settings_player_height_up', 'settings_player_height_down', {interval:1, min:1, max:768, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	          <a href="javascript:void(0);" rel="Height of the FLV Video Player, in pixels."><img src="images/icons/help.png" class="ml5"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1">
+	        <td align="right"><b class="red">*</b> <b>Rotating Thumbnails Amount:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[thumbs_amount]" id="settings_thumbs_amount" value="{$aSettings.thumbs_amount|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px;" tabindex="1">
+              <div style="float:left; border:1px solid #999999;">
+                <div class="spinner_up" id="settings_thumbs_amount_up"></div>
+                <div class="spinner_down" id="settings_thumbs_amount_down"></div>
+              </div>
+              {literal}<script type="text/javascript">new SpinnerControl('settings_thumbs_amount', 'settings_thumbs_amount_up', 'settings_thumbs_amount_down', {interval:1, min:1, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	          <a href="javascript:void(0);" rel="Amont of Thumbnails that will be rotating when<br>the user hovers the mouse on the video thumbnail."><img src="images/icons/help.png" class="ml5"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1">
+	        <td align="right"><b class="red">*</b> <b>Thumbnail Width:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[thumb_width]" id="settings_thumb_width" value="{$aSettings.thumb_width|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px;" tabindex="1">
+              <div style="float:left; border:1px solid #999999;">
+                <div class="spinner_up" id="settings_thumb_width_up"></div>
+                <div class="spinner_down" id="settings_thumb_width_down"></div>
+              </div>
+              {literal}<script type="text/javascript">new SpinnerControl('settings_thumb_width', 'settings_thumb_width_up', 'settings_thumb_width_down', {interval:1, min:1, max:640, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	          <a href="javascript:void(0);" rel="Width of the Thumbnails, in pixels."><img src="images/icons/help.png" class="ml5"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9">
+	        <td align="right"><b class="red">*</b> <b>Thumbnails Height:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[thumb_height]" id="settings_thumb_height" value="{$aSettings.thumb_height|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px;" tabindex="1">
+              <div style="float:left; border:1px solid #999999;">
+                <div class="spinner_up" id="settings_thumb_height_up"></div>
+                <div class="spinner_down" id="settings_thumb_height_down"></div>
+              </div>
+              {literal}<script type="text/javascript">new SpinnerControl('settings_thumb_height', 'settings_thumb_height_up', 'settings_thumb_height_down', {interval:1, min:1, max:640, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	          <a href="javascript:void(0);" rel="Height of the FLV Video Thumbnail, in pixels."><img src="images/icons/help.png" class="ml5"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1">
+	        <td align="right"><b class="red">*</b> <b>Related Videos Amount:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[related_amount]" id="settings_related_amount" value="{$aSettings.related_amount|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px;" tabindex="1">
+              <div style="float:left; border:1px solid #999999;">
+                <div class="spinner_up" id="settings_related_amount_up"></div>
+                <div class="spinner_down" id="settings_related_amount_down"></div>
+              </div>
+              {literal}<script type="text/javascript">new SpinnerControl('settings_related_amount', 'settings_related_amount_up', 'settings_related_amount_down', {interval:1, min:1, max:640, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	          <a href="javascript:void(0);" rel="Amount of videos of the related videos table"><img src="images/icons/help.png" class="ml5"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9">
+	        <td align="right"><b class="red">*</b> <b>Related Videos Columns:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[related_cols]" id="settings_related_cols" value="{$aSettings.related_cols|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px;" tabindex="1">
+              <div style="float:left; border:1px solid #999999;">
+                <div class="spinner_up" id="settings_related_cols_up"></div>
+                <div class="spinner_down" id="settings_related_cols_down"></div>
+              </div>
+              {literal}<script type="text/javascript">new SpinnerControl('settings_related_cols', 'settings_related_cols_up', 'settings_related_cols_down', {interval:1, min:1, max:640, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	          <a href="javascript:void(0);" rel="Amount of colums the related videos table should have.<br>Make sure you have selected a number that is multiple of<br>the related videos amount."><img src="images/icons/help.png" class="ml5"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1">
+	        <td align="right"><b class="red">*</b> <b>Home Being Watched Amount:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[home_being_watched_amount]" id="settings_home_being_watched_amount" value="{$aSettings.home_being_watched_amount|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px;" tabindex="1">
+              <div style="float:left; border:1px solid #999999;">
+                <div class="spinner_up" id="settings_home_being_watched_amount_up"></div>
+                <div class="spinner_down" id="settings_home_being_watched_amount_down"></div>
+              </div>
+              {literal}<script type="text/javascript">new SpinnerControl('settings_home_being_watched_amount', 'settings_home_being_watched_amount_up', 'settings_home_being_watched_amount_down', {interval:1, min:0, max:640, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	          <a href="javascript:void(0);" rel="Amount of 'Being Watched' videos to be shown in the home page.<br>It will use 'Columns' amount.<br>Set to 0 if you don't want to show 'Videos Being Watched'."><img src="images/icons/help.png" class="ml5"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9">
+	        <td align="right"><b class="red">*</b> <b>Home Recently Added Amount:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[home_recently_added_amount]" id="settings_home_recently_added_amount" value="{$aSettings.home_recently_added_amount|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px;" tabindex="1">
+              <div style="float:left; border:1px solid #999999;">
+                <div class="spinner_up" id="settings_home_recently_added_amount_up"></div>
+                <div class="spinner_down" id="settings_home_recently_added_amount_down"></div>
+              </div>
+              {literal}<script type="text/javascript">new SpinnerControl('settings_home_recently_added_amount', 'settings_home_recently_added_amount_up', 'settings_home_recently_added_amount_down', {interval:1, min:0, max:640, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	          <a href="javascript:void(0);" rel="Amount of 'Recently Added' videos to be shown in the home page.<br>It will use 'Columns' amount.<br>Set to 0 if you don't want to show 'Recently Added Videos'."><img src="images/icons/help.png" class="ml5"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1">
+	        <td align="right"><b class="red">*</b> <b>Home Premium Videos Amount:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[home_premium_amount]" id="settings_home_premium_amount" value="{$aSettings.home_premium_amount|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px;" tabindex="1">
+              <div style="float:left; border:1px solid #999999;">
+                <div class="spinner_up" id="settings_home_premium_amount_up"></div>
+                <div class="spinner_down" id="settings_home_premium_amount_down"></div>
+              </div>
+              {literal}<script type="text/javascript">new SpinnerControl('settings_home_premium_amount', 'settings_home_premium_amount_up', 'settings_home_premium_amount_down', {interval:1, min:0, max:640, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	          <a href="javascript:void(0);" rel="Amount of 'Premium' videos to be shown in the home page.<br>It will use 'Columns' amount.<br>Set to 0 if you don't want to show 'Premium Videos'."><img src="images/icons/help.png" class="ml5"></a>
+	        </td>
+	      </tr>
+	    </table>
+	  </div>
+	  </fieldset>
+	  
+	</div>
+	
+	<div class="settings_div" align="center" id="settings_div_2" style="display:none;">
+	
+	  <fieldset class="fieldset2" style="width:800px; text-align:left;">
+	  <legend class="legend2"><b>Video User Uploads</b></legend>
+	  <div class="bottom" style="padding:20px;">
+	    <table cellpadding="5" cellspacing="1"  width="100%" style="border:1px solid #AAAAAA; background:#EEEEEE;">	  
+	  	  <tr bgcolor="#D1D1D1">
+	        <td align="right" width="180"><b>Allow User Video Uploads:</b></td>
+	        <td>
+	          <input type="checkbox" value="1" name="aSettings[video_upload_allowed]" id="settings_video_upload_allowed" {if $aSettings.video_upload_allowed==1}checked{/if}  onchange="EnableUndoButton(); ToggleCells(this.checked,'.upload_property');" tabindex="1" class="checkbox">
+	          <a href="javascript:void(0);" rel="Choose wether to allow users to upload their own videos or not.<br>Only recommended if FFMPEG is installed in the server or you work<br>in manual mode (Thumnbails and Previews Data)."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9" class="upload_property" {if $aSettings.video_upload_allowed!=1}style="display:none;"{/if}>
+	        <td align="right" width="180"><b>Auto-Approve Uploaded Videos:</b></td>
+	        <td>
+	          <input type="checkbox" value="1" name="aSettings[video_upload_moderated]" id="settings_video_upload_moderated" {if $aSettings.video_upload_moderated==1}checked{/if}  onchange="EnableUndoButton();" tabindex="1" class="checkbox">
+	          <a href="javascript:void(0);" rel="If checked, all user uploaded videos will be approved inmediatly.<br>If not, you will have to moderate/approve the videos yourself.<br>Videos won't be shown unless basic cron tasks are ran."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1" class="upload_property" {if $aSettings.video_upload_allowed!=1}style="display:none;"{/if}>
+	        <td align="right" width="180"><b>Uploaded Videos Player:</b></td>
+	        <td>
+	          <select name="aSettings[video_upload_player_id]" id="settings_video_upload_player_id" value="{$aSettings.video_upload_player_id}" class="input-text" style="width:150px;" onchange="EnableUndoButton();" tabindex="1">
+	          {foreach from=$array_players key=player_id item=player}
+	          {if $player.id==1 || $player.editable}<option value="{$player_id}" {if $aSettings.video_upload_player_id==$player_id}selected{/if}>{$player.name}</option>{/if}
+	          {/foreach}
+	          </select>
+	          <a href="javascript:void(0);" rel="Select the player you want to use by default for user uploaded videos."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1" class="upload_property" {if $aSettings.video_upload_allowed!=1}style="display:none;"{/if}>
+	        <td align="right" width="180" valign="top">
+	          <b>Uploaded Videos Cron Tasks:</b><br>
+	          <font size="1" style="line-height:12px;">If you are going to use these additional cron tasks and have auto-approve enabled, make sure to have set the tasks cron job to 5 mins or similar. This way you will have your site updated quickly after a new video is uploaded.</font>
+	        </td>
+	        <td valign="top">
+			  <input type="hidden" value="{$aSettings.video_upload_task_m4v_conversion}" name="aSettings[video_upload_task_m4v_conversion]" id="settings_video_upload_task_m4v_conversion"> 
+	          {* <input type="checkbox" value="1" name="aSettings[video_upload_task_m4v_conversion]" id="settings_video_upload_task_m4v_conversion" {if $aSettings.video_upload_task_m4v_conversion==1}checked{/if}  onchange="EnableUndoButton();" tabindex="1" class="checkbox"> <label for="settings_video_upload_task_m4v_conversion">Convert to M4V Mobile Format</label>
+	          <a href="javascript:void(0);" rel="Select this task to convert the uploaded<br>file to M4V format within the tasks cron job."><img src="images/icons/help.png"></a>
+	          <br> *}
+	          <input type="checkbox" value="1" name="aSettings[video_upload_task_mp4_conversion]" id="settings_video_upload_task_mp4_conversion" {if $aSettings.video_upload_task_mp4_conversion==1}checked{/if}  onchange="EnableUndoButton();" tabindex="1" class="checkbox"> <label for="settings_video_upload_task_mp4_conversion">Add MP4 Conversion</label>
+	          <a href="javascript:void(0);" rel="Select this task to convert the uploaded<br>file to MP4 format. This will not replace<br>the existing FLV."><img src="images/icons/help.png"></a>
+			  <br>
+	          <input type="checkbox" value="1" name="aSettings[video_upload_generate_preview]" id="settings_video_upload_generate_preview" {if $aSettings.video_upload_generate_preview==1}checked{/if}  onchange="EnableUndoButton();" tabindex="1" class="checkbox"> <label for="settings_video_upload_generate_preview">Generate Preview Image</label>
+	          <a href="javascript:void(0);" rel="Select this task to generate a Preview Image.<br>Not really needed if Auto-Play is set to On."><img src="images/icons/help.png"></a>
+	          <br>
+	          <input type="checkbox" value="1" name="aSettings[video_upload_task_autotranslate]" id="settings_video_upload_task_autotranslate" {if $aSettings.video_upload_task_autotranslate==1}checked{/if}  onchange="EnableUndoButton();" tabindex="1" class="checkbox"> <label for="settings_video_upload_task_autotranslate">Auto-Translate Title and Description</label>
+	          <a href="javascript:void(0);" rel="Select this task to Auto-Translate the title and description of the<br>uploaded video to the additional configured languages of the site.<br>It uses the PAID Google Translate API."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	     </table>
+	  </div>
+	  </fieldset>
+	  <br>	  
+	  
+	  <fieldset class="fieldset2" style="width:800px; text-align:left;">
+	  <legend class="legend2"><b>Video Enconding (FFMPEG / Flvtool2 / qt-faststart / AtomicParsley)</b></legend>
+	  <div class="bottom" style="padding:20px;">
+	    <table cellpadding="5" cellspacing="1"  width="100%" style="border:1px solid #AAAAAA; background:#EEEEEE;">
+	      <tr bgcolor="#C9C9C9">
+	        <td align="right" width="180"><b>FFMPEG Installation Path:</b></td>
+	        <td>
+	          <input class="left" type="text" name="aSettings[ffmpeg_path]" id="settings_ffmpeg_path" value="{$aSettings.ffmpeg_path|replace:'"':'&quot;'}" class="input-text" style="width:200px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a class="left ml5 pt3" href="javascript:void(0);" rel="Absolute path where FFMPEG is installed. I.E: /usr/bin/ or /usr/local/bin/<br>If not installed, leave empty, and it will not be used."><img src="images/icons/help.png"></a>
+			  
+			  <span class="left ml5 pt3" id="ffmpeg_installed_div" {if !$ffmpeg_installed}style="display:none;"{/if}>
+			    <a href="javascript:void(0);" rel="FFMPEG is installed correctly on this path"><img src="images/icons/success.png"></a>
+			  </span>
+			  
+		      <span id="ffmpeg_not_installed_div" {if $ffmpeg_installed}style="display:none;"{/if}>
+			    <a class="left ml5 pt3" href="javascript:void(0);" rel="FFMPEG is not installed on this path. It won't<br>work either to convert nor extract thumbnails.<br>Check it with your hosting support or try the<br>suggested paths."><img src="images/icons/failure.png"></a>
+				<a class="option_button left ml5 mr5 pt3" href="javascript:void(0);" onclick="InstallFFMPEG();" rel="Attempt to Install FFMPEG.<br>This action will edit the installation path<br>and the conversion commands."><img src="images/icons/install.png" id="install_ffmpeg_icon"></a>
+			  </span>
+			  
+	        </td>
+	      </tr>
+		  <tr bgcolor="#D1D1D1">
+	        <td align="right" width="180"><b>Flvtool2 Installation Path:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[flvtool2_path]" id="settings_flvtool2_path" value="{$aSettings.flvtool2_path|replace:'"':'&quot;'}" class="input-text left" style="width:200px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a class="left ml5 pt3" href="javascript:void(0);" rel="Absolute path where flvtool2 is installed. I.E: /usr/bin/ or /usr/local/bin/<br>If not installed, leave empty, and it will not be used.<br><br>FLVtool2 is used to add keyframes to FLV videos enabling them to be<br>pseudo-streamed correctly."><img src="images/icons/help.png"></a>
+			  {if $flvtool2_installed}
+			    <a class="left ml5 pt3" href="javascript:void(0);" rel="Flvtool2 is installed correctly on this path."><img src="images/icons/success.png"></a>
+			  {else}
+			    <a class="left ml5 pt3" href="javascript:void(0);" rel="Flvtool2 is not installed on this path.<br>If you have WHM in this server, you can install it<br>by searching in the ruby gems section. Google it."><img src="images/icons/failure.png"></a>
+				<a class="left ml5 pt3" href="javascript:void(0);" rel="You won't be able to add keyframes to FLV videos (for pseudo-streaming).<br>Use only FLVs with keyframes."><img src="images/icons/warning.png"></a>
+			  {/if}
+	        </td>
+	      </tr>
+		  <tr bgcolor="#C9C9C9">
+	        <td align="right" width="180"><b>qt-faststart Installation Path:</b></td>
+	        <td>
+	          <input class="left" type="text" name="aSettings[qtfaststart_path]" id="settings_qtfaststart_path" value="{$aSettings.qtfaststart_path|replace:'"':'&quot;'}" class="input-text" style="width:200px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a class="left ml5 pt3" href="javascript:void(0);" rel="Absolute path where qt-faststart is installed. I.E: /usr/bin/ or /usr/local/bin/<br>If not installed, leave empty, and it will not be used.<br><br>qtfaststart is used to move metadata of MP4 videos<br>to the beginning, enabling them to be pseudo-streamed correctly."><img src="images/icons/help.png"></a>
+			  
+			  <span class="left ml5 pt3" id="qtfaststart_installed_div" {if !$qtfaststart_installed}style="display:none;"{/if}>
+			    <a href="javascript:void(0);" rel="qtfaststart is installed correctly on this path."><img src="images/icons/success.png"></a>
+			  </span>
+			  
+		      <span id="qtfaststart_not_installed_div" {if $qtfaststart_installed}style="display:none;"{/if}>
+			    <a class="left ml5 pt3" href="javascript:void(0);" rel="qtfaststart is not installed on this path.<br>You won't be able to Move the metadata of MP4 videos (for pseudo-streaming)."><img src="images/icons/failure.png"></a>
+				<a class="option_button left ml5 mr5 pt3" href="javascript:void(0);" onclick="InstallQtfaststart();" rel="Attempt to Install qtfaststart.<br>This action will edit the installation path."><img src="images/icons/install.png" id="install_qtfaststart_icon"></a>
+			  </span>
+			  
+	        </td>
+	      </tr>
+		  <tr bgcolor="#C9C9C9">
+	        <td align="right" width="180"><b>AtomicParsley Installation Path:</b></td>
+	        <td>
+	          <input class="left" type="text" name="aSettings[atomicparsley_path]" id="settings_atomicparsley_path" value="{$aSettings.atomicparsley_path|replace:'"':'&quot;'}" class="input-text" style="width:200px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a class="left ml5 pt3" href="javascript:void(0);" rel="Absolute path where qt-faststart is installed. I.E: /usr/bin/ or /usr/local/bin/<br>If not installed, leave empty, and it will not be used.<br><br>AtomicParsley is used to check the location of the moov-atom<br>metadata for MP4 videos and decide if qt-faststart is needed."><img src="images/icons/help.png"></a>
+			  
+			  <span class="left ml5 pt3" id="atomicparsley_installed_div" {if !$atomicparsley_installed}style="display:none;"{/if}>
+			    <a href="javascript:void(0);" rel="AtomicParsley is installed correctly on this path."><img src="images/icons/success.png"></a>
+			  </span>
+			  
+		      <span id="atomicparsley_not_installed_div" {if $atomicparsley_installed}style="display:none;"{/if}>
+			    <a class="left ml5 pt3" href="javascript:void(0);" rel="AtomicParsley is not installed on this path.<br>You won't be able to check the metadata of MP4 videos (for pseudo-streaming)."><img src="images/icons/failure.png"></a>
+				<a class="option_button left ml5 mr5 pt3" href="javascript:void(0);" onclick="InstallAtomicParsley();" rel="Attempt to Install AtomicParsley.<br>This action will edit the installation path."><img src="images/icons/install.png" id="install_atomicparsley_icon"></a>
+			  </span>
+			  
+	        </td>
+	      </tr>
+		  <input type="hidden" value="1" name="aSettings[ffmpeg_autoconvert]" id="settings_ffmpeg_autoconvert">
+	      {* <tr bgcolor="#C9C9C9">
+	        <td align="right" width="180"><b>Autoconvert to FLV:</b></td>
+	        <td>
+	          <input type="checkbox" value="1" name="aSettings[ffmpeg_autoconvert]" id="settings_ffmpeg_autoconvert" {if $aSettings.ffmpeg_autoconvert==1}checked{/if}  onchange="EnableUndoButton();" tabindex="1" class="checkbox">
+	          <a href="javascript:void(0);" rel="When you'll upload/download a video file which format is not FLV,<br>the script will attempt to autoconvert it to FLV.<br>If you choose not to autoconvert,<br>the original format will be kept, and you will have<br>the chance to use, for example, embedded<br>windows media player as video player, and play mpeg videos."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1">
+	        <td align="right" width="180"><b>Priorize MP4 Conversion:</b></td>
+	        <td>
+	          <input type="checkbox" value="1" name="aSettings[ffmpeg_skip_flv_conversion]" id="settings_ffmpeg_skip_flv_conversion" {if $aSettings.ffmpeg_skip_flv_conversion==1}checked{/if} onchange="EnableUndoButton();" tabindex="1" class="checkbox">
+	          <a href="javascript:void(0);" rel="Check this box if you rather prefer uploaded videos to<br>be converted directly to MP4 instead of FLV, by default.<br><br>If a user uploads an FLV video, it will NOT be encoded<br>to MP4. Only for other formats.<br><br>Attention: Pseudo-Streaming of MP4 files will need<br>a proper encoding of the MP4, so make sure you read the encoding guide."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr> *}
+	      <tr bgcolor="#C9C9C9">
+	        <td align="right" width="180"><b>Encoding Command (FLV):</b></td>
+	        <td>
+	          <input type="text" value="{$aSettings.ffmpeg_conversion_command|replace:'"':'&quot;'}" name="aSettings[ffmpeg_conversion_command]" id="settings_ffmpeg_conversion_command" onchange="EnableUndoButton();" tabindex="1" style="width:250px;">
+	          <a href="javascript:void(0);" rel="Enter the command options you want FFMPEG to execute when<br>a video file needs to be converted to FLV."><img src="images/icons/help.png"></a>
+			  <a class="ml5" href="javascript:void(0);" onclick="OpenLayer('encoding_guide_layer');">Encoding Guide</a>
+	        </td>
+	      </tr>
+		  <tr bgcolor="#D1D1D1">
+	        <td align="right" width="200"><b>Encoding Command (MP4):</b></td>
+	        <td>
+	          <input type="text" name="aSettings[mobile_ffmpeg_mp4_conversion_command]" id="settings_mobile_ffmpeg_mp4_conversion_command" value="{$aSettings.mobile_ffmpeg_mp4_conversion_command}" class="input-text"  style="width:250px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" rel="The command FFMPEG will use to convert videos to MP4 format.<br>Leave empty if you don't know what to put."><img src="images/icons/help.png"></a>
+			  <a class="ml5" href="javascript:void(0);" onclick="OpenLayer('encoding_guide_layer');">Encoding Guide</a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9">
+	        <td align="right" width="180"><b>Thumbs Extraction Time Limit:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[ffmpeg_capture_time_limit]" id="settings_ffmpeg_capture_time_limit" value="{$aSettings.ffmpeg_capture_time_limit|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px;" tabindex="1">
+              <div style="float:left; border:1px solid #999999;">
+                <div class="spinner_up" id="settings_ffmpeg_capture_time_limit_up"></div>
+                <div class="spinner_down" id="settings_ffmpeg_capture_time_limit_down"></div>
+              </div>
+              <span class="left ml5">min.</span>
+              {literal}<script type="text/javascript">new SpinnerControl('settings_ffmpeg_capture_time_limit', 'settings_ffmpeg_capture_time_limit_up', 'settings_ffmpeg_capture_time_limit_down', {interval:1, min:1, max:1439, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	          <a href="javascript:void(0);" rel="Set the MAX amount of minutes (from the begining of the video) that<br>ffmpeg will work with to extract frames (thumbs or preview images).<br>Example: 3 mins will make ffmpeg capture thumbs of only the first 3<br>mins of the video and ignore the rest. This will improve the timing and<br>performance for long videos."><img src="images/icons/help.png" class="ml5"></a>
+	        </td>
+	      </tr>
+	    </table>
+	  </div>
+	  </fieldset>
+	  <br>
+	  <fieldset class="fieldset2" style="width:800px; text-align:left;">
+	  <legend class="legend2"><b>Imagemagick</b></legend>
+	  <div class="bottom" style="padding:20px;">
+	    <table cellpadding="5" cellspacing="1"  width="100%" style="border:1px solid #AAAAAA; background:#EEEEEE;">
+	      <tr bgcolor="#D1D1D1">
+	        <td align="right" width="180"><b>Installation Path:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[imagemagick_path]" id="settings_imagemagick_path" value="{$aSettings.imagemagick_path|replace:'"':'&quot;'}" class="input-text" style="width:200px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" rel="Absolute path where the imagemagick lib is installed. I.E: /usr/bin/<br>If not installed, leave empty and it will not be used.<br>GD2lib will be used instead."><img src="images/icons/help.png"></a>
+			  {if $imagemagick_installed}
+			    <a href="javascript:void(0);" rel="ImageMagick is installed correctly on this path"><img src="images/icons/success.png"></a>
+			  {else}
+			    <a href="javascript:void(0);" rel="ImageMagick is not installed on this path. It won't<br>work on the thumbnails, though it's not needed<br>if you have GD2lib enabled.<br>Check it with your hosting support or try the<br>suggested paths."><img src="images/icons/failure.png"></a>
+			  {/if}
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9">
+	        <td align="right" width="180"><b>AutoEnhance Thumbs:</b></td>
+	        <td>
+	          <input type="checkbox" value="1" name="aSettings[imagemagick_autoenhance]" id="settings_imagemagick_autoenhance" {if $aSettings.imagemagick_autoenhance==1}checked{/if}  onchange="EnableUndoButton();" tabindex="1" class="checkbox">
+	          <a href="javascript:void(0);" rel="If checked, automagick will attempt to automatically enhance thumbnails.<br>Imagemagick must be installed."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	    </table>
+	  </div>
+	  </fieldset>
+	  <br>
+	  <fieldset class="fieldset2" style="width:800px; text-align:left;">
+	  <legend class="legend2"><b>Memcached</b></legend>
+	  <div class="bottom" style="padding:20px;">
+	    <table cellpadding="5" cellspacing="1"  width="100%" style="border:1px solid #AAAAAA; background:#EEEEEE;">
+		  <tr bgcolor="#D1D1D1">
+	        <td align="right" width="180"><b>Enable Memcached:</b></td>
+	        <td>
+	          <input type="checkbox" value="1" name="aSettings[memcache_enabled]" id="settings_memcache_enabled" {if $aSettings.memcache_enabled==1}checked{/if}  onchange="EnableUndoButton(); ToggleCells(this.checked,'.memcache_property');" tabindex="1" class="checkbox">
+	          <a href="javascript:void(0);" class="mr3" rel="Memcached is used to cache the results of MySQL Queries.<br>It will optimize the server resources and load time.<br>Check this box to Enable"><img src="images/icons/help.png"></a>
+			  {if $memcache_installed}
+			    <a href="javascript:void(0);" rel="Memcached is installed correctly<br>and its safe to enable it."><img src="images/icons/success.png"></a>
+			  {else}
+			    <a href="javascript:void(0);" rel="Memcached is not installed on this server<br><b>Don't enable it.</b>"><img src="images/icons/failure.png"></a>
+			  {/if}
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9" class="memcache_property">
+	        <td align="right" width="180"><b>Server:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[memcache_server]" id="settings_memcache_server" value="{$aSettings.memcache_server|replace:'"':'&quot;'}" class="input-text" style="width:200px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" rel="If you want to use another server/host<br>for Memcached. Otherwise use <i>localhost</i>"><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1" class="memcache_property">
+	        <td align="right" width="180"><b>Port:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[memcache_port]" id="settings_memcache_port" value="{$aSettings.memcache_port|replace:'"':'&quot;'}" class="input-text" style="width:35px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" rel="Set the Memcached port number.<br>Use 11211 if you don't know which to use."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+		  <tr bgcolor="#D1D1D1" class="memcache_property">
+	        <td align="right" width="180"><b>Duration:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[memcache_expires]" id="settings_memcache_expires" value="{$aSettings.memcache_expires|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px;" tabindex="1">
+              <div style="float:left; border:1px solid #999999;">
+                <div class="spinner_up" id="settings_memcache_expires"></div>
+                <div class="spinner_down" id="settings_memcache_expires"></div>
+              </div>
+              <span class="left ml5">videos.</span>
+              {literal}<script type="text/javascript">new SpinnerControl('settings_memcache_expires', 'settings_memcache_expires_up', 'settings_memcache_expires_down', {interval:1, min:0, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	          <a href="javascript:void(0);" rel="Set the amount of seconds you want<br>Memcached to save the results.<br>Default is 30 seconds."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>	 
+	    </table>
+	  </div>
+	  </fieldset>
+	  <br>
+	  <fieldset class="fieldset2" style="width:800px; text-align:left;">
+	  <legend class="legend2"><b>Video Search</b></legend>
+	  <div class="bottom" style="padding:20px;">
+	    <table cellpadding="5" cellspacing="1"  width="100%" style="border:1px solid #AAAAAA; background:#EEEEEE;">
+	      <tr bgcolor="#D1D1D1">
+	        <td align="right" width="180"><b>Random Video Results:</b></td>
+	        <td>
+			  <input type="checkbox" value="1" name="aSettings[noresults_get_random_videos]" id="settings_noresults_get_random_videos" {if $aSettings.noresults_get_random_videos==1}checked{/if}  onchange="EnableUndoButton();" tabindex="1" class="checkbox">
+	          <a href="javascript:void(0);" rel="Check this box if you want to show random video results<br> when no videos have been found for a search.<br><br>This is not really recommended, as it uses CPU resources."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>	      
+	    </table>
+	  </div>
+	  </fieldset>
+	  <br>
+	  <fieldset class="fieldset2" style="width:800px; text-align:left;">
+	  <legend class="legend2"><b>Tasks Cronjob Settings</b></legend>
+	  <div class="bottom" style="padding:20px;">
+	    <table cellpadding="5" cellspacing="1"  width="100%" style="border:1px solid #AAAAAA; background:#EEEEEE;">
+	      <tr bgcolor="#D1D1D1">
+	        <td align="right" width="180"><b>Limit Videos Amount:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[tasks_cron_limit]" id="settings_tasks_cron_limit" value="{$aSettings.tasks_cron_limit|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px;" tabindex="1">
+              <div style="float:left; border:1px solid #999999;">
+                <div class="spinner_up" id="settings_tasks_cron_limit_up"></div>
+                <div class="spinner_down" id="settings_tasks_cron_limit_down"></div>
+              </div>
+              <span class="left ml5">videos.</span>
+              {literal}<script type="text/javascript">new SpinnerControl('settings_tasks_cron_limit', 'settings_tasks_cron_limit_up', 'settings_tasks_cron_limit_down', {interval:1, min:0, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	          <a href="javascript:void(0);" rel="Set a limit for the amount of videos that<br>will be processed each time the tasks cron job runs.<br>Set to 0 for 'No Limit'"><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>	      
+	    </table>
+	  </div>
+	  </fieldset>
+	  <br>
+	  <fieldset class="fieldset2" style="width:800px; text-align:left;">
+	  <legend class="legend2"><b>Tags Cloud</b></legend>
+	  <div class="bottom" style="padding:20px;">
+	    <table cellpadding="5" cellspacing="1"  width="100%" style="border:1px solid #AAAAAA; background:#EEEEEE;">	  
+	  	  <tr bgcolor="#D1D1D1">
+	        <td align="right" width="180"><b>Enable Tags Cloud:</b></td>
+	        <td>
+	          <input type="checkbox" value="1" name="aSettings[tags_cloud_enabled]" id="settings_tags_cloud_enabled" {if $aSettings.tags_cloud_enabled==1}checked{/if}  onchange="EnableUndoButton(); ToggleCells(this.checked,'.tags_cloud_property');" tabindex="1" class="checkbox">
+	          <a href="javascript:void(0);" rel="Check this box if you want to show the tags cloud on home and videos pages"><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9" class="tags_cloud_property" {if $aSettings.tags_cloud_enabled!=1}style="display:none;"{/if}>
+	        <td align="right" width="180"><b>Amount of Tags:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[tags_cloud_limit]" id="settings_tags_cloud_limit" value="{$aSettings.tags_cloud_limit|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px;" tabindex="1">
+              <div style="float:left; border:1px solid #999999;">
+                <div class="spinner_up" id="settings_tags_cloud_limit_up"></div>
+                <div class="spinner_down" id="settings_tags_cloud_limit_down"></div>
+              </div>
+              {literal}<script type="text/javascript">new SpinnerControl('settings_tags_cloud_limit', 'settings_tags_cloud_limit_up', 'settings_tags_cloud_limit_down', {interval:1, min:1, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	          <a href="javascript:void(0);" rel="Amount of tags to be shown in the cloud."><img src="images/icons/help.png" class="ml5"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1" class="tags_cloud_property" {if $aSettings.tags_cloud_enabled!=1}style="display:none;"{/if}>
+	        <td align="right" width="180"><b>Smallest Font:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[tags_cloud_smallest_font]" id="settings_tags_cloud_smallest_font" value="{$aSettings.tags_cloud_smallest_font|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px;" tabindex="1">
+              <div style="float:left; border:1px solid #999999;">
+                <div class="spinner_up" id="settings_tags_cloud_smallest_font_up"></div>
+                <div class="spinner_down" id="settings_tags_cloud_smallest_font_down"></div>
+              </div>
+              {literal}<script type="text/javascript">new SpinnerControl('settings_tags_cloud_smallest_font', 'settings_tags_cloud_smallest_font_up', 'settings_tags_cloud_smallest_font_down', {interval:1, min:5, max:60, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	          <a href="javascript:void(0);" rel="Amount of tags to be shown in the cloud."><img src="images/icons/help.png" class="ml5"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9" class="tags_cloud_property" {if $aSettings.tags_cloud_enabled!=1}style="display:none;"{/if}>
+	        <td align="right" width="180"><b>Largest Font:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[tags_cloud_largest_font]" id="settings_tags_cloud_largest_font" value="{$aSettings.tags_cloud_largest_font|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px;" tabindex="1">
+              <div style="float:left; border:1px solid #999999;">
+                <div class="spinner_up" id="settings_tags_cloud_largest_font_up"></div>
+                <div class="spinner_down" id="settings_tags_cloud_largest_font_down"></div>
+              </div>
+              {literal}<script type="text/javascript">new SpinnerControl('settings_tags_cloud_largest_font', 'settings_tags_cloud_largest_font_up', 'settings_tags_cloud_largest_font_down', {interval:1, min:5, max:60, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	          <a href="javascript:void(0);" rel="Amount of tags to be shown in the cloud."><img src="images/icons/help.png" class="ml5"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1" class="tags_cloud_property" {if $aSettings.tags_cloud_enabled!=1}style="display:none;"{/if}>
+	        <td align="right" width="180"><b>Rebuild After:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[tags_cloud_duration]" id="settings_tags_cloud_duration" value="{$aSettings.tags_cloud_duration|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px;" tabindex="1">
+              <div style="float:left; border:1px solid #999999;">
+                <div class="spinner_up" id="settings_tags_cloud_duration_up"></div>
+                <div class="spinner_down" id="settings_tags_cloud_duration_down"></div>
+              </div>
+              <span class="left ml5">Mins.</span>
+              {literal}<script type="text/javascript">new SpinnerControl('settings_tags_cloud_duration', 'settings_tags_cloud_duration_up', 'settings_tags_cloud_duration_down', {interval:1, min:0, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	          <a href="javascript:void(0);" rel="Amount of minutes a tag cloud will be shown<br>to a user until it is rebuilt."><img src="images/icons/help.png" class="ml5"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9" class="tags_cloud_property" {if $aSettings.tags_cloud_enabled!=1}style="display:none;"{/if}>
+	        <td align="right" width="180"><b>Tags Remain for:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[tags_cloud_expiration]" id="settings_tags_cloud_expiration" value="{$aSettings.tags_cloud_expiration|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px;" tabindex="1">
+              <div style="float:left; border:1px solid #999999;">
+                <div class="spinner_up" id="settings_tags_cloud_expiration_up"></div>
+                <div class="spinner_down" id="settings_tags_cloud_expiration_down"></div>
+              </div>
+              <span class="left ml5">Days</span>
+              {literal}<script type="text/javascript">new SpinnerControl('settings_tags_cloud_expiration', 'settings_tags_cloud_expiration_up', 'settings_tags_cloud_expiration_down', {interval:1, min:1, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	          <a href="javascript:void(0);" rel="Amount of Days the search tags remain in the database<br>to be used in the tags cloud calculation.<br>The more traffic you have, the less days you should set."><img src="images/icons/help.png" class="ml5"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1" class="tags_cloud_property" {if $aSettings.tags_cloud_enabled!=1}style="display:none;"{/if}>
+	        <td align="right" width="180"><b>Forbidden Keywords:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[tags_cloud_forbidden_keywords]" id="settings_tags_cloud_forbidden_keywords" value="{$aSettings.tags_cloud_forbidden_keywords|replace:'"':'&quot;'}" class="input-text" style="width:200px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" rel="Set the keywords you want to block<br>from being showed in the Tags Cloud.<br>Comma Separated."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	     </table>
+	  </div>
+	  </fieldset>
+	  <br>
+	  <fieldset class="fieldset2" style="width:800px; text-align:left;">
+	  <legend class="legend2"><b>Tags Archive</b></legend>
+	  <div class="bottom" style="padding:20px;">
+	    <table cellpadding="5" cellspacing="1"  width="100%" style="border:1px solid #AAAAAA; background:#EEEEEE;">	  
+	  	  <tr bgcolor="#D1D1D1">
+	        <td align="right" width="180"><b>Enable Tags Archive:</b></td>
+	        <td>
+	          <input type="checkbox" value="1" name="aSettings[tags_archive_enabled]" id="settings_tags_archive_enabled" {if $aSettings.tags_archive_enabled==1}checked{/if}  onchange="EnableUndoButton(); ToggleCells(this.checked,'.tags_archive_property');" tabindex="1" class="checkbox">
+	          <a href="javascript:void(0);" rel="Check this box if you want to enable 'Tags Archive' page.<br>This will print a page with all the tags you configure here.<br>You need to have 'tags_archive_cron.php' as a cronjob."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9" class="tags_archive_property" {if $aSettings.tags_archive_enabled!=1}style="display:none;"{/if}>
+	        <td align="right" width="180"><b>Tags Limit:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[tags_archive_limit]" id="settings_tags_archive_limit" value="{$aSettings.tags_archive_limit|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px;" tabindex="1">
+              <div style="float:left; border:1px solid #999999;">
+                <div class="spinner_up" id="settings_tags_archive_limit_up"></div>
+                <div class="spinner_down" id="settings_tags_archive_limit_down"></div>
+              </div>
+              {literal}<script type="text/javascript">new SpinnerControl('settings_tags_archive_limit', 'settings_tags_archive_limit_up', 'settings_tags_archive_limit_down', {interval:1, min:1, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	          <a href="javascript:void(0);" rel="Amount of tags to be shown in the tags archive page."><img src="images/icons/help.png" class="ml5"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1" class="tags_archive_property" {if $aSettings.tags_archive_enabled!=1}style="display:none;"{/if}>
+	        <td align="right" width="180"><b>Tags Font Size:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[tags_archive_font_size]" id="settings_tags_archive_font_size" value="{$aSettings.tags_archive_font_size|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px;" tabindex="1">
+              <div style="float:left; border:1px solid #999999;">
+                <div class="spinner_up" id="settings_tags_archive_font_size_up"></div>
+                <div class="spinner_down" id="settings_tags_archive_font_size_down"></div>
+              </div>
+              {literal}<script type="text/javascript">new SpinnerControl('settings_tags_archive_font_size', 'settings_tags_archive_font_size_up', 'settings_tags_archive_font_size_down', {interval:1, min:1, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	          <a href="javascript:void(0);" rel="Amount of tags to be shown in the tags archive page."><img src="images/icons/help.png" class="ml5"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9" class="tags_archive_property" {if $aSettings.tags_archive_enabled!=1}style="display:none;"{/if}>
+	        <td align="right" width="180"><b>Cron Job will add:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[tags_archive_activate_amount]" id="settings_tags_archive_activate_amount" value="{$aSettings.tags_archive_activate_amount|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px;" tabindex="1">
+              <div style="float:left; border:1px solid #999999;">
+                <div class="spinner_up" id="settings_tags_archive_activate_amount_up"></div>
+                <div class="spinner_down" id="settings_tags_archive_activate_amount_down"></div>
+              </div>
+              {literal}<script type="text/javascript">new SpinnerControl('settings_tags_archive_activate_amount', 'settings_tags_archive_activate_amount_up', 'settings_tags_archive_activate_amount_down', {interval:1, min:1, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	          <a href="javascript:void(0);" rel="Amount of tags to be added/activated <br>every time the cron job runs."><img src="images/icons/help.png" class="ml5"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1" class="tags_archive_property" {if $aSettings.tags_archive_enabled!=1}style="display:none;"{/if}>
+	        <td align="right" width="180"><b>Tags Order:</b></td>
+	        <td>
+	          <select name="aSettings[tags_archive_order]" id="settings_tags_archive_order" value="{$aSettings.tags_archive_order}" class="input-text" style="width:150px;" onchange="EnableUndoButton();" tabindex="1">
+	            <option value="0">Random Order</option>
+	            <option value="1">Last Added</option>
+	          </select>
+	          <a href="javascript:void(0);" rel="Order of tags."><img src="images/icons/help.png" class="ml5"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9" class="tags_archive_property" {if $aSettings.tags_archive_enabled!=1}style="display:none;"{/if}>
+	        <td align="right" width="180"><b>Tags Manager:</b></td>
+	        <td>
+	          <a class="small_button" href="javascript:void(0);" onclick="OpenTagsArchiveManager();"><span><img src="images/icons/archive.png" id="tags_archive_manager_icon"> Open Tags Archive Manager</span></a>
+	        </td>
+	      </tr>
+	     </table>
+	  </div>
+	  </fieldset>
+	  <br>
+	  <fieldset class="fieldset2" style="width:800px; text-align:left;">
+	  <legend class="legend2"><b>Template Caching</b></legend>
+	  <div class="bottom" style="padding:20px;">
+	    <table cellpadding="5" cellspacing="1"  width="100%" style="border:1px solid #AAAAAA; background:#EEEEEE;">	  
+	  	  <tr bgcolor="#D1D1D1">
+	        <td align="right" width="180"><b>Enable Page Caching:</b></td>
+	        <td>
+	          <input type="checkbox" value="1" name="aSettings[template_caching]" id="settings_template_caching" {if $aSettings.template_caching==1}checked{/if}  onchange="EnableUndoButton(); ToggleCells(this.checked,'.caching_property');" tabindex="1" class="checkbox">
+	          <a href="javascript:void(0);" rel="Check this box if you want the template engine to cache pages.<br>It will optimize the server resources."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9" class="caching_property" {if $aSettings.template_caching!=1}style="display:none;"{/if}>
+	        <td align="right" width="180"><b>Cache Lifetime:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[template_cache_lifetime]" id="settings_template_cache_lifetime" value="{$aSettings.template_cache_lifetime|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px;" tabindex="1">
+              <div style="float:left; border:1px solid #999999;">
+                <div class="spinner_up" id="settings_template_cache_lifetime_up"></div>
+                <div class="spinner_down" id="settings_template_cache_lifetime_down"></div>
+              </div>
+              <span class="left ml5">min.</span>
+              {literal}<script type="text/javascript">new SpinnerControl('settings_template_cache_lifetime', 'settings_template_cache_lifetime_up', 'settings_template_cache_lifetime_down', {interval:1, min:1, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	          <a href="javascript:void(0);" rel="Amount of minutes of the cache lifetime.<br>Once reached, the files will be regenerated.<br>You need the clear_cache.php cronjob<br>running once every this same amount. I.E: 60 mins."><img src="images/icons/help.png" class="ml5"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1" class="caching_property" {if $aSettings.template_caching!=1}style="display:none;"{/if}>
+	        <td align="right" width="180"><b>Clear Cache:</b></td>
+	        <td>
+	          <a href="javascript:void(0);" class="option_button left ml5 mr5 pt3" onclick="ClearCache();" rel="<b>Clear Cache</b><br>Click to delete all cached files."><img src="images/icons/clear.png" id="clear_cache_icon"></a>
+	        </td>
+	      </tr>
+	     </table>
+	  </div>
+	  </fieldset>
+	  <br>
+	  <fieldset class="fieldset2" style="width:800px; text-align:left;">
+	  <legend class="legend2"><b>General User Settings</b></legend>
+	  <div class="bottom" style="padding:20px;">
+	    <table cellpadding="5" cellspacing="1"  width="100%" style="border:1px solid #AAAAAA; background:#EEEEEE;">	  
+	  	  <tr bgcolor="#D1D1D1">
+	        <td align="right" width="180"><b>Force Users to Create Account:</b></td>
+	        <td>
+	          <input type="checkbox" value="1" name="aSettings[force_account_creation]" id="settings_force_account_creation" {if $aSettings.force_account_creation==1}checked{/if}  onchange="EnableUndoButton();" tabindex="1" class="checkbox">
+	          <a href="javascript:void(0);" rel="Force the users to create an account to watch any video on the site.<br>If user is not logged in, he won't he able to watch videos."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	     </table>
+	  </div>
+	  </fieldset>
+	  <br>
+	  
+	  <fieldset class="fieldset2" style="width:800px; text-align:left;">
+	  <legend class="legend2"><b>Comments Settings</b></legend>
+	  <div class="bottom" style="padding:20px;">
+	    <table cellpadding="5" cellspacing="1"  width="100%" style="border:1px solid #AAAAAA; background:#EEEEEE;">
+	      <tr bgcolor="#C9C9C9">
+	        <td align="right" width="180"><b>Allow Comments:</b></td>
+	        <td>
+	          <input type="checkbox" value="1" name="aSettings[comments_allowed]" id="settings_comments_allowed" {if $aSettings.comments_allowed==1}checked{/if}  onchange="EnableUndoButton(); ToggleCells(this.checked,'.comments_property');" tabindex="1" class="checkbox">
+	          <a href="javascript:void(0);" rel="Choose wether to allow users to comment on the videos pages or not."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+		  <tr bgcolor="#D1D1D1" class="comments_property" {if $aSettings.comments_allowed!=1}style="display:none;"{/if}>
+	        <td align="right" width="180"><b>Comments per Page:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[comments_amount]" id="settings_comments_amount" value="{$aSettings.comments_amount|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px;" tabindex="1">
+              <div style="float:left; border:1px solid #999999;">
+                <div class="spinner_up" id="settings_comments_amount_up"></div>
+                <div class="spinner_down" id="settings_comments_amount_down"></div>
+              </div>
+              {literal}<script type="text/javascript">new SpinnerControl('settings_comments_amount', 'settings_comments_amount_up', 'settings_comments_amount_down', {interval:1, min:0, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	          <a href="javascript:void(0);" rel="Amount of comments to show on each page.<br>Default is 25"><img src="images/icons/help.png" class="ml5"></a>
+	        </td>
+	      </tr>	 
+	      <tr bgcolor="#C9C9C9" class="comments_property" {if $aSettings.comments_allowed!=1}style="display:none;"{/if}>
+	        <td align="right" width="180"><b>Allow Anonymus Comments:</b></td>
+	        <td>
+	          <input type="checkbox" value="1" name="aSettings[comments_anonymus_allowed]" id="settings_comments_anonymus_allowed" {if $aSettings.comments_anonymus_allowed==1}checked{/if}  onchange="EnableUndoButton();" tabindex="1" class="checkbox">
+	          <a href="javascript:void(0);" rel="Choose wether to allow anonymus user comments on the videos or not."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1" class="comments_property" {if $aSettings.comments_allowed!=1}style="display:none;"{/if}>
+	        <td align="right" width="180"><b>Moderate Comments:</b></td>
+	        <td>
+	          <input type="checkbox" value="1" name="aSettings[comments_moderation]" id="settings_comments_moderation" {if $aSettings.comments_moderation==1}checked{/if}  onchange="EnableUndoButton();" tabindex="1" class="checkbox">
+	          <a href="javascript:void(0);" rel="Check this box if you with to moderate/activate comments yourself, instead of allowing inmediate publication."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9" class="comments_property" {if $aSettings.comments_allowed!=1}style="display:none;"{/if}>
+	        <td align="right" width="180"><b>Show Captcha Validation:</b></td>
+	        <td>
+	          <input type="checkbox" value="1" name="aSettings[comments_captcha]" id="settings_comments_captcha" {if $aSettings.comments_captcha==1}checked{/if}  onchange="EnableUndoButton();" tabindex="1" class="checkbox">
+	          <a href="javascript:void(0);" rel="Captcha Validation will show disorted words for the user to type in, in order to verify he is human.<br>This prevents automated spam. If anonymus comments are ON, it will also be shown."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1" class="comments_property" {if $aSettings.comments_allowed!=1}style="display:none;"{/if}>
+	        <td align="right" width="180"><b>ReCaptcha Public Key:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[recaptcha_public_key]" id="settings_recaptcha_public_key" value="{$aSettings.recaptcha_public_key|replace:'"':'&quot;'}" class="input-text" style="width:200px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" rel="This would be the public key provided by your account of recaptcha.net.<br>It's not mandatory, as by default it will be using a generic public key."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9" class="comments_property" {if $aSettings.comments_allowed!=1}style="display:none;"{/if}>
+	        <td align="right" width="180"><b>ReCaptcha Private Key:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[recaptcha_private_key]" id="settings_recaptcha_private_key" value="{$aSettings.recaptcha_private_key|replace:'"':'&quot;'}" class="input-text" style="width:200px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" rel="This would be the private key provided by your account of recaptcha.net.<br>It's not mandatory, as by default it will be using a generic private key."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1" class="comments_property" {if $aSettings.comments_allowed!=1}style="display:none;"{/if}>
+	        <td align="right" width="180"><b>Hide reported comments after:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[comments_disable_after]" id="settings_comments_disable_after" value="{$aSettings.comments_disable_after|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px;" tabindex="1">
+              <div style="float:left; border:1px solid #999999;">
+                <div class="spinner_up" id="settings_comments_disable_after_up"></div>
+                <div class="spinner_down" id="settings_comments_disable_after_down"></div>
+              </div>
+              <span class="left ml5">spam reports.</span>
+              {literal}<script type="text/javascript">new SpinnerControl('settings_comments_disable_after', 'settings_comments_disable_after_up', 'settings_comments_disable_after_down', {interval:1, min:0, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	          <a href="javascript:void(0);" rel="When a comment is reported as spam the times you set here,<br>it will be automatically deactivated/hided.<br>Set to 0 if you don't want to auto hide."><img src="images/icons/help.png" class="ml5"></a>
+	        </td>
+	      </tr>	      
+	      <tr bgcolor="#C9C9C9" class="comments_property" {if $aSettings.comments_allowed!=1}style="display:none;"{/if}>
+	        <td align="right" width="180"><b>Forbidden keywords:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[comments_forbidden_keywords]" id="settings_comments_forbidden_keywords" value="{$aSettings.comments_forbidden_keywords|replace:'"':'&quot;'}" class="input-text" style="width:200px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" rel="If the users enter any of these words, they will be replaced with asterisks (******).<br>Comma separated."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	    </table>
+	  </div>
+	  </fieldset>
+	  <br>
+	  <fieldset class="fieldset2" style="width:800px; text-align:left;">
+	  <legend class="legend2"><b>Video Rating System</b></legend>
+	  <div class="bottom" style="padding:20px;">
+	    <table cellpadding="5" cellspacing="1"  width="100%" style="border:1px solid #AAAAAA; background:#EEEEEE;">
+	      <tr bgcolor="#D1D1D1">
+	        <td align="right" width="180"><b>Allow Anonymus Ratings:</b></td>
+	        <td>
+	          <input type="checkbox" value="1" name="aSettings[ratings_anonymus_allowed]" id="settings_ratings_anonymus_allowed" {if $aSettings.ratings_anonymus_allowed==1}checked{/if}  onchange="EnableUndoButton();" tabindex="1" class="checkbox">
+	          <a href="javascript:void(0);" rel="Choose wether to allow anonymus user ratings on the videos or not.<br>If you choose not to allow them, a 'Register' link will be shown."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	    </table>
+	  </div>
+	  </fieldset>
+	  <br>
+	  <fieldset class="fieldset2" style="width:800px; text-align:left;">
+	  <legend class="legend2"><b>RSS Settings</b></legend>
+	  <div class="bottom" style="padding:20px;">
+	    <table cellpadding="5" cellspacing="1"  width="100%" style="border:1px solid #AAAAAA; background:#EEEEEE;">
+	      <tr bgcolor="#D1D1D1">
+	        <td align="right" width="180"><b>Use RSS Feeds:</b></td>
+	        <td>
+	          <input type="checkbox" value="1" name="aSettings[rss_status]" id="settings_rss_status" {if $aSettings.rss_status==1}checked{/if}  onchange="EnableUndoButton(); ToggleCells(this.checked,'.rss_property');" tabindex="1" class="checkbox">
+	          <a href="javascript:void(0);" rel="Check this option to enable rss feeds on your site.<br>The feed will print 50 videos in the rss format.<br>You will need to link to http://www.yourdomain.com/rss/videos.rss<br>or http://www.yourdomain.com/rss/[category_id]/[category_name].rss<br>Check the installation guide to learn more."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9" class="rss_property" {if $aSettings.rss_status!=1}style="display:none;"{/if}>
+	        <td align="right" width="180"><b>Categorized Feeds:</b></td>
+	        <td>
+	          <input type="checkbox" value="1" name="aSettings[rss_categories]" id="settings_rss_categories" {if $aSettings.rss_categories==1}checked{/if}  onchange="EnableUndoButton();" tabindex="1" class="checkbox">
+	          <a href="javascript:void(0);" rel="Check this option to show RSS feeds for the categories as well."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	    </table>
+	  </div>
+	  </fieldset>
+	  <br>
+	  <fieldset class="fieldset2" style="width:800px; text-align:left;">
+	  <legend class="legend2"><b>Sitemap Settings</b></legend>
+	  <div class="bottom" style="padding:20px;">
+	    <table cellpadding="5" cellspacing="1"  width="100%" style="border:1px solid #AAAAAA; background:#EEEEEE;">
+	      <tr bgcolor="#D1D1D1">
+	        <td align="right" width="180"><b>Enable Sitemap:</b></td>
+	        <td>
+	          <input type="checkbox" value="1" name="aSettings[sitemap_status]" id="settings_sitemap_status" {if $aSettings.sitemap_status==1}checked{/if}  onchange="EnableUndoButton(); ToggleCells(this.checked,'.sitemap_property');" tabindex="1" class="checkbox">
+	          <a href="javascript:void(0);" rel="Check this option to enable the sitemap.<br>You will be able to access it from yoursite.com/sitemap.xml<br>You may use ?limit=X to limit the VIDEOS amount."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9" class="sitemap_property" {if $aSettings.sitemap_status!=1}style="display:none;"{/if}>
+	        <td align="right" width="180"><b>Regular Pages Frequency:</b></td>
+	        <td>
+	          <select name="aSettings[sitemap_frequency]" id="settings_sitemap_frequency" value="{$aSettings.sitemap_frequency}" class="input-text" style="width:200px;" onchange="EnableUndoButton();" tabindex="1">
+				<option value="always" {if $aSettings.sitemap_frequency=="always"}selected{/if}>Always</option>
+				<option value="hourly" {if $aSettings.sitemap_frequency=="hourly"}selected{/if}>Hourly</option>
+				<option value="daily" {if $aSettings.sitemap_frequency=="daily"}selected{/if}>Daily</option>
+				<option value="weekly" {if $aSettings.sitemap_frequency=="weekly"}selected{/if}>Weekly</option>
+				<option value="monthly" {if $aSettings.sitemap_frequency=="monthly"}selected{/if}>Monthly</option>
+				<option value="yearly" {if $aSettings.sitemap_frequency=="yearly"}selected{/if}>Yearly</option>
+	          </select>
+	          <a href="javascript:void(0);" rel="The frequency you would like google to<br>re-visit the regular pages of you site<br>like the index, categories, etc."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9" class="sitemap_property" {if $aSettings.sitemap_status!=1}style="display:none;"{/if}>
+	        <td align="right" width="180"><b>Video Pages Frequency:</b></td>
+	        <td>
+	          <select name="aSettings[sitemap_videos_frequency]" id="settings_sitemap_videos_frequency" value="{$aSettings.sitemap_videos_frequency}" class="input-text" style="width:200px;" onchange="EnableUndoButton();" tabindex="1">
+				<option value="always" {if $aSettings.sitemap_videos_frequency=="always"}selected{/if}>Always</option>
+				<option value="hourly" {if $aSettings.sitemap_videos_frequency=="hourly"}selected{/if}>Hourly</option>
+				<option value="daily" {if $aSettings.sitemap_videos_frequency=="daily"}selected{/if}>Daily</option>
+				<option value="weekly" {if $aSettings.sitemap_videos_frequency=="weekly"}selected{/if}>Weekly</option>
+				<option value="monthly" {if $aSettings.sitemap_videos_frequency=="monthly"}selected{/if}>Monthly</option>
+				<option value="yearly" {if $aSettings.sitemap_videos_frequency=="yearly"}selected{/if}>Yearly</option>
+	          </select>
+	          <a href="javascript:void(0);" rel="The frequency you would like google to<br>re-visit the video pages of you site."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	    </table>
+	  </div>
+	  </fieldset>
+	  <br>
+	  <fieldset class="fieldset2" style="width:800px; text-align:left;">
+	  <legend class="legend2"><b>Smart Recategorization</b></legend>
+	  <div class="bottom" style="padding:20px;">
+	    <table cellpadding="5" cellspacing="1"  width="100%" style="border:1px solid #AAAAAA; background:#EEEEEE;">
+	      <tr bgcolor="#D1D1D1">
+	        <td align="right" width="180"><b>Force Same Group:</b></td>
+	        <td>
+	          <input type="checkbox" value="1" name="aSettings[smart_recategorization_force_group]" id="settings_smart_recategorization_force_group" {if $aSettings.smart_recategorization_force_group==1}checked{/if}  onchange="EnableUndoButton();" tabindex="1" class="checkbox">
+	          <a href="javascript:void(0);" rel="Check this option to force the smart recategorization<br>to keep te videos within the same group."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9">
+	        <td align="right" width="180"><b>Smart Recateg Ignore List:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[smart_recategorization_ignore_list]" id="settings_smart_recategorization_ignore_list" value="{$aSettings.smart_recategorization_ignore_list|replace:'"':'&quot;'}" class="input-text" style="width:200px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" rel="Words the smart recategorization will ignore when analyzing titles and tags.<br>Comma separated."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	    </table>
+	  </div>
+	  </fieldset>
+	</div>	
+	
+	
+	<div class="settings_div" align="center" id="settings_div_3" style="display:none;">
+	  <fieldset class="fieldset2" style="width:800px; text-align:left;">
+	  <legend class="legend2"><b>Default Player Settings</b></legend>
+	  <div class="bottom" style="padding:20px;">
+	    <table cellpadding="5" cellspacing="1"  width="100%" style="border:1px solid #AAAAAA; background:#EEEEEE;">
+	      <tr bgcolor="#D1D1D1">
+	        <td align="right"><b>Player Background Color:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[default_player_background_color]" id="settings_default_player_background_color" value="{$aSettings.default_player_background_color}" class="input-text left" style="width:50px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" class="option_button left ml5 mr5 pt3" onclick="pickcolor('settings_default_player_background_color','',false,'settings_default_player_background_color',this);" rel="Click to Pick a Color"><img src="images/icons/colors.png"></a>
+	          <a href="javascript:void(0);" rel="Color of the player background color." class="left"><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9">
+	        <td align="right"><b>Control Bar Color:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[default_player_controlbar_color]" id="settings_default_player_controlbar_color" value="{$aSettings.default_player_controlbar_color}" class="input-text left" style="width:50px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" class="option_button left ml5 mr5 pt3" onclick="pickcolor('','',false,'settings_default_player_controlbar_color',this);" rel="Click to Pick a Color"><img src="images/icons/colors.png"></a>
+	          <a href="javascript:void(0);" rel="Color of the control bar." class="left"><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1">
+	        <td align="right"><b>Control Bar Font Color:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[default_player_controlbar_font_color]" id="settings_default_player_controlbar_font_color" value="{$aSettings.default_player_controlbar_font_color}" class="input-text left" style="width:50px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" class="option_button left ml5 mr5 pt3" onclick="pickcolor('settings_default_player_controlbar_font_color','',false,'settings_default_player_controlbar_font_color',this);" rel="Click to Pick a Color"><img src="images/icons/colors.png"></a>
+	          <a href="javascript:void(0);" rel="Color of the control bar fonts." class="left"><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9">
+	        <td align="right" width="180"><b>Auto Play:</b></td>
+	        <td>
+	          <input type="checkbox" value="1" name="aSettings[default_player_autoplay]" id="settings_default_player_autoplay" {if $aSettings.default_player_autoplay==1}checked{/if}  onchange="EnableUndoButton();" tabindex="1" class="checkbox">
+	          <a href="javascript:void(0);" rel="Would you like the video to be played automatically when it is loaded?<br>If you check this option, the Preview Images won't be needed."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1">
+	        <td align="right" width="180"><b>Use Pre-roll Ad:</b></td>
+	        <td>
+	          <input type="checkbox" value="1" name="aSettings[default_player_preroll_status]" id="settings_default_player_preroll_status" {if $aSettings.default_player_preroll_status==1}checked{/if}  onchange="EnableUndoButton(); ToggleCells(this.checked,'.preroll_property');" tabindex="1" class="checkbox">
+	          <a href="javascript:void(0);" rel="Would you like to use a Pre-roll Ad in the default player?"><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1" class="preroll_property" {if $aSettings.default_player_preroll_status!=1}style="display:none;"{/if}>
+	        <td align="right"><b>Pre-roll Ad Link:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[default_player_preroll_link]" id="settings_default_player_preroll_link" value="{$aSettings.default_player_preroll_link|replace:'"':'&quot;'}" class="input-text" style="width:200px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" rel="Link to the site you want the Pre-roll Ad to point to."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1" class="preroll_property" {if $aSettings.default_player_preroll_status!=1}style="display:none;"{/if}>
+	        <td align="right"><b>Pre-roll Ad Image:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[default_player_preroll_image]" id="settings_default_player_preroll_image" value="{$aSettings.default_player_preroll_image|replace:'"':'&quot;'}" class="input-text" style="width:200px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" rel="Image to be showed in the Pre-roll Ad.<br>Can be JPG, GIF, PNG or SWF.<br>Should have the same dimensions as the player or similar."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1" class="preroll_property" {if $aSettings.default_player_preroll_status!=1}style="display:none;"{/if}>
+	        <td align="right"><b>Pre-roll Ad Duration:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[default_player_preroll_duration]" id="settings_default_player_preroll_duration" value="{$aSettings.default_player_preroll_duration|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px;"  tabindex="1">
+              <div style="float:left; border:1px solid #999999;">
+                <div class="spinner_up" id="settings_default_player_preroll_duration_up"></div>
+                <div class="spinner_down" id="settings_default_player_preroll_duration_down"></div>
+              </div>
+              {literal}<script type="text/javascript">new SpinnerControl('settings_default_player_preroll_duration', 'settings_default_player_preroll_duration_up', 'settings_default_player_preroll_duration_down', {interval:1, min:1, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	          <a href="javascript:void(0);" rel="Amount of Seconds the Pre-Roll Ad will be shown."><img src="images/icons/help.png" class="ml5"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9">
+	        <td align="right"><b>Use Post-roll Ad:</b></td>
+	        <td>
+	          <input type="checkbox" value="1" name="aSettings[default_player_postroll_status]" id="settings_default_player_postroll_status" {if $aSettings.default_player_postroll_status==1}checked{/if}  onchange="EnableUndoButton(); ToggleCells(this.checked,'.postroll_property');" tabindex="1" class="checkbox">
+	          <a href="javascript:void(0);" rel="Would you like to use a Post-roll Ad in the default player?"><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9" class="postroll_property" {if $aSettings.default_player_postroll_status!=1}style="display:none;"{/if}>
+	        <td align="right"><b>Post-roll Ad Link:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[default_player_postroll_link]" id="settings_default_player_postroll_link" value="{$aSettings.default_player_postroll_link|replace:'"':'&quot;'}" class="input-text" style="width:200px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" rel="Link to the site you want the Post-roll Ad to point to."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9" class="postroll_property" {if $aSettings.default_player_postroll_status!=1}style="display:none;"{/if}>
+	        <td align="right"><b>Post-roll Ad Image:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[default_player_postroll_image]" id="settings_default_player_postroll_image" value="{$aSettings.default_player_postroll_image|replace:'"':'&quot;'}" class="input-text" style="width:200px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" rel="Image to be showed in the Post-roll Ad.<br>Can be JPG, GIF, PNG or SWF.<br>Should have the same dimensions as the player or similar."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1"">
+	        <td align="right"><b>Streaming Method:</b></td>
+	        <td>
+	          <select name="aSettings[default_player_straming_method]" id="settings_default_player_straming_method" value="{$aSettings.default_player_straming_method}" class="input-text" style="width:200px;" onchange="EnableUndoButton(); ToggleCells(this.value==3,'.rtmp_property'); ToggleCells(this.value<3,'.pseudo_property'); ToggleCells((this.value==2 && $('settings_default_player_limit_bw').checked),'.limitbw_property');" tabindex="1">
+	            {* <option value="1" {if $aSettings.default_player_straming_method==1}selected{/if}>Progressive Download</option> *}
+	            <option value="2" {if $aSettings.default_player_straming_method==2}selected{/if}>Pseudo Streaming</option>
+	            <option value="3" {if $aSettings.default_player_straming_method==3}selected{/if}>RTMP - Flash Media Server</option>
+	          </select>
+	          {* <a href="javascript:void(0);" rel="{ldelim}&quot;title&quot;:&quot;Streaming Method&quot;,&quot;value&quot;:&quot;Choose which streaming method you want the FLV player to use.<br><br class='br'><b class='orange'>Progressive Download:</b> Users won't be able to skip to not buffered parts of the video, and will have to watch the video while it is being downloaded.<br><br class='br'><b class='orange'>Pseudo Sreaming (lighthttpd):</b> With this method, users will be able to skip to other parts of the video, even if it hasn't been downloaded.<br>This is the method used by Youtube and it's the recommended one.<br>Note that not all videos will be able to use this method (only those with proper keyframes) and in these cases, progressive download will be used.<br><br class='br'><b class='orange'>RTMP Server Method:</b> It is more dynamic than Pseudo Streaming, but requires a RTPM server to play the videos.&quot;,&quot;width&quot;:400{rdelim}"><img src="images/icons/help.png"></a> *}
+	          <a href="javascript:void(0);" rel="{ldelim}&quot;title&quot;:&quot;Streaming Method&quot;,&quot;value&quot;:&quot;Choose which streaming method you want the FLV player to use.<br><br class='br'><b class='orange'>Pseudo Sreaming (Via PHP):</b> With this method, users will be able to seek other parts of the video, even if it hasn't been downloaded.<br>This is the method used by Youtube and it's the recommended one.<br><br class='br'><b class='orange'>RTMP Server Method:</b> It is more dynamic than Pseudo Streaming, but requires a RTPM server to play the videos.<br><br>If you can't pseudo-stream, progressive download will be used.&quot;,&quot;width&quot;:400{rdelim}"><img src="images/icons/help.png"></a>
+			  <a class="ml5" href="javascript:void(0);" onclick="OpenLayer('encoding_guide_layer');">Encoding Guide</a>
+	        </td>
+	      </tr>
+		  <tr bgcolor="#D1D1D1" class="pseudo_property" {if $aSettings.default_player_straming_method!=2}style="display:none;"{/if}>
+	        <td align="right"><b>Secure-Streaming:</b></td>
+	        <td>
+			  <input type="checkbox" value="1" name="aSettings[default_player_secure_streaming]" id="settings_default_player_secure_streaming" {if $aSettings.default_player_secure_streaming==1}checked{/if} onchange="EnableUndoButton();" onclick="{literal}if(this.checked==true){alert('Remember to edit /videos/.htaccess and follow the instructions there.');}{/literal}" tabindex="1" class="checkbox">
+	          <a href="javascript:void(0);" rel="Check this box to protect videos location by encoding it."><img src="images/icons/help.png"></a>
+			  <a href="javascript:void(0);" rel="<b>Atention:</b> For this to work propperly you need to edit<br>'videos/.htaccess' and uncomment the commented lines.<br><br>Likewise, you need to revert this if you disable<br>Secure-Streaming. <br><br>MP4 files will not be 'secured'. Only FLVs"><img src="images/icons/warning.png"></a>
+	        </td>
+	      </tr>
+		  {* <tr bgcolor="#D1D1D1" class="pseudo_property" {if $aSettings.default_player_straming_method!=2}style="display:none;"{/if}>
+	        <td align="right"><b>Allow Video Caching:</b></td>
+	        <td>
+	          <input type="checkbox" value="1" name="aSettings[default_player_allow_caching]" id="settings_default_player_allow_caching" {if $aSettings.default_player_allow_caching==1}checked{/if} onchange="EnableUndoButton();" tabindex="1" class="checkbox">
+	          <a href="javascript:void(0);" rel="Check this box to allow the user's browser to cache the<br>contents of the video. This can save some bandwidth."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr> *}
+		  <tr bgcolor="#D1D1D1" class="pseudo_property" {if $aSettings.default_player_straming_method!=2}style="display:none;"{/if}>
+	        <td align="right"><b>Limit Bandwidth:</b></td>
+	        <td>
+	          <input type="checkbox" value="1" name="aSettings[default_player_limit_bw]" id="settings_default_player_limit_bw" {if $aSettings.default_player_limit_bw==1}checked{/if} onchange="EnableUndoButton(); ToggleCells((this.checked && $('settings_default_player_straming_method').value==2),'.limitbw_property');" tabindex="1" class="checkbox">
+	          <a href="javascript:void(0);" rel="<b>Only when secure-streaming is enabled</b><br>Check this box to limit the bandwidth<br>to a defined amount of KBPS.<br>This will allow you to control,<br>for each video stream,<br>the KBPS you want to serve."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+		  <tr bgcolor="#D1D1D1" class="limitbw_property" {if $aSettings.default_player_straming_method!=2 or $aSettings.default_player_limit_bw!=1}style="display:none;"{/if}>
+	        <td align="right"><b>Bandwidth Limit (KB per sec.)</b></td>
+	        <td>
+	          <input type="text" name="aSettings[default_player_limit_bw_kbps]" id="settings_default_player_limit_bw_kbps" value="{$aSettings.default_player_limit_bw_kbps|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px;" tabindex="1">
+              <div style="float:left; border:1px solid #999999;">
+                <div class="spinner_up" id="settings_default_player_limit_bw_kbps_up"></div>
+                <div class="spinner_down" id="settings_default_player_limit_bw_kbps_down"></div>
+              </div>
+              {literal}<script type="text/javascript">new SpinnerControl('settings_default_player_limit_bw_kbps', 'settings_default_player_limit_bw_kbps_up', 'settings_default_player_limit_bw_kbps_down', {interval:1, min:0, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	          <a href="javascript:void(0);" rel="Amount of bandwidth limit to be applied, in KiloBytes per second."><img src="images/icons/help.png" class="ml5"></a>
+	        </td>
+	      </tr>
+		  
+	      <tr bgcolor="#D1D1D1" class="rtmp_property" {if $aSettings.default_player_straming_method!=3}style="display:none;"{/if}>
+	        <td align="right"><b>RTMP Servers Configuration:</b></td>
+	        <td>
+	          <a class="small_button" href="javascript:void(0);" onclick="OpenRTMPServersManager();"><span><img src="images/icons/server.png"> RTMP Servers Manager</span></a>
+	          <a href="javascript:void(0);" rel="Opens the RTMP Servers Manager" class="m3"><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1" class="rtmp_property" {if $aSettings.default_player_straming_method!=3}style="display:none;"{/if}>
+	        <td align="right"><b>Automatically Move to Server:</b></td>
+	        <td>
+	          <input type="checkbox" value="1" name="aSettings[default_player_rtmp_automove]" id="settings_default_player_rtmp_automove" {if $aSettings.default_player_rtmp_automove==1}checked{/if}  onchange="EnableUndoButton();" tabindex="1" class="checkbox">
+	          <a href="javascript:void(0);" rel="Check this box to automatically move a new video to the streaming server.<br>This will only work if the task cronjob is set.<br>If you don't check this option, you will have to move it manually<br>by assigning a task to the videos."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	    </table>
+	  </div>
+	  </fieldset>
+	  <br>
+	</div>
+	
+	<div class="settings_div" align="center" id="settings_div_4" style="display:none;">
+	{/if}
+	
+	  <fieldset class="fieldset2" style="width:800px; text-align:left;">
+	  <legend class="legend2"><b>Languages Settings</b></legend>
+	    <div class="bottom" style="padding:20px;">
+	      
+	      <a class="small_button" id="add_language_button" href="javascript:void(0);" onclick="$('add_lang_name').value=''; OpenLayer($('add_language_layer'));"><span><img src="images/icons/add-tiny.png" id="add_language_icon"> Add Language</span></a>
+	      <br style="clear:both;">
+	      <br>
+	      
+	      <table cellpadding="5" cellspacing="1" style="border:1px solid #AAAAAA; background:#EEEEEE;" class="left">
+	      {foreach from=$array_languages item=lang key=lang_id}
+	        {if $smarty.foreach.labels.index%2==0}
+		      {assign var='bgcolor' value='#C9C9C9'}
+		    {else}
+		      {assign var='bgcolor' value='#D1D1D1'}	    
+		    {/if}
+	        <tr bgcolor="{$bgcolor}" id="language_id_{$lang.id}">
+	          <td width="20"><a href="javascript:void(0);" rel="Set as Default Language">
+	            <input type="radio" class="lang_radio" name="default_lang" id="default_lang_{$lang.id}" onclick="SetDefaultLanguage({$lang.id});" {if $lang.default==1}checked{/if}><img src="images/loading.gif" id="default_lang_loading_{$lang.id}" style="display:none;"></a>
+	            <input type="hidden" id="lang_code_{$lang.code}" value="{$lang.id}">
+	          </td>
+	          <td width="150"><img src="images/flags/{$lang.code}.gif">&nbsp;&nbsp;<b>{$lang.name}</b></td>
+	          <td>
+	            <div class="option_button right ml3 pt3"><a href="javascript:void(0);" onclick="DeleteLanguage({$lang.id});" rel="Delete Language"><span class="red_button"><img src="images/icons/delete.png" id="delete_lang_icon_{$lang.id}"></a></div>
+	            <div class="option_button right ml3 pt3" {if $lang.installed==0}style="display:none;"{/if} id="active_status_option_{$lang.id}"><a href="javascript:void(0);" onclick="SetLanguageStatus({$lang.id},0);" rel="Deactivate Language"><img id="active_lang_icon_{$lang.id}" src="images/icons/active.png"  onmouseover="this.src='images/icons/stop.png';" onmouseout="this.src='images/icons/active.png';"></a></div>
+			    <div class="option_button right ml3 pt3" {if $lang.installed==1}style="display:none;"{/if} id="inactive_status_option_{$lang.id}"><a href="javascript:void(0);" onclick="SetLanguageStatus({$lang.id},1);" rel="Activate Language"><img id="inactive_lang_icon_{$lang.id}" src="images/icons/inactive.png" onmouseover="this.src='images/icons/go.png';" onmouseout="this.src='images/icons/inactive.png';"></div>
+			    {* <div class="option_button right ml3" style="padding-top:2px;"><a href="javascript:void(0);" rel="Set this language as default<br>for video auto-translations"><input type="radio" name="autotranslate_default_langs" id="autotranslate_default_lang_{$lang.id}" onclick="SetDefaultAutoTranslateLanguage({$lang.id});" {if $aSettings.autotranslate_default_lang==$lang.id}checked{/if}></a></div> *}
+			  </td>
+	        </tr>
+	      {/foreach}
+	      </table>
+		  
+		  <table cellpadding="5" cellspacing="1" style="border:1px solid #AAAAAA; background:#EEEEEE;" class="right">
+	        <tr bgcolor="#C9C9C9">
+	          <td width="150">Google Translate API Key</td>
+	          <td>
+				<input type="text" name="aSettings[google_translate_api_key]" id="settings_google_translate_api_key" value="{$aSettings.google_translate_api_key|replace:'"':'&quot;'}" class="input-text" style="width:200px;" onchange="EnableUndoButton();" tabindex="1">
+				<a href="javascript:void(0);" rel="This is your private Google Translate API Key<br>for the PAID v2 of google translate."><img src="images/icons/help.png"></a>
+			  </td>
+	        </tr>
+	      </table>
+		  
+		  <br class="clear">
+	    </div>
+	  </fieldset>
+	  <br>
+	  
+	  <fieldset class="fieldset2" style="width:800px; text-align:left;">
+	  <legend class="legend2"><b>Labels Settings</b></legend>
+	  <div class="bottom" style="padding:20px;">
+	  
+	    <span class="left">
+	      <b>Add New Label:</b>
+	      <input type="text" id="new_label_name" class="input-text" style="width:120px;">
+	    </span>
+	    <a href="javascript:void(0);" onclick="AddNewLabel();" class="option_button left pt3 ml5 mr5"><img src="images/icons/add.png" id="add_label_icon"></a>
+	    <br><br>
+	   
+	    {if count($array_languages)>1}
+			<a class="small_button" id="autotranslate_button" href="javascript:void(0);" onclick="OpenLayer('autotranslate_layer');"><span><img src="images/icons/translate.gif" id="translate_icon"> Translate Selected Labels</span></a>
+			&nbsp;&nbsp;
+			<input type="checkbox" id="at_select_all" onclick="AutoTranslateToggleAll(this.checked);"> <label for="at_select_all"><b>Select All Labels</b></label>
+		    <br><br>
+		{/if}
+	    
+	    
+	    
+	    
+	    <div style="width:93%; position:relative; z-index:2; margin-bottom:-1px; text-align:center; padding-left:20px;">
+		<table cellpadding="0" cellspacing="0" align="right" style="margin-top:-22px;">
+		  <tr>
+		    {foreach from=$array_languages item=lang key=lang_id}
+			    <td class="tab{if $lang.default==1}_active{/if}" id="lang_{$lang_id}" onclick="SwitchTab('lang',{$lang_id}); HideByClassName('.lang_div'); HideByClassName('.lang_row'); ShowByClassName('.lang_id_{$lang_id}'); document.cookie='lang_active_tab={$lang_id}';"><a href="javascript:void(0);" rel="View {$lang.name} Label Translations"><img src="images/flags/{$lang.code}.gif"></a></td>
+			    <td width="5"></td>
+			{/foreach}
+		  </tr>
+		</table>
+		</div>
+		
+		<div style=" height:400px; overflow-x:auto;">
+		  <table cellpadding="5" cellspacing="1"  width="100%" style="border:1px solid #AAAAAA; background:#EEEEEE;" id="languages_table">
+		  {foreach from=$aLabels[1] item=label_value key=label_name name=labels}
+		  
+		  {if !preg_match("/paypal_option_button_|zombaio_option_button_/",$label_name)}
+		    {if $smarty.foreach.labels.index%2==0}
+		      {assign var='bgcolor' value='#C9C9C9'}
+		    {else}
+		      {assign var='bgcolor' value='#D1D1D1'}	    
+		    {/if}
+		  
+		    <tr bgcolor="{$bgcolor}" class="row label_{$label_name}">
+		      <td align="right" width="100">
+		        <b>{$label_name}</b>
+		      </td>
+		      {foreach from=$array_languages item=lang key=lang_id}
+		          <td class="lang_row lang_id_{$lang_id}" {if !$lang.default}style="display:none;"{/if}>
+		            <a href="javascript:void(0);" rel="{$lang.name}"><img src="images/flags/{$lang.code}.gif"></a>&nbsp;
+		            <textarea name="aLabels[{$lang.id}][{$label_name}]" id="labels_{$lang.id}_{$label_name}" class="input-text" style="width:300px; height:50px;" onchange="EnableUndoButton();" tabindex="1">{if $label_name=="comment_explanation"}{$aLabels[$lang.id][$label_name]|escape:'htmlall'}{else}{$aLabels[$lang.id][$label_name]}{/if}</textarea>
+		            {if $lang_id==1 && count($array_languages)>1}<a href="javascript:void(0);" rel="Select Label for<br>Autotranslation"><input type="checkbox" id="at_label_{$label_name}" name="at_labels[{$label_name}]" class="at_checkbox"></a>&nbsp;{/if}
+		            <a href="javascript:void(0);" class="option_button right pt3 ml5 mr5" style="margin-top:15px;" onclick="DeleteLabel('{$lang.id}','{$label_name}');" rel="<b>Delete Label</b><br>Labels of all the languages will be deleted."><img src="images/icons/delete.png" id="delete_label_icon_{$lang.id}_{$label_name}"></a>
+		          </td>
+		      {/foreach}
+		    </tr>
+		    {/if}
+		    
+		  {/foreach}
+		  </table>
+		</div>  
+	  </div>
+	  </fieldset>
+	  
+	  {if !$onlymod}
+	</div>
+	
+	<div class="settings_div" align="center" id="settings_div_5" style="display:none;">
+	
+	  <div style="width:650px; text-align:justify;">
+	    These settings will allow you to manage all aspects of the mobile version of your site but the contents themselves.<br>
+	    In order for the mobile version to show videos, you will need to add a file in mp4 or m4v format in addition to the existing video one.<br>
+	    Only the videos with the mp4 {* or m4v *}existing file will be shown.<br>
+	    You need FFMPEG to autoconvert to mobile format through a task, or else, upload/dowload/hotlink in "Edit Video" options.
+	  </div>
+	  <br><br>
+	  
+	  <fieldset class="fieldset2" style="width:800px; text-align:left;">
+	  <legend class="legend2"><b>Mobile General Settings </b></legend>
+	  <div class="bottom" style="padding:20px;">
+	    <table cellpadding="5" cellspacing="1" width="100%" style="border:1px solid #AAAAAA; background:#EEEEEE;">
+	      <tr bgcolor="#D1D1D1">
+	        <td align="right" width="200"><b>Enable Mobile Version:</b></td>
+	        <td>
+	          <input type="checkbox" value="1" name="aSettings[mobile_enabled]" id="settings_mobile_enabled" {if $aSettings.mobile_enabled==1}checked{/if}  onchange="EnableUndoButton(); ToggleCells(this.checked,'.mobile_property');" tabindex="1" class="checkbox">
+	          <a href="javascript:void(0);" rel="Check this option to enable the mobile version.<br>If disabled, the web version will be shown in mobile devices."><img src="images/icons/help.png" class="ml5"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9" class="mobile_property" {if $aSettings.mobile_enabled!=1}style="display:none;"{/if}>
+	        <td align="right" width="200"><b>Amount of Videos per Page</b></td>
+	        <td>
+	          <input type="text" name="aSettings[mobile_amount]" id="settings_mobile_amount" value="{$aSettings.mobile_amount|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px;"  tabindex="1">
+              <div style="float:left; border:1px solid #999999;">
+                <div class="spinner_up" id="settings_mobile_amount_up"></div>
+                <div class="spinner_down" id="settings_mobile_amount_down"></div>
+              </div>
+              {literal}<script type="text/javascript">new SpinnerControl('settings_mobile_amount', 'settings_mobile_amount_up', 'settings_mobile_amount_down', {interval:1, min:1, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	          <a href="javascript:void(0);" rel="Amount of videos each page will show."><img src="images/icons/help.png" class="ml5"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1" class="mobile_property" {if $aSettings.mobile_enabled!=1}style="display:none;"{/if}>
+	        <td align="right"><b>Thumbnail Width:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[mobile_thumb_width]" id="settings_mobile_thumb_width" value="{$aSettings.mobile_thumb_width|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px;" tabindex="1">
+              <div style="float:left; border:1px solid #999999;">
+                <div class="spinner_up" id="settings_mobile_thumb_width_up"></div>
+                <div class="spinner_down" id="settings_mobile_thumb_width_down"></div>
+              </div>
+              {literal}<script type="text/javascript">new SpinnerControl('settings_mobile_thumb_width', 'settings_mobile_thumb_width_up', 'settings_mobile_thumb_width_down', {interval:1, min:1, max:640, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	          <a href="javascript:void(0);" rel="Width of the Thumbnails, in pixels."><img src="images/icons/help.png" class="ml5"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9" class="mobile_property" {if $aSettings.mobile_enabled!=1}style="display:none;"{/if}>
+	        <td align="right"><b>Thumbnails Height:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[mobile_thumb_height]" id="settings_mobile_thumb_height" value="{$aSettings.mobile_thumb_height|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px;" tabindex="1">
+              <div style="float:left; border:1px solid #999999;">
+                <div class="spinner_up" id="settings_mobile_thumb_height_up"></div>
+                <div class="spinner_down" id="settings_mobile_thumb_height_down"></div>
+              </div>
+              {literal}<script type="text/javascript">new SpinnerControl('settings_mobile_thumb_height', 'settings_mobile_thumb_height_up', 'settings_mobile_thumb_height_down', {interval:1, min:1, max:640, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	          <a href="javascript:void(0);" rel="Height of the FLV Video Thumbnail, in pixels."><img src="images/icons/help.png" class="ml5"></a>
+	        </td>
+	      </tr>
+		  <input type="hidden" name="aSettings[mobile_ffmpeg_conversion_command]" id="settings_mobile_ffmpeg_conversion_command" value="{$aSettings.mobile_ffmpeg_conversion_command}">
+	      {* <tr bgcolor="#D1D1D1" class="mobile_property" {if $aSettings.mobile_enabled!=1}style="display:none;"{/if}>
+	        <td align="right" width="200"><b>Conversion to M4V Command:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[mobile_ffmpeg_conversion_command]" id="settings_mobile_ffmpeg_conversion_command" value="{$aSettings.mobile_ffmpeg_conversion_command}" class="input-text" style="width:250px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" rel="The command FFMPEG will use to convert videos to mp4 or m4v format.<br>Leave empty if you don't know what to put.<br>A default command will be applied.<br>Example: <b>-vcodec libx264 -vpre medium -ar 44100 -ab 96k -b 1200k -r 15 -s 320x240 -threads 0 -f m4v</b>"><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr> *}
+	    </table>
+	  </div>
+	  </fieldset>
+	  <br>
+	  
+	  <fieldset class="fieldset2 mobile_property" style="width:800px; text-align:left; {if $aSettings.mobile_enabled!=1}display:none;{/if}">
+	  <legend class="legend2"><b>Mobile Template Settings</b></legend>
+	  <div class="bottom" style="padding:20px;">
+	    <div class="left">
+	      <table cellpadding="5" cellspacing="1"  width="400" style="border:1px solid #AAAAAA; background:#EEEEEE;">
+	      <tr bgcolor="#D1D1D1"">
+	        <td align="right" width="180"><b>Template:</b></td>
+	        <td>
+	          <select name="aSettings[mobile_template_name]" id="settings_mobile_template_name" value="{$aSettings.mobile_template_name}" class="input-text" style="width:120px;" onchange="FillMobileStyles(); EnableUndoButton();" tabindex="1">
+	          {foreach from=$aMobileTemplates item=template}
+	            <option value="{$template}" {if $aSettings.mobile_template_name==$template}selected{/if}>{$template|replace:'_':' '|capitalize}</option>
+	          {/foreach}
+	          </select>
+	          <a href="javascript:void(0);" rel="Select the template you want to use.<br>Note that a mobile template needs to be<br>called 'mobile_xxxxxxx' in 'templates/' folder."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9"">
+	        <td align="right"><b>Style Name:</b></td>
+	        <td>
+	          <select name="aSettings[mobile_style_name]" id="settings_mobile_style_name" value="{$aSettings.mobile_style_name}" class="input-text" style="width:120px;" onchange="EnableUndoButton();" tabindex="1">
+	          {foreach from=$aMobileStyles item=style}
+	            <option value="{$style}" {if $aSettings.mobile_style_name==$style}selected{/if}>{$style|capitalize}</option>
+	          {/foreach}
+	          </select>
+	          <a href="javascript:void(0);" rel="Loading Styles for the selected template." id="mobile_styles_loading" style="display:none;"><img src="images/loading.gif"></a>
+	          <a href="javascript:void(0);" rel="Select the CSS style of the template."><img src="images/icons/help.png"></a>	          
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1">
+	        <td align="right"><b>Header Background Color:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[mobile_header_bgcolor]" id="settings_mobile_header_bgcolor" value="{$aSettings.mobile_header_bgcolor}" class="input-text left" style="width:50px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" class="option_button left ml5 mr5 pt3" onclick="pickcolor('settings_mobile_header_bgcolor','',false,'settings_mobile_header_bgcolor',this);" rel="Click to Pick a Color"><img src="images/icons/colors.png"></a>
+	          <a href="javascript:void(0);" rel="Color of the Header Background." class="left"><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9">
+	        <td align="right"><b>Bar Color:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[mobile_bar_bgcolor]" id="settings_mobile_bar_bgcolor" value="{$aSettings.mobile_bar_bgcolor}" class="input-text left" style="width:50px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" class="option_button left ml5 mr5 pt3" onclick="pickcolor('settings_mobile_bar_bgcolor','',false,'settings_mobile_bar_bgcolor',this);" rel="Click to Pick a Color"><img src="images/icons/colors.png"></a>
+	          <a href="javascript:void(0);" rel="Color of the Bar Background." class="left"><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1">
+	        <td align="right"><b>Body Background Color:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[mobile_body_bgcolor]" id="settings_mobile_body_bgcolor" value="{$aSettings.mobile_body_bgcolor}" class="input-text left" style="width:50px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" class="option_button left ml5 mr5 pt3" onclick="pickcolor('settings_mobile_body_bgcolor','',false,'settings_mobile_body_bgcolor',this);" rel="Click to Pick a Color"><img src="images/icons/colors.png"></a>
+	          <a href="javascript:void(0);" rel="Color of the Body Background." class="left"><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9">
+	        <td align="right"><b>Font Color:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[mobile_font_color]" id="settings_mobile_font_color" value="{$aSettings.mobile_font_color}" class="input-text left" style="width:50px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" class="option_button left ml5 mr5 pt3" onclick="pickcolor('settings_mobile_font_color','',false,'settings_mobile_font_color',this);" rel="Click to Pick a Color"><img src="images/icons/colors.png"></a>
+	          <a href="javascript:void(0);" rel="Color of the Font." class="left"><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1">
+	        <td align="right"><b>Font Color 2:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[mobile_font_color_2]" id="settings_mobile_font_color_2" value="{$aSettings.mobile_font_color_2}" class="input-text left" style="width:50px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" class="option_button left ml5 mr5 pt3" onclick="pickcolor('settings_mobile_font_color_2','',false,'settings_mobile_font_color_2',this);" rel="Click to Pick a Color"><img src="images/icons/colors.png"></a>
+	          <a href="javascript:void(0);" rel="Color of the second Font." class="left"><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      	<tr bgcolor="#C9C9C9">
+	        <td align="right"><b>Menu Links Color:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[mobile_menu_links_color]" id="settings_mobile_menu_links_color" value="{$aSettings.mobile_menu_links_color}" class="input-text left" style="width:50px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" class="option_button left ml5 mr5 pt3" onclick="pickcolor('settings_mobile_menu_links_color','',false,'settings_mobile_menu_links_color',this);" rel="Click to Pick a Color"><img src="images/icons/colors.png"></a>
+	          <a href="javascript:void(0);" rel="Color of the Menu Links." class="left"><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1">
+	        <td align="right"><b>Links Color:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[mobile_links_color]" id="settings_mobile_links_color" value="{$aSettings.mobile_links_color}" class="input-text left" style="width:50px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" class="option_button left ml5 mr5 pt3" onclick="pickcolor('settings_mobile_links_color','',false,'settings_mobile_links_color',this);" rel="Click to Pick a Color"><img src="images/icons/colors.png"></a>
+	          <a href="javascript:void(0);" rel="Color of the General Links." class="left"><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9">
+	        <td align="right"><b>Thumbs Container Background:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[mobile_item_bgcolor]" id="settings_mobile_item_bgcolor" value="{$aSettings.mobile_item_bgcolor}" class="input-text left" style="width:50px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" class="option_button left ml5 mr5 pt3" onclick="pickcolor('settings_mobile_item_bgcolor','',false,'settings_mobile_item_bgcolor',this);" rel="Click to Pick a Color"><img src="images/icons/colors.png"></a>
+	          <a href="javascript:void(0);" rel="Color of the box that contains each video." class="left"><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1">
+	        <td align="right"><b>Thumbs Container Border Color:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[mobile_item_border]" id="settings_mobile_item_border" value="{$aSettings.mobile_item_border}" class="input-text left" style="width:50px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" class="option_button left ml5 mr5 pt3" onclick="pickcolor('settings_mobile_item_border','',false,'settings_mobile_item_border',this);" rel="Click to Pick a Color"><img src="images/icons/colors.png"></a>
+	          <a href="javascript:void(0);" rel="Color of the box border" class="left"><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9">
+	        <td align="right"><b>Thumbs Border Color:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[mobile_thumb_border_color]" id="settings_mobile_thumb_border_color" value="{$aSettings.mobile_thumb_border_color}" class="input-text left" style="width:50px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" class="option_button left ml5 mr5 pt3" onclick="pickcolor('settings_mobile_thumb_border_color','',false,'settings_mobile_thumb_border_color',this);" rel="Click to Pick a Color"><img src="images/icons/colors.png"></a>
+	          <a href="javascript:void(0);" rel="Color of the thumbs border." class="left"><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      </table>
+	      <br class="br">
+	      <a class="button" href="javascript:void(0);" onclick="RefreshMobilePreview();" style="margin-left:200px;"><span><img src="images/icons/refresh.png"> Refresh Preview</span></a>
+	    </div>
+
+	    <div class="right">
+	      <iframe src="{$aSettings.installation_url}index.php?force_mobile=1" id="mobile_preview" frameborder="0" style="width:340px; height:400px; overflow-x:hidden;" class="border1"></iframe>
+	    </div>
+	    
+	    <br style="clear:both;">
+	  </div>
+	  </fieldset>
+	  <br>
+	  
+	</div>
+	
+	<div class="settings_div" align="center" id="settings_div_7" style="display:none;">
+	
+	  <div style="width:650px; text-align:justify;">
+	    These settings will allow you to manage all the basic configuration of the Automagick TubePro Template, regading Logo upload, color selection and others.
+		If you want to use it, enable the template on the Templates Module. If you want to change the amount of thumbnails, player size and others, click the Basic "Settings" tab.<br><br>
+		If, by any chance, you want to edit the CSS styles of TubePro template, open tubepro_noedit.css, make the changes you need, and come back here to save the settings. Don't edit tubepro.css directly.<br><br>
+		<b>It is NOT recommended for you to edit the template directly. It may not work as espected. You should duplicate the whole 'tubepro' folder and work with is as a different template.</b>
+	    </div>
+	  <br><br>
+	  
+	  <fieldset class="fieldset2" style="width:800px; text-align:left;">
+	  <legend class="legend2"><b>Logo & Colors</b></legend>
+	    <div class="bottom" style="padding:20px;">
+		    <div class="left">
+			  <table cellpadding="5" cellspacing="1" width="400" style="border:1px solid #AAAAAA; background:#EEEEEE;">
+			  <tr bgcolor="#D1D1D1">
+				<td align="right" width="200"><b>Logo Image:</b></td>
+				<td id="tubepro_position_reference">
+				  <input type="hidden" name="tubepro_logo_is_uploaded" id="tubepro_logo_is_uploaded" value="0">
+				  <input type="hidden" name="tubepro_logo_name_uploaded" id="tubepro_logo_name_uploaded" value="">
+				  <input type="hidden" name="tubepro_logo_uploaded_width" id="tubepro_logo_uploaded_width" value="">
+				  <input type="hidden" name="tubepro_logo_uploaded_height" id="tubepro_logo_uploaded_height" value="">
+				  <input type="hidden" name="aSettings[tubepro_original_logo_image]" id="settings_tubepro_original_logo_image" value="{$aSettings.tubepro_original_logo_image}">
+				  <input type="hidden" name="aSettings[tubepro_original_logo_width]" id="settings_tubepro_original_logo_width" value="{$aSettings.tubepro_original_logo_width}">
+				  <input type="hidden" name="aSettings[tubepro_original_logo_height]" id="settings_tubepro_original_logo_height" value="{$aSettings.tubepro_original_logo_height}">
+				</td>
+			  </tr>
+			  <tr bgcolor="#C9C9C9">
+				<td align="right"><b>Header Background Color:</b></td>
+				<td>
+				  <input type="text" name="aSettings[tubepro_header_bg_color]" id="settings_tubepro_header_bg_color" value="{$aSettings.tubepro_header_bg_color}" class="input-text left" style="width:50px;" onchange="EnableUndoButton();" tabindex="1">
+				  <a href="javascript:void(0);" class="option_button left ml5 mr5 pt3" onclick="pickcolor('settings_tubepro_header_bg_color','',false,'settings_tubepro_header_bg_color',this);" rel="Click to Pick a Color"><img src="images/icons/colors.png"></a>
+				  <a href="javascript:void(0);" rel="Color of the Body Background." class="left"><img src="images/icons/help.png"></a>
+				</td>
+			  </tr>
+			  <tr bgcolor="#D1D1D1">
+				<td align="right"><b>Bar Color:</b></td>
+				<td>
+				  <input type="text" name="aSettings[tubepro_bar_color]" id="settings_tubepro_bar_color" value="{$aSettings.tubepro_bar_color}" class="input-text left" style="width:50px;" onchange="EnableUndoButton();" tabindex="1">
+				  <a href="javascript:void(0);" class="option_button left ml5 mr5 pt3" onclick="pickcolor('settings_tubepro_bar_color','',false,'settings_tubepro_bar_color',this);" rel="Click to Pick a Color"><img src="images/icons/colors.png"></a>
+				  <a href="javascript:void(0);" rel="Color of the Main<br>Bar and all the title bars." class="left"><img src="images/icons/help.png"></a>
+				</td>
+			  </tr>
+			  <tr bgcolor="#C9C9C9">
+				<td align="right"><b>Bar Color (for Active Menu):</b></td>
+				<td>
+				  <input type="text" name="aSettings[tubepro_menu_active_color]" id="settings_tubepro_menu_active_color" value="{$aSettings.tubepro_menu_active_color}" class="input-text left" style="width:50px;" onchange="EnableUndoButton();" tabindex="1">
+				  <a href="javascript:void(0);" class="option_button left ml5 mr5 pt3" onclick="pickcolor('settings_tubepro_menu_active_color','',false,'settings_tubepro_menu_active_color',this);" rel="Click to Pick a Color"><img src="images/icons/colors.png"></a>
+				  <a href="javascript:void(0);" rel="Color of the Menu Item<br>background, when active." class="left"><img src="images/icons/help.png"></a>
+				</td>
+			  </tr>
+			  <tr bgcolor="#D1D1D1">
+				<td align="right"><b>Menu Links Color:</b></td>
+				<td>
+				  <input type="text" name="aSettings[tubepro_menu_links_color]" id="settings_tubepro_menu_links_color" value="{$aSettings.tubepro_menu_links_color}" class="input-text left" style="width:50px;" onchange="EnableUndoButton();" tabindex="1">
+				  <a href="javascript:void(0);" class="option_button left ml5 mr5 pt3" onclick="pickcolor('settings_tubepro_menu_links_color','',false,'settings_tubepro_menu_links_color',this);" rel="Click to Pick a Color"><img src="images/icons/colors.png"></a>
+				  <a href="javascript:void(0);" rel="Color of the Menu Links." class="left"><img src="images/icons/help.png"></a>
+				</td>
+			  </tr>
+			  <tr bgcolor="#C9C9C9">
+				<td align="right"><b>Buttons Background Color:</b></td>
+				<td>
+				  <input type="text" name="aSettings[tubepro_button_rgba_color]" id="settings_tubepro_button_rgba_color" value="{$aSettings.tubepro_button_rgba_color}" class="input-text left" style="width:50px;" onchange="EnableUndoButton();" tabindex="1">
+				  <a href="javascript:void(0);" class="option_button left ml5 mr5 pt3" onclick="pickcolor('settings_tubepro_button_rgba_color','',false,'settings_tubepro_button_rgba_color',this);" rel="Click to Pick a Color"><img src="images/icons/colors.png"></a>
+				  <a href="javascript:void(0);" rel="Color of the Buttons Background." class="left"><img src="images/icons/help.png"></a>
+				</td>
+			  </tr>
+			  <tr bgcolor="#D1D1D1">
+				<td align="right"><b>Buttons Text Color:</b></td>
+				<td>
+				  <input type="text" name="aSettings[tubepro_button_text_color]" id="settings_tubepro_button_text_color" value="{$aSettings.tubepro_button_text_color}" class="input-text left" style="width:50px;" onchange="EnableUndoButton();" tabindex="1">
+				  <a href="javascript:void(0);" class="option_button left ml5 mr5 pt3" onclick="pickcolor('settings_tubepro_button_text_color','',false,'settings_tubepro_button_text_color',this);" rel="Click to Pick a Color"><img src="images/icons/colors.png"></a>
+				  <a href="javascript:void(0);" rel="Color of the Buttons Text." class="left"><img src="images/icons/help.png"></a>
+				</td>
+			  </tr>
+			  <tr bgcolor="#C9C9C9">
+				<td align="right"><b>Body Background Color:</b></td>
+				<td>
+				  <input type="text" name="aSettings[tubepro_body_bgcolor]" id="settings_tubepro_body_bgcolor" value="{$aSettings.tubepro_body_bgcolor}" class="input-text left" style="width:50px;" onchange="EnableUndoButton();" tabindex="1">
+				  <a href="javascript:void(0);" class="option_button left ml5 mr5 pt3" onclick="pickcolor('settings_tubepro_body_bgcolor','',false,'settings_tubepro_body_bgcolor',this);" rel="Click to Pick a Color"><img src="images/icons/colors.png"></a>
+				  <a href="javascript:void(0);" rel="Color of the Background." class="left"><img src="images/icons/help.png"></a>
+				</td>
+			  </tr>
+			  <tr bgcolor="#D1D1D1">
+				<td align="right"><b>Font Color:</b></td>
+				<td>
+				  <input type="text" name="aSettings[tubepro_body_font_color]" id="settings_tubepro_body_font_color" value="{$aSettings.tubepro_body_font_color}" class="input-text left" style="width:50px;" onchange="EnableUndoButton();" tabindex="1">
+				  <a href="javascript:void(0);" class="option_button left ml5 mr5 pt3" onclick="pickcolor('settings_tubepro_body_font_color','',false,'settings_tubepro_body_font_color',this);" rel="Click to Pick a Color"><img src="images/icons/colors.png"></a>
+				  <a href="javascript:void(0);" rel="Color of the Font." class="left"><img src="images/icons/help.png"></a>
+				</td>
+			  </tr>
+			  <tr bgcolor="#C9C9C9">
+				<td align="right"><b>Font Color 2:</b></td>
+				<td>
+				  <input type="text" name="aSettings[tubepro_font_color_2]" id="settings_tubepro_font_color_2" value="{$aSettings.tubepro_font_color_2}" class="input-text left" style="width:50px;" onchange="EnableUndoButton();" tabindex="1">
+				  <a href="javascript:void(0);" class="option_button left ml5 mr5 pt3" onclick="pickcolor('settings_tubepro_font_color_2','',false,'settings_tubepro_font_color_2',this);" rel="Click to Pick a Color"><img src="images/icons/colors.png"></a>
+				  <a href="javascript:void(0);" rel="Color of the second Font." class="left"><img src="images/icons/help.png"></a>
+				</td>
+			  </tr>
+			  <tr bgcolor="#D1D1D1">
+				<td align="right"><b>Links Color:</b></td>
+				<td>
+				  <input type="text" name="aSettings[tubepro_links_color]" id="settings_tubepro_links_color" value="{$aSettings.tubepro_links_color}" class="input-text left" style="width:50px;" onchange="EnableUndoButton();" tabindex="1">
+				  <a href="javascript:void(0);" class="option_button left ml5 mr5 pt3" onclick="pickcolor('settings_tubepro_links_color','',false,'settings_tubepro_links_color',this);" rel="Click to Pick a Color"><img src="images/icons/colors.png"></a>
+				  <a href="javascript:void(0);" rel="Color of the General Links." class="left"><img src="images/icons/help.png"></a>
+				</td>
+			  </tr>
+			  <tr bgcolor="#C9C9C9">
+				<td align="right"><b>Links 2 Color:</b></td>
+				<td>
+				  <input type="text" name="aSettings[tubepro_links2_color]" id="settings_tubepro_links2_color" value="{$aSettings.tubepro_links2_color}" class="input-text left" style="width:50px;" onchange="EnableUndoButton();" tabindex="1">
+				  <a href="javascript:void(0);" class="option_button left ml5 mr5 pt3" onclick="pickcolor('settings_tubepro_links2_color','',false,'settings_tubepro_links2_color',this);" rel="Click to Pick a Color"><img src="images/icons/colors.png"></a>
+				  <a href="javascript:void(0);" rel="Color of the Video Title Links and others." class="left"><img src="images/icons/help.png"></a>
+				</td>
+			  </tr>
+			  <tr bgcolor="#D1D1D1">
+				<td align="right"><b>Box Containers Background:</b></td>
+				<td>
+				  <input type="text" name="aSettings[tubepro_box_bgcolor]" id="settings_tubepro_box_bgcolor" value="{$aSettings.tubepro_box_bgcolor}" class="input-text left" style="width:50px;" onchange="EnableUndoButton();" tabindex="1">
+				  <a href="javascript:void(0);" class="option_button left ml5 mr5 pt3" onclick="pickcolor('settings_tubepro_box_bgcolor','',false,'settings_tubepro_box_bgcolor',this);" rel="Click to Pick a Color"><img src="images/icons/colors.png"></a>
+				  <a href="javascript:void(0);" rel="Background Color of the box containers." class="left"><img src="images/icons/help.png"></a>
+				</td>
+			  </tr>
+			  <tr bgcolor="#C9C9C9">
+				<td align="right"><b>Box Containers Border:</b></td>
+				<td>
+				  <input type="text" name="aSettings[tubepro_box_border]" id="settings_tubepro_box_border" value="{$aSettings.tubepro_box_border}" class="input-text left" style="width:50px;" onchange="EnableUndoButton();" tabindex="1">
+				  <a href="javascript:void(0);" class="option_button left ml5 mr5 pt3" onclick="pickcolor('settings_tubepro_box_border','',false,'settings_tubepro_box_border',this);" rel="Click to Pick a Color"><img src="images/icons/colors.png"></a>
+				  <a href="javascript:void(0);" rel="Color of the box border" class="left"><img src="images/icons/help.png"></a>
+				</td>
+			  </tr>
+			  <tr bgcolor="#D1D1D1">
+				<td align="right"><b>Thumbs Box Background:</b></td>
+				<td>
+				  <input type="text" name="aSettings[tubepro_thumb_bgcolor]" id="settings_tubepro_thumb_bgcolor" value="{$aSettings.tubepro_thumb_bgcolor}" class="input-text left" style="width:50px;" onchange="EnableUndoButton();" tabindex="1">
+				  <a href="javascript:void(0);" class="option_button left ml5 mr5 pt3" onclick="pickcolor('settings_tubepro_thumb_bgcolor','',false,'settings_tubepro_thumb_bgcolor',this);" rel="Click to Pick a Color"><img src="images/icons/colors.png"></a>
+				  <a href="javascript:void(0);" rel="Color of the thumbs container background." class="left"><img src="images/icons/help.png"></a>
+				</td>
+			  </tr>
+			  <tr bgcolor="#C9C9C9">
+				<td align="right"><b>Thumbs Border:</b></td>
+				<td>
+				  <input type="text" name="aSettings[tubepro_thumb_border_color]" id="settings_tubepro_thumb_border_color" value="{$aSettings.tubepro_thumb_border_color}" class="input-text left" style="width:50px;" onchange="EnableUndoButton();" tabindex="1">
+				  <a href="javascript:void(0);" class="option_button left ml5 mr5 pt3" onclick="pickcolor('settings_tubepro_thumb_border_color','',false,'settings_tubepro_thumb_border_color',this);" rel="Click to Pick a Color"><img src="images/icons/colors.png"></a>
+				  <a href="javascript:void(0);" rel="Color of the thumbs containter border<br>and thumbs border." class="left"><img src="images/icons/help.png"></a>
+				</td>
+			  </tr>
+			  </table>
+			  <br class="br">
+			  <a class="button" href="javascript:void(0);" onclick="RefreshTubeProPreview();" style="margin-left:200px;"><span><img src="images/icons/refresh.png"> Refresh Preview</span></a>
+			</div>
+			
+			<div class="right">
+			  <div style="width:340px; height:525px; overflow:auto;" class="border1">
+	            <iframe src="" id="tubepro_preview" frameborder="0" style="width:1024px; height:2000px; overflow:hidden;"></iframe>
+			  </div>
+			</div>
+			
+			<br style="clear:both;">
+	    </div>
+	  </fieldset>
+	  <br>
+	  
+	</div>
+	
+	<div class="settings_div" align="center" id="settings_div_6" style="display:none;">
+	
+	  <fieldset class="fieldset2" style="width:800px; text-align:left;">
+	  <legend class="legend2"><b>Premium Membership</b></legend>
+	  <div class="bottom" style="padding:20px;">
+	    <table cellpadding="5" cellspacing="1"  width="100%" style="border:1px solid #AAAAAA; background:#EEEEEE;">
+	      <tr bgcolor="#D1D1D1">
+	        <td align="right" width="180"><b>Premium Post-Roll Image:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[premium_postroll_image]" id="settings_premium_postroll_image" value="{$aSettings.premium_postroll_image|replace:'"':'&quot;'}" class="input-text" style="width:200px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" rel="URL of Promotional image that will be shown after the configured<br>amount of seconds after the premium video starts playing.<br>Must have about the same dimmensions as the player."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9">
+	        <td align="right" width="180"><b>Premium Post-Roll Link:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[premium_postroll_link]" id="settings_premium_postroll_link" value="{$aSettings.premium_postroll_link|replace:'"':'&quot;'}" class="input-text" style="width:200px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" rel="Link of the Premium Post-Roll Image."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1">
+	        <td align="right"> <b>Premium Free Seconds:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[premium_free_seconds]" id="settings_premium_free_seconds" value="{$aSettings.premium_free_seconds|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px;"  tabindex="1">
+              <div style="float:left; border:1px solid #999999;">
+                <div class="spinner_up" id="settings_premium_free_seconds_up"></div>
+                <div class="spinner_down" id="settings_premium_free_seconds_down"></div>
+              </div>
+              {literal}<script type="text/javascript">new SpinnerControl('settings_premium_free_seconds', 'settings_premium_free_seconds_up', 'settings_premium_free_seconds_down', {interval:1, min:1, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	          <a href="javascript:void(0);" rel="Amount of seconds you wish the user to be able to watch a premium<br>video before the 'Buy Premium Membership' Post-Roll Banner appears."><img src="images/icons/help.png" class="ml5"></a>
+	        </td>
+	      </tr>
+		  <tr bgcolor="#C9C9C9">
+	        <td align="right" width="180"><b>Force for ALL Players:</b></td>
+	        <td>
+	          <input type="checkbox" value="1" name="aSettings[premium_force_all_players]" id="settings_premium_force_all_players" {if $aSettings.premium_force_all_players==1}checked{/if}  onchange="EnableUndoButton();" tabindex="1" class="checkbox">
+	          <a href="javascript:void(0);" rel="Check this box if you want to show the<br>Premium Subscription banner for ALL<br>players and not only the default player.<br>(for Premium videos, of course)<br><br>This will allow you to request/force a<br>premium subscription without the need<br>to host the videos. i.e: with sources' videos.<br><br>No Free Premium Senconds will be given."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	    </table>
+	  </div>
+	  </fieldset>
+	  <br>
+	
+	  <fieldset class="fieldset2" style="width:800px; text-align:left;">
+	  <legend class="legend2"><b>Paypal Payments for Premium Membership</b></legend>
+	  <div class="bottom" style="padding:20px;">
+	    <table cellpadding="5" cellspacing="1"  width="100%" style="border:1px solid #AAAAAA; background:#EEEEEE;">
+	      <tr bgcolor="#D1D1D1">
+	        <td align="right" width="180"><b>Enable Paypal Method:</b></td>
+	        <td>
+	          <input type="checkbox" value="1" name="aSettings[paypal_method_status]" id="settings_paypal_method_status" {if $aSettings.paypal_method_status==1}checked{/if}  onchange="EnableUndoButton(); ToggleCells(this.checked,'.paypal_property');" tabindex="1" class="checkbox">
+	          <a href="javascript:void(0);" rel="Choose wether to enable Paypal for user payments or not."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9" class="paypal_property" {if $aSettings.paypal_method_status!=1}style="display:none;"{/if}>
+	        <td align="right" width="180" valign="top"><b>Option 1:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[paypal_option_item_name_1]" id="settings_paypal_option_item_name_1" value="{$aSettings.paypal_option_item_name_1}" class="input-text" style="width:250px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" rel="Name of the Option, as shown to the user."><img src="images/icons/help.png"></a>
+	          <br><br class="br">
+			  {foreach from=$array_languages item=lang name="at_langs"}
+	            <textarea type="text" name="aLabels[{$lang.id}][paypal_option_button_1]" id="labels_{$lang.id}_paypal_option_button_1" class="input-text" style="width:250px; height:50px;" onchange="EnableUndoButton();" tabindex="1">{$aLabels[$lang.id].paypal_option_button_1}</textarea>
+	            <img src="images/flags/{$lang.code}.gif">
+				<a href="javascript:void(0);" rel="Code of the Paypal Hosted Button for this Option."><img src="images/icons/help.png"></a>
+	            <br><br class="br">
+			  {/foreach}
+	          <div class="left" style="margin-right:20px; display:inline;">
+	            <b>Item Number:&nbsp;</b>
+	            <input type="text" name="aSettings[paypal_option_item_number_1]" id="settings_paypal_option_item_number_1" value="{$aSettings.paypal_option_item_number_1}" class="input-text" style="width:50px;" onchange="EnableUndoButton();" tabindex="1">
+	            <a href="javascript:void(0);" rel="Item Number of the Option 1, as configured for this button in paypal.<br>It will be needed for recognizing it after the payment."><img src="images/icons/help.png"></a>
+	          </div>
+	          
+	          <div class="left" style="display:inline;">
+	            <b class="left">Days:&nbsp;</b>
+	            <input type="text" name="aSettings[paypal_option_days_amount_1]" id="settings_paypal_option_days_amount_1" value="{$aSettings.paypal_option_days_amount_1|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px; margin-top:2px;"  tabindex="1">
+                <div style="float:left; border:1px solid #999999; margin-top:2px;">
+                  <div class="spinner_up" id="settings_paypal_option_days_amount_1_up"></div>
+                  <div class="spinner_down" id="settings_paypal_option_days_amount_1_down"></div>
+                </div>
+                {literal}<script type="text/javascript">new SpinnerControl('settings_paypal_option_days_amount_1', 'settings_paypal_option_days_amount_1_up', 'settings_paypal_option_days_amount_1_down', {interval:1, min:1, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	            <span class="left m3"> <a href="javascript:void(0);" rel="Amount of Premium Days to be given to the user"><img src="images/icons/help.png"></a></span>
+	          </div>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1" class="paypal_property" {if $aSettings.paypal_method_status!=1}style="display:none;"{/if}>
+	        <td align="right" width="180" valign="top"><b>Option 2:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[paypal_option_item_name_2]" id="settings_paypal_option_item_name_2" value="{$aSettings.paypal_option_item_name_2}" class="input-text" style="width:250px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" rel="Name of the Option, as shown to the user."><img src="images/icons/help.png"></a>
+	          <br><br class="br">
+	          {foreach from=$array_languages item=lang name="at_langs"}
+	            <textarea type="text" name="aLabels[{$lang.id}][paypal_option_button_2]" id="labels_{$lang.id}_paypal_option_button_2" class="input-text" style="width:250px; height:50px;" onchange="EnableUndoButton();" tabindex="1">{$aLabels[$lang.id].paypal_option_button_2}</textarea>
+	            <img src="images/flags/{$lang.code}.gif">
+				<a href="javascript:void(0);" rel="Code of the Paypal Hosted Button for this Option."><img src="images/icons/help.png"></a>
+	            <br><br class="br">
+			  {/foreach}
+	          <div class="left" style="margin-right:20px; display:inline;">
+	            <b>Item Number:&nbsp;</b>
+	            <input type="text" name="aSettings[paypal_option_item_number_2]" id="settings_paypal_option_item_number_2" value="{$aSettings.paypal_option_item_number_2}" class="input-text" style="width:50px;" onchange="EnableUndoButton();" tabindex="1">
+	            <a href="javascript:void(0);" rel="Item Number of the Option 2, as configured for this button in paypal.<br>It will be needed for recognizing it after the payment."><img src="images/icons/help.png"></a>
+	          </div>
+	          
+	          <div class="left" style="display:inline;">
+	            <b class="left">Days:&nbsp;</b>
+	            <input type="text" name="aSettings[paypal_option_days_amount_2]" id="settings_paypal_option_days_amount_2" value="{$aSettings.paypal_option_days_amount_2|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px; margin-top:2px;"  tabindex="1">
+                <div style="float:left; border:1px solid #999999; margin-top:2px;">
+                  <div class="spinner_up" id="settings_paypal_option_days_amount_2_up"></div>
+                  <div class="spinner_down" id="settings_paypal_option_days_amount_2_down"></div>
+                </div>
+                {literal}<script type="text/javascript">new SpinnerControl('settings_paypal_option_days_amount_2', 'settings_paypal_option_days_amount_2_up', 'settings_paypal_option_days_amount_2_down', {interval:1, min:1, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	            <span class="left m3"> <a href="javascript:void(0);" rel="Amount of Premium Days to be given to the user"><img src="images/icons/help.png"></a></span>
+	          </div>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9" class="paypal_property" {if $aSettings.paypal_method_status!=1}style="display:none;"{/if}>
+	        <td align="right" width="180" valign="top"><b>Option 3:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[paypal_option_item_name_3]" id="settings_paypal_option_item_name_3" value="{$aSettings.paypal_option_item_name_3}" class="input-text" style="width:250px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" rel="Name of the Option, as shown to the user."><img src="images/icons/help.png"></a>
+	          <br><br class="br">
+	          {foreach from=$array_languages item=lang name="at_langs"}
+	            <textarea type="text" name="aLabels[{$lang.id}][paypal_option_button_3]" id="labels_{$lang.id}_paypal_option_button_3" class="input-text" style="width:250px; height:50px;" onchange="EnableUndoButton();" tabindex="1">{$aLabels[$lang.id].paypal_option_button_3}</textarea>
+	            <img src="images/flags/{$lang.code}.gif">
+				<a href="javascript:void(0);" rel="Code of the Paypal Hosted Button for this Option."><img src="images/icons/help.png"></a>
+	            <br><br class="br">
+			  {/foreach}
+	          <div class="left" style="margin-right:20px; display:inline;">
+	            <b>Item Number:&nbsp;</b>
+	            <input type="text" name="aSettings[paypal_option_item_number_3]" id="settings_paypal_option_item_number_3" value="{$aSettings.paypal_option_item_number_3}" class="input-text" style="width:50px;" onchange="EnableUndoButton();" tabindex="1">
+	            <a href="javascript:void(0);" rel="Item Number of the Option 3, as configured for this button in paypal.<br>It will be needed for recognizing it after the payment."><img src="images/icons/help.png"></a>
+	          </div>
+	          
+	          <div class="left" style="display:inline;">
+	            <b class="left">Days:&nbsp;</b>
+	            <input type="text" name="aSettings[paypal_option_days_amount_3]" id="settings_paypal_option_days_amount_3" value="{$aSettings.paypal_option_days_amount_3|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px; margin-top:2px;"  tabindex="1">
+                <div style="float:left; border:1px solid #999999; margin-top:2px;">
+                  <div class="spinner_up" id="settings_paypal_option_days_amount_3_up"></div>
+                  <div class="spinner_down" id="settings_paypal_option_days_amount_3_down"></div>
+                </div>
+                {literal}<script type="text/javascript">new SpinnerControl('settings_paypal_option_days_amount_3', 'settings_paypal_option_days_amount_3_up', 'settings_paypal_option_days_amount_3_down', {interval:1, min:1, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	            <span class="left m3"> <a href="javascript:void(0);" rel="Amount of Premium Days to be given to the user"><img src="images/icons/help.png"></a></span>
+	          </div>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1" class="paypal_property" {if $aSettings.paypal_method_status!=1}style="display:none;"{/if}>
+	        <td align="right" width="180" valign="top"><b>Option 4:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[paypal_option_item_name_4]" id="settings_paypal_option_item_name_4" value="{$aSettings.paypal_option_item_name_4}" class="input-text" style="width:250px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" rel="Name of the Option, as shown to the user."><img src="images/icons/help.png"></a>
+	          <br><br class="br">
+	          {foreach from=$array_languages item=lang name="at_langs"}
+	            <textarea type="text" name="aLabels[{$lang.id}][paypal_option_button_4]" id="labels_{$lang.id}_paypal_option_button_4" class="input-text" style="width:250px; height:50px;" onchange="EnableUndoButton();" tabindex="1">{$aLabels[$lang.id].paypal_option_button_4}</textarea>
+	            <img src="images/flags/{$lang.code}.gif">
+				<a href="javascript:void(0);" rel="Code of the Paypal Hosted Button for this Option."><img src="images/icons/help.png"></a>
+	            <br><br class="br">
+			  {/foreach}
+	          <div class="left" style="margin-right:20px; display:inline;">
+	            <b>Item Number:&nbsp;</b>
+	            <input type="text" name="aSettings[paypal_option_item_number_4]" id="settings_paypal_option_item_number_4" value="{$aSettings.paypal_option_item_number_4}" class="input-text" style="width:50px;" onchange="EnableUndoButton();" tabindex="1">
+	            <a href="javascript:void(0);" rel="Item Number of the Option 4, as configured for this button in paypal.<br>It will be needed for recognizing it after the payment."><img src="images/icons/help.png"></a>
+	          </div>
+	          
+	          <div class="left" style="display:inline;">
+	            <b class="left">Days:&nbsp;</b>
+	            <input type="text" name="aSettings[paypal_option_days_amount_4]" id="settings_paypal_option_days_amount_4" value="{$aSettings.paypal_option_days_amount_4|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px; margin-top:2px;"  tabindex="1">
+                <div style="float:left; border:1px solid #999999; margin-top:2px;">
+                  <div class="spinner_up" id="settings_paypal_option_days_amount_4_up"></div>
+                  <div class="spinner_down" id="settings_paypal_option_days_amount_4_down"></div>
+                </div>
+                {literal}<script type="text/javascript">new SpinnerControl('settings_paypal_option_days_amount_4', 'settings_paypal_option_days_amount_4_up', 'settings_paypal_option_days_amount_4_down', {interval:1, min:1, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	            <span class="left m3"> <a href="javascript:void(0);" rel="Amount of Premium Days to be given to the user"><img src="images/icons/help.png"></a></span>
+	          </div>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9" class="paypal_property" {if $aSettings.paypal_method_status!=1}style="display:none;"{/if}>
+	        <td align="right" width="180" valign="top"><b>Option 5:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[paypal_option_item_name_5]" id="settings_paypal_option_item_name_5" value="{$aSettings.paypal_option_item_name_5}" class="input-text" style="width:250px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" rel="Name of the Option, as shown to the user."><img src="images/icons/help.png"></a>
+	          <br><br class="br">
+	          {foreach from=$array_languages item=lang name="at_langs"}
+	            <textarea type="text" name="aLabels[{$lang.id}][paypal_option_button_5]" id="labels_{$lang.id}_paypal_option_button_5" class="input-text" style="width:250px; height:50px;" onchange="EnableUndoButton();" tabindex="1">{$aLabels[$lang.id].paypal_option_button_5}</textarea>
+	            <img src="images/flags/{$lang.code}.gif">
+				<a href="javascript:void(0);" rel="Code of the Paypal Hosted Button for this Option."><img src="images/icons/help.png"></a>
+	            <br><br class="br">
+			  {/foreach}
+	          <div class="left" style="margin-right:20px; display:inline;">
+	            <b>Item Number:&nbsp;</b>
+	            <input type="text" name="aSettings[paypal_option_item_number_5]" id="settings_paypal_option_item_number_5" value="{$aSettings.paypal_option_item_number_5}" class="input-text" style="width:50px;" onchange="EnableUndoButton();" tabindex="1">
+	            <a href="javascript:void(0);" rel="Item Number of the Option 5, as configured for this button in paypal.<br>It will be needed for recognizing it after the payment."><img src="images/icons/help.png"></a>
+	          </div>
+	          
+	          <div class="left" style="display:inline;">
+	            <b class="left">Days:&nbsp;</b>
+	            <input type="text" name="aSettings[paypal_option_days_amount_5]" id="settings_paypal_option_days_amount_5" value="{$aSettings.paypal_option_days_amount_5|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px; margin-top:2px;"  tabindex="1">
+                <div style="float:left; border:1px solid #999999; margin-top:2px;">
+                  <div class="spinner_up" id="settings_paypal_option_days_amount_5_up"></div>
+                  <div class="spinner_down" id="settings_paypal_option_days_amount_5_down"></div>
+                </div>
+                {literal}<script type="text/javascript">new SpinnerControl('settings_paypal_option_days_amount_5', 'settings_paypal_option_days_amount_5_up', 'settings_paypal_option_days_amount_5_down', {interval:1, min:1, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	            <span class="left m3"> <a href="javascript:void(0);" rel="Amount of Premium Days to be given to the user"><img src="images/icons/help.png"></a></span>
+	          </div>
+	        </td>
+	      </tr>
+	    </table>
+	  </div>
+	  </fieldset>
+	  <br>
+	  
+	  <fieldset class="fieldset2" style="width:800px; text-align:left;">
+	  <legend class="legend2"><b>Zombaio Payments for Premium Membership</b></legend>
+	  <div class="bottom" style="padding:20px;">
+	    <br>
+	    <b>You need to create an account in Zombaio.</b><br>
+	    <a href="https://secure.zombaio.com/signup/?PID=10274162" target="_blank">Click here to proceed to sign up form and create it.</a>
+	    <br><br>
+	    <table cellpadding="5" cellspacing="1"  width="100%" style="border:1px solid #AAAAAA; background:#EEEEEE;">
+	      <tr bgcolor="#D1D1D1">
+	        <td align="right" width="180"><b>Enable Zombaio Method:</b></td>
+	        <td>
+	          <input type="checkbox" value="1" name="aSettings[zombaio_method_status]" id="settings_zombaio_method_status" {if $aSettings.zombaio_method_status==1}checked{/if}  onchange="EnableUndoButton(); ToggleCells(this.checked,'.zombaio_property');" tabindex="1" class="checkbox">
+	          <a href="javascript:void(0);" rel="Choose wether to enable Zombaio for user payments or not."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9" class="zombaio_property" {if $aSettings.zombaio_method_status!=1}style="display:none;"{/if}>
+	        <td align="right" width="200"><b>Postback Password:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[zombaio_gw_pass]" id="settings_zombaio_gw_pass" value="{$aSettings.zombaio_gw_pass}" class="input-text" style="width:120px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" rel="Your Site ID, as provided in your Zombaio account."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9" class="zombaio_property" {if $aSettings.zombaio_method_status!=1}style="display:none;"{/if}>
+	        <td align="right" width="200"><b>Site Id:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[zombaio_site_id]" id="settings_zombaio_site_id" value="{$aSettings.zombaio_site_id}" class="input-text" style="width:120px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" rel="Your Site ID, as provided in your Zombaio account."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9" class="zombaio_property" {if $aSettings.zombaio_method_status!=1}style="display:none;"{/if}>
+	        <td align="right" width="200"><b>Rebill Days Amount:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[zombaio_rebill_days]" id="settings_zombaio_rebill_days" value="{$aSettings.zombaio_rebill_days|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px;"  tabindex="1">
+              <div style="float:left; border:1px solid #999999;">
+                <div class="spinner_up" id="settings_zombaio_rebill_days_up"></div>
+                <div class="spinner_down" id="settings_zombaio_rebill_days_down"></div>
+              </div>
+              {literal}<script type="text/javascript">new SpinnerControl('settings_zombaio_rebill_days', 'settings_zombaio_rebill_days_up', 'settings_zombaio_rebill_days_down', {interval:1, min:1, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	          <a href="javascript:void(0);" rel="Amount of days you had configured in your zombaio account,<br>in case a rebill is processed. Default: 30 days."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9" class="zombaio_property" {if $aSettings.zombaio_method_status!=1}style="display:none;"{/if}>
+	        <td align="right" width="180" valign="top"><b>Option 1:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[zombaio_option_item_name_1]" id="settings_zombaio_option_item_name_1" value="{$aSettings.zombaio_option_item_name_1}" class="input-text" style="width:250px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" rel="Name of the Option, as shown to the user."><img src="images/icons/help.png"></a>
+	          <br><br class="br">
+	          <textarea type="text" name="aLabels[1][zombaio_option_button_1]" id="labels_1_zombaio_option_button_1" class="input-text" style="width:250px; height:50px;" onchange="EnableUndoButton();" tabindex="1">{$aLabels[1].zombaio_option_button_1}</textarea>
+	          <a href="javascript:void(0);" rel="Code of the Zombaio Button for this Option."><img src="images/icons/help.png"></a>
+	          <br><br class="br">
+	          <div class="left" style="margin-right:20px; display:inline;">
+	            <b>Pricing ID:&nbsp;</b>
+	            <input type="text" name="aSettings[zombaio_option_pricing_id_1]" id="settings_zombaio_option_pricing_id_1" value="{$aSettings.zombaio_option_pricing_id_1}" class="input-text" style="width:50px;" onchange="EnableUndoButton();" tabindex="1">
+	            <a href="javascript:void(0);" rel="Pricing ID of the Option 1, as configured for this button in Zombaio.<br>It will be needed for recognizing it after the payment."><img src="images/icons/help.png"></a>
+	          </div>
+	          
+	          <div class="left" style="display:inline;">
+	            <b class="left">Days:&nbsp;</b>
+	            <input type="text" name="aSettings[zombaio_option_days_amount_1]" id="settings_zombaio_option_days_amount_1" value="{$aSettings.zombaio_option_days_amount_1|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px; margin-top:2px;"  tabindex="1">
+                <div style="float:left; border:1px solid #999999; margin-top:2px;">
+                  <div class="spinner_up" id="settings_zombaio_option_days_amount_1_up"></div>
+                  <div class="spinner_down" id="settings_zombaio_option_days_amount_1_down"></div>
+                </div>
+                {literal}<script type="text/javascript">new SpinnerControl('settings_zombaio_option_days_amount_1', 'settings_zombaio_option_days_amount_1_up', 'settings_zombaio_option_days_amount_1_down', {interval:1, min:1, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	            <span class="left m3"> <a href="javascript:void(0);" rel="Amount of Premium Days to be given to the user"><img src="images/icons/help.png"></a></span>
+	          </div>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1" class="zombaio_property" {if $aSettings.zombaio_method_status!=1}style="display:none;"{/if}>
+	        <td align="right" width="180" valign="top"><b>Option 2:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[zombaio_option_item_name_2]" id="settings_zombaio_option_item_name_2" value="{$aSettings.zombaio_option_item_name_2}" class="input-text" style="width:250px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" rel="Name of the Option, as shown to the user."><img src="images/icons/help.png"></a>
+	          <br><br class="br">
+	          <textarea type="text" name="aLabels[1][zombaio_option_button_2]" id="labels_1_zombaio_option_button_2" class="input-text" style="width:250px; height:50px;" onchange="EnableUndoButton();" tabindex="1">{$aLabels[1].zombaio_option_button_2}</textarea>
+	          <a href="javascript:void(0);" rel="Code of the Zombaio Button for this Option."><img src="images/icons/help.png"></a>
+	          <br><br class="br">
+	          <div class="left" style="margin-right:20px; display:inline;">
+	            <b>Pricing ID:&nbsp;</b>
+	            <input type="text" name="aSettings[zombaio_option_pricing_id_2]" id="settings_zombaio_option_pricing_id_2" value="{$aSettings.zombaio_option_pricing_id_2}" class="input-text" style="width:50px;" onchange="EnableUndoButton();" tabindex="1">
+	            <a href="javascript:void(0);" rel="Pricing ID of the Option 2, as configured for this button in Zombaio.<br>It will be needed for recognizing it after the payment."><img src="images/icons/help.png"></a>
+	          </div>
+	          
+	          <div class="left" style="display:inline;">
+	            <b class="left">Days:&nbsp;</b>
+	            <input type="text" name="aSettings[zombaio_option_days_amount_2]" id="settings_zombaio_option_days_amount_2" value="{$aSettings.zombaio_option_days_amount_2|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px; margin-top:2px;"  tabindex="1">
+                <div style="float:left; border:1px solid #999999; margin-top:2px;">
+                  <div class="spinner_up" id="settings_zombaio_option_days_amount_2_up"></div>
+                  <div class="spinner_down" id="settings_zombaio_option_days_amount_2_down"></div>
+                </div>
+                {literal}<script type="text/javascript">new SpinnerControl('settings_zombaio_option_days_amount_2', 'settings_zombaio_option_days_amount_2_up', 'settings_zombaio_option_days_amount_2_down', {interval:1, min:1, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	            <span class="left m3"> <a href="javascript:void(0);" rel="Amount of Premium Days to be given to the user"><img src="images/icons/help.png"></a></span>
+	          </div>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9" class="zombaio_property" {if $aSettings.zombaio_method_status!=1}style="display:none;"{/if}>
+	        <td align="right" width="180" valign="top"><b>Option 3:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[zombaio_option_item_name_3]" id="settings_zombaio_option_item_name_3" value="{$aSettings.zombaio_option_item_name_3}" class="input-text" style="width:250px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" rel="Name of the Option, as shown to the user."><img src="images/icons/help.png"></a>
+	          <br><br class="br">
+	          <textarea type="text" name="aLabels[1][zombaio_option_button_3]" id="labels_1_zombaio_option_button_3" class="input-text" style="width:250px; height:50px;" onchange="EnableUndoButton();" tabindex="1">{$aLabels[1].zombaio_option_button_3}</textarea>
+	          <a href="javascript:void(0);" rel="Code of the Zombaio Button for this Option."><img src="images/icons/help.png"></a>
+	          <br><br class="br">
+	          <div class="left" style="margin-right:20px; display:inline;">
+	            <b>Pricing ID:&nbsp;</b>
+	            <input type="text" name="aSettings[zombaio_option_pricing_id_3]" id="settings_zombaio_option_pricing_id_3" value="{$aSettings.zombaio_option_pricing_id_3}" class="input-text" style="width:50px;" onchange="EnableUndoButton();" tabindex="1">
+	            <a href="javascript:void(0);" rel="Pricing ID of the Option 3, as configured for this button in Zombaio.<br>It will be needed for recognizing it after the payment."><img src="images/icons/help.png"></a>
+	          </div>
+	          
+	          <div class="left" style="display:inline;">
+	            <b class="left">Days:&nbsp;</b>
+	            <input type="text" name="aSettings[zombaio_option_days_amount_3]" id="settings_zombaio_option_days_amount_3" value="{$aSettings.zombaio_option_days_amount_3|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px; margin-top:2px;"  tabindex="1">
+                <div style="float:left; border:1px solid #999999; margin-top:2px;">
+                  <div class="spinner_up" id="settings_zombaio_option_days_amount_3_up"></div>
+                  <div class="spinner_down" id="settings_zombaio_option_days_amount_3_down"></div>
+                </div>
+                {literal}<script type="text/javascript">new SpinnerControl('settings_zombaio_option_days_amount_3', 'settings_zombaio_option_days_amount_3_up', 'settings_zombaio_option_days_amount_3_down', {interval:1, min:1, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	            <span class="left m3"> <a href="javascript:void(0);" rel="Amount of Premium Days to be given to the user"><img src="images/icons/help.png"></a></span>
+	          </div>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#D1D1D1" class="zombaio_property" {if $aSettings.zombaio_method_status!=1}style="display:none;"{/if}>
+	        <td align="right" width="180" valign="top"><b>Option 4:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[zombaio_option_item_name_4]" id="settings_zombaio_option_item_name_4" value="{$aSettings.zombaio_option_item_name_4}" class="input-text" style="width:250px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" rel="Name of the Option, as shown to the user."><img src="images/icons/help.png"></a>
+	          <br><br class="br">
+	          <textarea type="text" name="aLabels[1][zombaio_option_button_4]" id="labels_1_zombaio_option_button_4" class="input-text" style="width:250px; height:50px;" onchange="EnableUndoButton();" tabindex="1">{$aLabels[1].zombaio_option_button_4}</textarea>
+	          <a href="javascript:void(0);" rel="Code of the Zombaio Button for this Option."><img src="images/icons/help.png"></a>
+	          <br><br class="br">
+	          <div class="left" style="margin-right:20px; display:inline;">
+	            <b>Pricing ID:&nbsp;</b>
+	            <input type="text" name="aSettings[zombaio_option_pricing_id_4]" id="settings_zombaio_option_pricing_id_4" value="{$aSettings.zombaio_option_pricing_id_4}" class="input-text" style="width:50px;" onchange="EnableUndoButton();" tabindex="1">
+	            <a href="javascript:void(0);" rel="Pricing ID of the Option 4, as configured for this button in Zombaio.<br>It will be needed for recognizing it after the payment."><img src="images/icons/help.png"></a>
+	          </div>
+	          
+	          <div class="left" style="display:inline;">
+	            <b class="left">Days:&nbsp;</b>
+	            <input type="text" name="aSettings[zombaio_option_days_amount_4]" id="settings_zombaio_option_days_amount_4" value="{$aSettings.zombaio_option_days_amount_4|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px; margin-top:2px;"  tabindex="1">
+                <div style="float:left; border:1px solid #999999; margin-top:2px;">
+                  <div class="spinner_up" id="settings_zombaio_option_days_amount_4_up"></div>
+                  <div class="spinner_down" id="settings_zombaio_option_days_amount_4_down"></div>
+                </div>
+                {literal}<script type="text/javascript">new SpinnerControl('settings_zombaio_option_days_amount_4', 'settings_zombaio_option_days_amount_4_up', 'settings_zombaio_option_days_amount_4_down', {interval:1, min:1, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	            <span class="left m3"> <a href="javascript:void(0);" rel="Amount of Premium Days to be given to the user"><img src="images/icons/help.png"></a></span>
+	          </div>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9" class="zombaio_property" {if $aSettings.zombaio_method_status!=1}style="display:none;"{/if}>
+	        <td align="right" width="180" valign="top"><b>Option 5:</b></td>
+	        <td>
+	          <input type="text" name="aSettings[zombaio_option_item_name_5]" id="settings_zombaio_option_item_name_5" value="{$aSettings.zombaio_option_item_name_5}" class="input-text" style="width:250px;" onchange="EnableUndoButton();" tabindex="1">
+	          <a href="javascript:void(0);" rel="Name of the Option, as shown to the user."><img src="images/icons/help.png"></a>
+	          <br><br class="br">
+	          <textarea type="text" name="aLabels[1][zombaio_option_button_5]" id="labels_1_zombaio_option_button_5" class="input-text" style="width:250px; height:50px;" onchange="EnableUndoButton();" tabindex="1">{$aLabels[1].zombaio_option_button_5}</textarea>
+	          <a href="javascript:void(0);" rel="Code of the Zombaio Button for this Option."><img src="images/icons/help.png"></a>
+	          <br><br class="br">
+	          <div class="left" style="margin-right:20px; display:inline;">
+	            <b>Pricing ID:&nbsp;</b>
+	            <input type="text" name="aSettings[zombaio_option_pricing_id_5]" id="settings_zombaio_option_pricing_id_5" value="{$aSettings.zombaio_option_pricing_id_5}" class="input-text" style="width:50px;" onchange="EnableUndoButton();" tabindex="1">
+	            <a href="javascript:void(0);" rel="Pricing ID of the Option 5, as configured for this button in Zombaio.<br>It will be needed for recognizing it after the payment."><img src="images/icons/help.png"></a>
+	          </div>
+	          
+	          <div class="left" style="display:inline;">
+	            <b class="left">Days:&nbsp;</b>
+	            <input type="text" name="aSettings[zombaio_option_days_amount_5]" id="settings_zombaio_option_days_amount_5" value="{$aSettings.zombaio_option_days_amount_5|replace:'"':'&quot;'}" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px; margin-top:2px;"  tabindex="1">
+                <div style="float:left; border:1px solid #999999; margin-top:2px;">
+                  <div class="spinner_up" id="settings_zombaio_option_days_amount_5_up"></div>
+                  <div class="spinner_down" id="settings_zombaio_option_days_amount_5_down"></div>
+                </div>
+                {literal}<script type="text/javascript">new SpinnerControl('settings_zombaio_option_days_amount_5', 'settings_zombaio_option_days_amount_5_up', 'settings_zombaio_option_days_amount_5_down', {interval:1, min:1, afterUpdate:'EnableUndoButton()'}); </script>{/literal}
+	            <span class="left m3"> <a href="javascript:void(0);" rel="Amount of Premium Days to be given to the user"><img src="images/icons/help.png"></a></span>
+	          </div>
+	        </td>
+	      </tr>
+	    </table>
+	  </div>
+	  </fieldset>
+	  <br>
+	  
+	  <fieldset class="fieldset2" style="width:800px; text-align:left;">
+	  <legend class="legend2"><b>CCBill Payments for Premium Membership</b></legend>
+	  <div class="bottom" style="padding:20px;">
+	    <br><br>
+	    <table cellpadding="5" cellspacing="1"  width="100%" style="border:1px solid #AAAAAA; background:#EEEEEE;">
+	      <tr bgcolor="#D1D1D1">
+	        <td align="right" width="180"><b>Enable CCBill Method:</b></td>
+	        <td>
+	          <input type="checkbox" value="1" name="aSettings[ccbill_method_status]" id="settings_ccbill_method_status" {if $aSettings.ccbill_method_status==1}checked{/if}  onchange="EnableUndoButton(); ToggleCells(this.checked,'.ccbill_property');" tabindex="1" class="checkbox">
+	          <a href="javascript:void(0);" rel="Choose wether to enable CCBill for user payments or not."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9" class="ccbill_property" {if $aSettings.ccbill_method_status!=1}style="display:none;"{/if}>
+	        <td align="right" width="180" valign="top"><b>Option 1:</b></td>
+	        <td>
+	          <textarea type="text" name="aLabels[1][ccbill_option_button_1]" id="labels_1_ccbill_option_button_1" class="input-text" style="width:250px; height:50px;" onchange="EnableUndoButton();" tabindex="1">{$aLabels[1].ccbill_option_button_1}</textarea>
+	          <a href="javascript:void(0);" rel="Code of the CCBill Button for this Option.<br>Use ONLY the &amp;lt;form&amp;gt; option, not the regular link one."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9" class="ccbill_property" {if $aSettings.ccbill_method_status!=1}style="display:none;"{/if}>
+	        <td align="right" width="180" valign="top"><b>Option 2:</b></td>
+	        <td>
+	          <textarea type="text" name="aLabels[1][ccbill_option_button_2]" id="labels_1_ccbill_option_button_2" class="input-text" style="width:250px; height:50px;" onchange="EnableUndoButton();" tabindex="1">{$aLabels[1].ccbill_option_button_2}</textarea>
+	          <a href="javascript:void(0);" rel="Code of the CCBill Button for this Option.<br>Use ONLY the &amp;lt;form&amp;gt; option, not the regular link one."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9" class="ccbill_property" {if $aSettings.ccbill_method_status!=1}style="display:none;"{/if}>
+	        <td align="right" width="180" valign="top"><b>Option 3:</b></td>
+	        <td>
+	          <textarea type="text" name="aLabels[1][ccbill_option_button_3]" id="labels_1_ccbill_option_button_3" class="input-text" style="width:250px; height:50px;" onchange="EnableUndoButton();" tabindex="1">{$aLabels[1].ccbill_option_button_3}</textarea>
+	          <a href="javascript:void(0);" rel="Code of the CCBill Button for this Option.<br>Use ONLY the &amp;lt;form&amp;gt; option, not the regular link one."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9" class="ccbill_property" {if $aSettings.ccbill_method_status!=1}style="display:none;"{/if}>
+	        <td align="right" width="180" valign="top"><b>Option 4:</b></td>
+	        <td>
+	          <textarea type="text" name="aLabels[1][ccbill_option_button_4]" id="labels_1_ccbill_option_button_4" class="input-text" style="width:250px; height:50px;" onchange="EnableUndoButton();" tabindex="1">{$aLabels[1].ccbill_option_button_4}</textarea>
+	          <a href="javascript:void(0);" rel="Code of the CCBill Button for this Option.<br>Use ONLY the &amp;lt;form&amp;gt; option, not the regular link one."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	      <tr bgcolor="#C9C9C9" class="ccbill_property" {if $aSettings.ccbill_method_status!=1}style="display:none;"{/if}>
+	        <td align="right" width="180" valign="top"><b>Option 5:</b></td>
+	        <td>
+	          <textarea type="text" name="aLabels[1][ccbill_option_button_5]" id="labels_1_ccbill_option_button_5" class="input-text" style="width:250px; height:50px;" onchange="EnableUndoButton();" tabindex="1">{$aLabels[1].ccbill_option_button_5}</textarea>
+	          <a href="javascript:void(0);" rel="Code of the CCBill Button for this Option.<br>Use ONLY the &amp;lt;form&amp;gt; option, not the regular link one."><img src="images/icons/help.png"></a>
+	        </td>
+	      </tr>
+	    </table>
+	  </div>
+	</fieldset>
+	  
+	</div>
+	<br><br>
+  </div>
+  </form>
+
+</fieldset>
+
+
+<form id="tubepro_logo_upload_form" name="tubepro_logo_upload_form" style="position:absolute; width:150px; margin:4px;" action="actions/settings/logo_upload.php" enctype="multipart/form-data" method="post" target="tubepro_logo_upload_iframe">
+	<label class="cabinet" style="float:left;">
+	  <span><img src="images/icons/upload.png" id="tubepro_logo_upload_button_img"></span>
+	  <span id="tubepro_logo_upload_button_text">Browse...</span>
+	  <input type="file" name="tubepro_logo_file_name" id="tubepro_logo_file_name" class="file" size="1" onchange="SubmitLogoUploadForm();">
+	</label>
+	<a href="javascript:void(0);" class="m3" rel="When you upload the image it will not<br>be used until you save the settings.<br>PNG with transparent background is better."><img src="images/icons/help.png"></a>
+	<iframe style="display:none; width:0px; height:0px;" src="about:blank" id="tubepro_logo_upload_iframe" name="tubepro_logo_upload_iframe"></iframe>
+</form>
+
+{if $smarty.cookies.settings_active_tab}
+<script>
+  SwitchTab('settings',{$smarty.cookies.settings_active_tab});
+  HideByClassName('.settings_div');
+  $('settings_div_{$smarty.cookies.settings_active_tab}').show();
+</script>
+{/if}  
+{if $smarty.cookies.lang_active_tab}
+<script>
+  SwitchTab('lang',{$smarty.cookies.lang_active_tab});
+  HideByClassName('.lang_div');
+  HideByClassName('.lang_row');
+  ShowByClassName('.lang_id_{$smarty.cookies.lang_active_tab}');
+</script>
+{/if}
+
+<script type="text/javascript">
+ReTip();
+ToggleCells($('settings_comments_allowed').checked,'.comments_property');
+ToggleCells($('settings_rss_status').checked,'.rss_property');
+ToggleCells($('settings_sitemap_status').checked,'.sitemap_property');
+ToggleCells($('settings_video_upload_allowed').checked,'.upload_property');
+ToggleCells($('settings_template_caching').checked,'.caching_property');
+ToggleCells($('settings_default_player_preroll_status').checked,'.preroll_property');
+ToggleCells($('settings_default_player_postroll_status').checked,'.postroll_property');
+ToggleCells($('settings_default_player_straming_method').value==3,'.rtmp_property');
+ToggleCells($('settings_default_player_straming_method').value<3,'.pseudo_property');
+ToggleCells(($('settings_default_player_limit_bw').checked && $('settings_default_player_straming_method').value==2),'.limitbw_property');
+ToggleCells($('settings_paypal_method_status').checked,'.paypal_property');
+ToggleCells($('settings_zombaio_method_status').checked,'.zombaio_property');
+ToggleCells($('settings_ccbill_method_status').checked,'.ccbill_property');
+ToggleCells($('settings_mobile_enabled').checked,'.mobile_property');
+ToggleCells($('settings_tags_cloud_enabled').checked,'.tags_cloud_property');
+ToggleCells($('settings_tags_archive_enabled').checked,'.tags_archive_property');
+ToggleCells($('settings_memcache_enabled').checked,'.memcache_property');
+FillMobileStyles();
+</script>
+
+<script language="javascript">
+  {if $smarty.cookies.settings_active_tab==7}
+	ShowTubeproForm();
+	RefreshTubeProPreview();
+  {else}
+	$('tubepro_logo_upload_form').hide();
+  {/if}
+</script>
+
+{/if}

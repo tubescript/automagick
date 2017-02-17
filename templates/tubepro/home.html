@@ -1,0 +1,143 @@
+<div class="left" style="width:780px;">
+  {if count($array_watched_videos)>0}
+	<div class="left rounded3 container_box" style="padding:0px;">
+	  <div class="bar rounded3 title_text m3" style="text-align:left;">{$aLabels.videos_being_watched}</div>
+	  
+	  <div class="m5">
+	  {foreach from=$array_watched_videos item=video name=videos}
+		<table cellpadding="0" cellspacing="8" class="text left thumb_box rounded5 m3">
+		  <tr><td colspan="2">
+			<a href="javascript:void(0);" onclick="{if $smarty.session.user_logged}FavAddVideo({$video.id},1);{else}$('login_layer').show();$('login_info_msg').show();{/if}" id="favstar_off_{$video.id}" title="Add Video to Favorites." {if in_array($video.id,$array_favorites)}style="display:none;"{/if}><img src="templates/{$template}/images/star_off.png" border="0" align="absmiddle"></a>
+			<a href="javascript:void(0);" onclick="{if $smarty.session.user_logged}FavRemoveVideo({$video.id},1);{else}$('login_layer').show();$('login_info_msg').show();{/if}" id="favstar_on_{$video.id}"  title="Remove Video from Favorites." {if !in_array($video.id,$array_favorites)}style="display:none;"{/if}><img src="templates/{$template}/images/star_on.png" border="0" align="absmiddle"></a>
+			<a href="video/{$video.id}/{$video.title|regex_replace:'/[ \<\>\#\?\%\&\/\"\']/':'-'}" class="link" title="{$video.title|replace:'"':'&quot;'}">
+			  {if $mb_available}
+				{if $language==$default_language or !$video.translations.$language.title}
+					{$video.title|mb_truncate:22:"...":"UTF-8":true}
+				{else}
+					{$video.translations.$language.title|mb_truncate:22:"...":"UTF-8":true}
+				{/if}
+			  {else}
+			  	{if ($language==$default_language or !$video.translations.$language.title)}
+					{$video.title|truncate:14:"...":true}
+				{else}
+					{$video.translations.$language.title|truncate:14:"...":true}
+				{/if}
+			  {/if}
+			</a>
+		  </td></tr>
+		  <tr><td colspan="2" align="center" class="thumb" valign="top" style="width:{$aSettings.thumb_width}px; height:{$aSettings.thumb_height}px;" onmouseover="StartThumbRotation('thumb_{$video.id}','{$video.id}');" onmouseout="StopThumbRotation('thumb_{$video.id}','{$video.id}');">
+		    <div style="position:relative; height:{$aSettings.thumb_height}px;">
+	          <div style="position:absolute; top:0px; left:0px; z-index:1;"><a href="video/{$video.id}/{$video.title|regex_replace:'/[ \<\>\#\?\%\&\/\"\']/':'-'}" title="{$video.title|replace:'"':'&quot;'}"><img src="{$video.thumbs[0]}" width="{$aSettings.thumb_width}" height="{$aSettings.thumb_height}" id="thumb_{$video.id}"></a></div>
+	          {if $video.premium}<div class="premium_icon" style="position:absolute; z-index:2;" title="{$aLabels.premium_video}"></div>{/if}
+	        </div>
+		  </td></tr>
+		  <tr><td><b>{$video.duration_formated}</b></td><td align="right"><b>{$video.activation_date|date_format}</b></td></tr>
+		  <tr><td>{$video.votes} ratings</td><td align="right"><img src="templates/{$template}/images/star_image_{$video.star_image}.png" title="Rating: {$video.rating} of 5"></td></tr>
+		</table>
+	    {if ($smarty.foreach.videos.index+1)%$aSettings.videos_cols==0}<br class="clear">{/if}
+	  {foreachelse}
+	    <center><br><b>No videos where found.</b><br></center>
+	  {/foreach}
+	  </div>
+	</div>
+	<br class="clear"><br>
+  {/if}
+  
+  {if count($array_recently_added_videos)>0}
+	<div class="left rounded3 container_box" style="padding:0px;">
+	  <div class="bar rounded3 title_text m3" style="text-align:left;">{$aLabels.recently_added_videos}</div>
+	  
+	  <div class="m5">
+	  {foreach from=$array_recently_added_videos item=video name=videos}
+		<table cellpadding="0" cellspacing="8" class="text left thumb_box rounded5 m3">
+		  <tr><td colspan="2">
+			<a href="javascript:void(0);" onclick="{if $smarty.session.user_logged}FavAddVideo({$video.id},1);{else}$('login_layer').show();$('login_info_msg').show();{/if}" id="favstar_off_{$video.id}" title="Add Video to Favorites." {if in_array($video.id,$array_favorites)}style="display:none;"{/if}><img src="templates/{$template}/images/star_off.png" border="0" align="absmiddle"></a>
+			<a href="javascript:void(0);" onclick="{if $smarty.session.user_logged}FavRemoveVideo({$video.id},1);{else}$('login_layer').show();$('login_info_msg').show();{/if}" id="favstar_on_{$video.id}"  title="Remove Video from Favorites." {if !in_array($video.id,$array_favorites)}style="display:none;"{/if}><img src="templates/{$template}/images/star_on.png" border="0" align="absmiddle"></a>
+			<a href="video/{$video.id}/{$video.title|regex_replace:'/[ \<\>\#\?\%\&\/\"\']/':'-'}" class="link" title="{$video.title|replace:'"':'&quot;'}">
+			  {if $mb_available}
+				{if $language==$default_language or !$video.translations.$language.title}
+					{$video.title|mb_truncate:22:"...":"UTF-8":true}
+				{else}
+					{$video.translations.$language.title|mb_truncate:22:"...":"UTF-8":true}
+				{/if}
+			  {else}
+			  	{if ($language==$default_language or !$video.translations.$language.title)}
+					{$video.title|truncate:14:"...":true}
+				{else}
+					{$video.translations.$language.title|truncate:14:"...":true}
+				{/if}
+			  {/if}
+			</a>
+		  </td></tr>
+		  <tr><td colspan="2" align="center" class="thumb" valign="top" style="width:{$aSettings.thumb_width}px; height:{$aSettings.thumb_height}px;" onmouseover="StartThumbRotation('thumb2_{$video.id}','{$video.id}');" onmouseout="StopThumbRotation('thumb2_{$video.id}','{$video.id}');">
+		    <div style="position:relative; height:{$aSettings.thumb_height}px;">
+	          <div style="position:absolute; top:0px; left:0px; z-index:1;"><a href="video/{$video.id}/{$video.title|regex_replace:'/[ \<\>\#\?\%\&\/\"\']/':'-'}" title="{$video.title|replace:'"':'&quot;'}"><img src="{$video.thumbs[0]}" width="{$aSettings.thumb_width}" height="{$aSettings.thumb_height}" id="thumb2_{$video.id}"></a></div>
+	          {if $video.premium}<div class="premium_icon" style="position:absolute; z-index:2;" title="{$aLabels.premium_video}"></div>{/if}
+	        </div>
+		  </td></tr>
+		  <tr><td><b>{$video.duration_formated}</b></td><td align="right"><b>{$video.activation_date|date_format}</b></td></tr>
+		  <tr><td>{$video.votes} ratings</td><td align="right"><img src="templates/{$template}/images/star_image_{$video.star_image}.png" title="Rating: {$video.rating} of 5"></td></tr>
+		</table>
+	    {if ($smarty.foreach.videos.index+1)%$aSettings.videos_cols==0}<br class="clear">{/if}
+	  {foreachelse}
+	    <center><br><b>No videos where found.</b><br></center>
+	  {/foreach}
+	  </div>
+	</div>
+	<br class="clear"><br>
+  {/if}
+  
+  {if count($array_premium_videos)>0}
+  	<div class="left rounded3 container_box" style="padding:0px;">
+	  <div class="bar rounded3 title_text m3" style="text-align:left;">{$aLabels.premium_videos}</div>
+	
+	  <div class="m5">
+	  {foreach from=$array_premium_videos item=video name=videos}
+		<table cellpadding="0" cellspacing="8" class="text left thumb_box rounded5 m3">
+		  <tr><td colspan="2">
+			<a href="javascript:void(0);" onclick="{if $smarty.session.user_logged}FavAddVideo({$video.id},1);{else}$('login_layer').show();$('login_info_msg').show();{/if}" id="favstar_off_{$video.id}" title="Add Video to Favorites." {if in_array($video.id,$array_favorites)}style="display:none;"{/if}><img src="templates/{$template}/images/star_off.png" border="0" align="absmiddle"></a>
+			<a href="javascript:void(0);" onclick="{if $smarty.session.user_logged}FavRemoveVideo({$video.id},1);{else}$('login_layer').show();$('login_info_msg').show();{/if}" id="favstar_on_{$video.id}"  title="Remove Video from Favorites." {if !in_array($video.id,$array_favorites)}style="display:none;"{/if}><img src="templates/{$template}/images/star_on.png" border="0" align="absmiddle"></a>
+			<a href="video/{$video.id}/{$video.title|regex_replace:'/[ \<\>\#\?\%\&\/\"\']/':'-'}" class="link" title="{$video.title|replace:'"':'&quot;'}">
+			   {if $mb_available}
+				{if $language==$default_language or !$video.translations.$language.title}
+					{$video.title|mb_truncate:22:"...":"UTF-8":true}
+				{else}
+					{$video.translations.$language.title|mb_truncate:22:"...":"UTF-8":true}
+				{/if}
+			  {else}
+			  	{if ($language==$default_language or !$video.translations.$language.title)}
+					{$video.title|truncate:14:"...":true}
+				{else}
+					{$video.translations.$language.title|truncate:14:"...":true}
+				{/if}
+			  {/if}
+			</a>
+		  </td></tr>
+		  <tr><td colspan="2" align="center" class="thumb" valign="top" style="width:{$aSettings.thumb_width}px; height:{$aSettings.thumb_height}px;" onmouseover="StartThumbRotation('thumb3_{$video.id}','{$video.id}');" onmouseout="StopThumbRotation('thumb3_{$video.id}','{$video.id}');">
+		    <div style="position:relative; height:{$aSettings.thumb_height}px;">
+	          <div style="position:absolute; top:0px; left:0px; z-index:1;"><a href="video/{$video.id}/{$video.title|regex_replace:'/[ \<\>\#\?\%\&\/\"\']/':'-'}" title="{$video.title|replace:'"':'&quot;'}"><img src="{$video.thumbs[0]}" width="{$aSettings.thumb_width}" height="{$aSettings.thumb_height}" id="thumb3_{$video.id}"></a></div>
+	          {if $video.premium}<div class="premium_icon" style="position:absolute; z-index:2;" title="{$aLabels.premium_video}"></div>{/if}
+	        </div>
+		  </td></tr>
+		  <tr><td><b>{$video.duration_formated}</b></td><td align="right"><b>{$video.activation_date|date_format}</b></td></tr>
+		  <tr><td>{$video.votes} ratings</td><td align="right"><img src="templates/{$template}/images/star_image_{$video.star_image}.png" title="Rating: {$video.rating} of 5"></td></tr>
+		</table>
+	    {if ($smarty.foreach.videos.index+1)%$aSettings.videos_cols==0}<br class="clear">{/if}
+	  {foreachelse}
+	    <center><br><b>No videos where found.</b><br></center>
+	  {/foreach}
+	  </div>
+	  <br class="clear"><br>
+	</div>
+  {/if}
+</div>
+
+<div class="right rounded3 container_box" style="padding:0px; width:206px; margin-bottom:10px;">
+  <div class="bar rounded3 title_text m3" style="text-align:left;">{$aLabels.sponsored_by}</div>
+  <div style="margin-bottom:3px;">{php}$spot=1; include("modules/banner.php");{/php}</div>
+</div>
+
+<div class="right rounded3 container_box" style="padding:0px; width:206px; margin-bottom:10px;">
+  <div class="bar rounded3 title_text m3" style="text-align:left;">{$aLabels.tags}</div>
+  <div class="m3">{include file="tags_cloud.html"}</div>
+</div>

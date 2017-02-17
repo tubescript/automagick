@@ -1,0 +1,123 @@
+<div id="tags_archive_layer" style="display:none;" class="floating_layer">
+<table cellpadding="0" cellspacing="0" align="center" width="100%" height="100%">
+  <tr><td align="center">
+  
+     <table cellpadding="0" cellspacing="0" class="draggable">
+       <tr class="draggable_handle" style="cursor:pointer;">
+         <td background="images/modalbox/otl.png" width="8" height="25"></td>
+         <td background="images/modalbox/ot.png" height="25" valign="bottom">
+           <span class="modalbox_title">Tags Archive Manager</span>
+           <span class="modalbox_buttons">
+             &nbsp;
+             <a href="javascript:void(0);" onclick="CloseLayer('tags_archive_layer');"><img src="images/icons/close_big.png" onmouseover="this.src='images/icons/close_big_on.png';" onmouseout="this.src='images/icons/close_big.png';"></a>
+           </span>
+         </td>
+         <td background="images/modalbox/otr.png" width="8" height="25"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/ol.png" width="8"></td>
+         <td>
+           <table cellpadding="0" cellspacing="0">
+	         <tr>
+	           <td background="images/modalbox/itl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/it.png" height="10"></td>
+	           <td background="images/modalbox/itr.png" width="10" height="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/il.png" width="10"></td>
+	           <td bgcolor="#C9CDD0" class="modal_text" style="width:auto;">
+	               Select, from the tags list of the left, the ones you want to activate or viceversa.<br>
+	               Click on "Add New Tags to add your own tags manually, or use the "Extract Videos Tags"<br>
+	               to automatically add all tags from existing videos (no tag repetition will occure).<br class="clear"><br>
+	               
+	               <table cellpadding="0" cellspacing="0" width="100%" align="center">
+	                 <tr>
+	                   <td width="115"><a class="small_button" href="javascript:void(0);" onclick="$('tags_archive_add_tags_div').show();"><span><img src="images/icons/add-tiny.png" id="tags_archive_add_icon"> Add New Tags</span></a></td>
+	                   <td><a class="small_button" href="javascript:void(0);" onclick="ExtractVideosTags();"><span><img src="images/icons/video_extract.png" id="tags_archive_extract_icon"> Extract Videos Tags</span></a></td>
+	                   <td></td>
+	                   <td width="80"><a class="small_button" href="javascript:void(0);" onclick="OpenTagsArchiveManager();"><span><img src="images/icons/refresh.png" id="tags_archive_refresh_icon"> Refresh</span></a></td>
+	                 </tr>
+	               </table>
+	               <br>
+	               
+	               <div id="tags_archive_add_tags_div" style="display:none;">
+	                 Add one tag per line.<br>
+	                 <textarea id="tags_archive_add_tags" style="width:100%; height:80px;"></textarea><br>
+	                 <div style="width:170px; float:right; margin-top:4px;">
+	                   <a class="small_button" href="javascript:void(0);" onclick="TagsArchiveAddTags();"><span><img src="images/icons/add-tiny.png" id="tags_archive_add_tags_icon"> Add Tags</span></a>
+	                   <a class="small_button" style="margin-left:8px;" href="javascript:void(0);" onclick="$('tags_archive_add_tags_div').hide();"><span class="red_button"><img src="images/icons/close_big.png" id="tags_archive_add_cancel_icon" style="margin-top:-2px;"> Cancel</span></a>
+	                 </div>
+					 <div style="width:108px; float:left; margin-top:5px;">
+	                   Exclude: 
+					   <input type="text" id="tags_archive_exclude_amount" value="1" style="width:25px; height:14px; text-align:right; float:left; margin-right:-1px;" tabindex="1">
+						  <div style="float:left; border:1px solid #999999;">
+							<div class="spinner_up" id="tags_archive_exclude_amount_up"></div>
+							<div class="spinner_down" id="tags_archive_exclude_amount_down"></div>
+						  </div>
+						  {literal}<script type="text/javascript">new SpinnerControl('tags_archive_exclude_amount', 'tags_archive_exclude_amount_up', 'tags_archive_exclude_amount_down', {interval:1, min:1, max:50}); </script>{/literal}
+						  <a href="javascript:void(0);" rel="Tags with less than this amount<br>of characters will be excluded."><img src="images/icons/help.png" class="ml5"></a>
+	                 </div>
+	                 <div style="width:108px; float:right; margin-top:5px;">
+	                   <input type="checkbox" id="tags_archive_add_as_active"><label for="tags_archive_add_as_active"><b>Add as Active</b></label>
+	                 </div>
+	                 <br class="clear">
+	                 <br>
+	                 <hr>
+	               </div>
+	               <br>
+	               
+	               <div class="left">
+	                 <fieldset class="fieldset3" style="width:200px; text-align:left;">
+	  					<legend class="legend3">
+	  					  <a href="javascript:void(0);" rel="Select/Unselect All"><input type="checkbox" onclick="TagsArchiveToggleAll('tags_archive_inactive_tags',this.checked);"></a>
+	  					  <b>Inactive Tags (<span id="tags_archive_inactive_tags_count"></span>)</b>
+	  					</legend>
+	  					<div style="padding:15px;">
+	  					  <select multiple id="tags_archive_inactive_tags" size="12" style="width:170px; font-size:10pt;"></select>
+	  					</div>
+	  				</fieldset>
+	  				<br class="br">
+	  				<a class="small_button" href="javascript:void(0);" onclick="DeleteTags('inactive');" style="margin-left:60px;"><span><img src="images/icons/delete-tiny.png" id="tags_archive_delete_icon_inactive"> Delete Tags</span></a>
+	  			   </div>
+	  			   
+	  			   <div class="left" style="padding-top:75px;">
+	  			     <a href="javascript:void(0);" onclick="ActivateTagsFromArchive();" rel="Activate Tags"><img class="pag" src="images/icons/raquo.png" style="width:11px;" id="tags_archive_raquo_icon"></a>
+	  			     <br><br><br>
+	  			     <a href="javascript:void(0);" onclick="DeactivateTagsFromArchive();" rel="Deactivate Tags"><img class="pag" src="images/icons/laquo.png" style="width:11px;" id="tags_archive_laquo_icon"></a>
+	  			   </div>
+	  			   
+	  			   <div class="left">
+	                 <fieldset class="fieldset3" style="width:200px; text-align:left;">
+	  					<legend class="legend3">
+	  					  <a href="javascript:void(0);" rel="Select/Unselect All"><input type="checkbox" onclick="TagsArchiveToggleAll('tags_archive_active_tags',this.checked);"></a>
+	  					  <b>Active Tags (<span id="tags_archive_active_tags_count"></span>)</b>
+	  					</legend>
+	  					<div style="padding:15px;">
+	  					  <select multiple id="tags_archive_active_tags" size="12" style="width:170px; font-size:10pt;"></select>
+	  					</div>
+	  				</fieldset>
+	  				<br class="br">
+	  				<a class="small_button" href="javascript:void(0);" onclick="DeleteTags('active');" style="margin-left:60px;"><span><img src="images/icons/delete-tiny.png" id="tags_archive_delete_icon_active"> Delete Tags</span></a>
+	  			   </div>
+	                 
+	           </td>
+	           <td background="images/modalbox/ir.png" width="10"></td>
+	         </tr>
+	         <tr>
+	           <td background="images/modalbox/ibl.png" width="10" height="10"></td>
+	           <td background="images/modalbox/ib.png" height="10"></td>
+	           <td background="images/modalbox/ibr.png" width="10" height="10"></td>
+	         </tr>
+	       </table>         
+         </td>
+         <td background="images/modalbox/or.png" width="8"></td>
+       </tr>
+       <tr>
+         <td background="images/modalbox/obl.png" width="8" height="11"></td>
+         <td background="images/modalbox/ob.png" height="11"></td>
+         <td background="images/modalbox/obr.png" width="8" height="1"></td>
+       </tr>
+     </table>
+  </td></tr>
+</table>
+</div>

@@ -1,0 +1,77 @@
+<br>
+<fieldset>
+<legend> <b>Videochat Plugin</b>&nbsp;</legend>
+<div class="bottom">
+  <div id="videochat_plugin_contents" style="width:95%;  text-align:justify;">
+    
+    <br>
+  	The videochat plugin will allow you to configure the Videochat Page contents that is included with the default template.<br>
+  	It uses <b>Sexier Affiliate Program</b>, and you need to sign up and use your Webmaster ID to get profits from it.<br>
+  	Click on the banner to sign up and then complete your Webmaster ID. Finally, configure the variables to adjust the promotional contents to your site.
+    <br><br>
+    <fieldset class="fieldset2" style="width:100%; text-align:left;">
+	  <div class="bottom" style="padding:20px;">
+	    
+	    <div class="left" style="width:300px; text-align:right;">
+		    <form id="videochat_form">
+		      <b>Webmaster ID:</b> <input type="text" id="plugin_videochat_wid" name="plugin_videochat_wid" value="{$aSettings.plugin_videochat_wid}" style="width:155px;">
+		      <a href="javascript:void(0);" rel="Your Webmaster ID, as provided in sexier.com affiliate program"><img src="images/icons/help.png"></a>
+		      <br><br class="br">
+		      
+		      <b>Select Program:</b>
+		      <select id="plugin_videochat_program" name="plugin_videochat_program" onchange="UpdatePreviewIframe();" style="width:155px;">
+		        <option value="1078" {if $aSettings.plugin_videochat_program==1078}selected{/if}>25% LIFETIME Rev. Share</option>
+		        <option value="1079" {if $aSettings.plugin_videochat_program==1079}selected{/if}>30% Revenue Share</option>
+		        <option value="1080" {if $aSettings.plugin_videochat_program==1080}selected{/if}>$40 Pay Per Sign-up</option>
+		      </select>
+		      <a href="javascript:void(0);" rel="The Program as explained in Sexier.com"><img src="images/icons/help.png"></a>
+		      <br><br class="br">
+		      
+		      <b>Select Category:</b>
+		      <select id="plugin_videochat_category" name="plugin_videochat_category" onchange="UpdatePreviewIframe();" style="width:155px;">
+		        <option value="1" {if $aSettings.plugin_videochat_category==1}selected{/if}>All Amateurs</option>
+		        <option value="11" {if $aSettings.plugin_videochat_category==11}selected{/if}>Horny Housewives</option>
+		        <option value="12" {if $aSettings.plugin_videochat_category==12}selected{/if}>Ripe Co-eds</option>
+		        <option value="9" {if $aSettings.plugin_videochat_category==9}selected{/if}>Busty Babes</option>
+		        <option value="5" {if $aSettings.plugin_videochat_category==5}selected{/if}>Kinky Fetish</option>
+		        <option value="6" {if $aSettings.plugin_videochat_category==6}selected{/if}>Shemales & Trannies</option>
+		      </select>
+		      <a href="javascript:void(0);" rel="The Category of Webcams."><img src="images/icons/help.png"></a>
+		      <br><br class="br">
+		      
+		      <b>Select template:</b>
+		      <select id="plugin_videochat_template_id" name="plugin_videochat_template_id" onchange="UpdatePreviewIframe();" style="width:155px;">
+		        {section name=templates start=1 loop=201 step=1}
+		          <option value="{$smarty.section.templates.index}" {if $smarty.section.templates.index==$aSettings.plugin_videochat_template_id}selected{/if}>Template {$smarty.section.templates.index}</option>
+		          {/section}
+		      </select>
+		      <a href="javascript:void(0);" rel="Select the templates that best fits your site."><img src="images/icons/help.png"></a>
+		      <br><br class="br">
+		      
+		      <a class="button" id="save_button" href="javascript:void(0);" onclick="SaveConfig();" style="margin-left:133px;"><span><img src="images/icons/save.png" id="save_icon"> Save Configuration</span></a>
+		      
+		    </form>
+		</div>
+		
+		<div class="right" style="width:450px; text-align:center;">
+		  <a href="http://partners.sexier.com/wmaster.ashx?WID=125152585365" target="_blank"><img src="http://partners.sexier.com/Content/Banners/gif/sexier_300_110_referral.gif" class="border1"><br>Click here to sign up at Sexier.com<br>and get your Webmaster ID.</a>
+		</div>
+		<br style="clear:both;">
+		
+	  </div>
+	</fieldset>
+    <br class="clear">
+    <br>
+    <fieldset class="fieldset2" style="width:100%; text-align:left;">
+      <legend class="legend2"> <b>Preview</b></legend>
+	  <div class="bottom" style="padding:20px;">
+	    <iframe src="http://ads.sexier.com/BannerV1.ashx?template={if $aSettings.plugin_videochat_template_id}{$aSettings.plugin_videochat_template_id}{else}1{/if}&wid={if $aSettings.plugin_videochat_wid}{$aSettings.plugin_videochat_wid}{else}125152585365{/if}&LinkID={$aSettings.plugin_videochat_program}&promocode=BCODE82A48667_00000&QueryID={$aSettings.plugin_videochat_category}&cid=13" name="preview_iframe" id="preview_iframe" width="100%" height="600" frameborder="0"></iframe>
+	  </div>
+	</fieldset>
+    <br class="clear">
+	  
+  </div>
+</div>
+</fieldset>
+<br><br>
+<script>ReTip();</script>

@@ -1,0 +1,72 @@
+</div>
+<br class="clear">
+
+{if !$smarty.session.user_logged}
+<div class="floating_layer" id="login_layer" style="display:none;">
+  <table cellpadding="0" cellspacing="0" width="100%" height="100%" align="center">
+    <tr><td align="center" valign="middle">
+  		{include file="login.html" cache_id=$cache_id}
+  	</td></tr>
+  </table>
+</div>
+<div class="floating_layer" id="register_layer" style="display:none;">
+  <table cellpadding="0" cellspacing="0" width="100%" height="100%" align="center">
+    <tr><td align="center" valign="middle">
+  		{include file="register.html" cache_id=$cache_id}
+  	</td></tr>
+  </table>
+</div>
+<div class="floating_layer" id="forgot_layer" style="display:none;">
+  <table cellpadding="0" cellspacing="0" width="100%" height="100%" align="center">
+    <tr><td align="center" valign="middle">
+  		{include file="forgot_pass.html" cache_id=$cache_id}
+  	</td></tr>
+  </table>
+</div>
+{elseif $aSettings.video_upload_allowed}
+<div class="floating_layer" id="upload_layer" style="display:none;">
+  <table cellpadding="0" cellspacing="0" width="100%" height="100%" align="center">
+    <tr><td align="center" valign="middle">
+  		{include file="upload_form.html" cache_id=$cache_id}
+  	</td></tr>
+  </table>
+</div>
+{/if}
+
+
+<div class="floating_layer" id="premium_options_layer" style="display:none;">
+  <table cellpadding="0" cellspacing="0" width="100%" height="100%" align="center">
+    <tr><td align="center" valign="middle">
+  		{include file="premium_options_form.html" cache_id=$cache_id}
+  	</td></tr>
+  </table>
+</div>
+
+<div class="footer" style="margin:15px 0px;">
+
+  <div class="footer1" style="height:35px; line-height:35px;">
+	<div align="center" class="text3">Copyright &copy; 2008-2013 Automagick Tube Script - All Rights Reserved -
+	<a href="2257.html">18 U.S.C. 2257 Statement</a> -
+	<a href="privacy.html">Privacy Policy</a> -
+	<a href="terms.html">Terms And Conditions</a> -
+	<a href="contact.html">Contact</a> -
+	<a href="advertise.html">Advertise</a> -
+	{if $aSettings.rss_status==1}<a href="rss_feeds.html"><img src="templates/{$template}/images/rss.png"> Rss</a>{/if}
+	{if $aSettings.tags_archive_enabled==1} - <a href="tags_archive.html">{$aLabels.tags_archive|capitalize}</a>{/if}
+	</div>
+  </div>
+  <div class="footer2" style="height:100px;"></div>
+  <div class="footer3" style="height:35px; line-height:35px;"></div>
+</div>
+	
+{literal}
+<script type="text/javascript">
+//<![CDATA[
+document.observe('dom:loaded', function(){
+  $$('.draggable').each(function(element){
+    new Draggable(element,{handle:'draggable_handle', scroll: window});
+  });
+});
+//]]>
+</script>
+{/literal}

@@ -1,0 +1,76 @@
+<div class="rounded3 container_box draggable" style="padding:0px; width:420px; height:480px;">
+  <div class="bar rounded3 title_text m3 draggable_handle" style="text-align:left;">
+	<div class="left">{$aLabels.upload_video|capitalize}</div>
+	<span class="right"><a href="javascript:void(0);" onclick="$('upload_layer').hide();"><img src="templates/{$template}/images/close_big.png" onmouseover="this.src='templates/{$template}/images/close_big_on.png';" onmouseout="this.src='templates/{$template}/images/close_big.png';" class="m3"></a></span>
+  </div>
+  
+
+  <div style="padding:10px;">
+	  <form id="upload_form" action="actions/upload/video_upload.php" enctype="multipart/form-data" method="post" target="upload_iframe" onsubmit="ValidateUpload(); return false;">
+	  
+		<div style="text-align:left; padding-left:50px;">
+		  <font size="1" class="red">* {$aLabels.mandatory_fields}</font>      
+		</div><br>
+		
+		{$aLabels.upload_video_instructions}
+		
+		<table cellpadding="3" cellspacing="1">
+		  <tr>
+			<td align="right"><b class="red">*</b> <b>{$aLabels.title|capitalize}:</b></td>
+			<td>
+			  <input type="text" name="upload_title" id="upload_title" class="rounded3 text mr5" style="width:265px;" value="" maxlength="100" tabindex="1">
+			</td>
+		  </tr>
+		  <tr valign="top">
+			<td align="right"><b class="red">*</b> <b>{$aLabels.description|capitalize}:</b></td>
+			<td>
+			  <textarea name="upload_description" id="upload_description" class="rounded3 textarea text" style="width:265px; font-weight:bold;" tabindex="1"></textarea>
+			</td>
+		  </tr>
+		  <tr>
+			<td align="right"><b class="red">*</b> <b>{$aLabels.tags|capitalize}:</b></td>
+			<td>
+			  <input type="text" name="upload_tags" id="upload_tags" class="rounded3 text mr5" style="width:265px;" value="" tabindex="1">
+			  <img src="templates/{$template}/images/help.png" title="{$aLabels.tags_tip}">
+			</td>
+		  </tr>
+		  <tr>
+			<td align="right"><b class="red">*</b> <b>{$aLabels.file|capitalize}:</b></td>
+			<td>
+			  <input type="text" name="upload_filename" id="upload_filename" value="" class="rounded3 text left" style="width:190px;" readonly >
+			  <label class="cabinet left ml5 dark_text">
+				<span class="button_small rounded3 right" style="text-align:center;">{$aLabels.browse|capitalize}</span>
+				<input type="file" name="upload_file" id="upload_file" class="file" onchange="$('upload_filename').value=this.value;">
+			  </label>
+			</td>
+		  </tr>
+		  <tr valign="top">
+			<td align="right"><b class="red">*</b> <b>{$aLabels.categories|capitalize}:</b></td>
+			<td>
+			  <select name="upload_categories[]" id="upload_categories" class="rounded3 text mr5" style="width:265px;" multiple size="5" tabindex="1">
+				{foreach from=$array_groups[$group_id] item=categ}
+				  <option value="{$categ.category_id}" style="background:transparent;">{$categ.category_name}</option>
+				{/foreach}
+			  </select>
+			  <img src="templates/{$template}/images/help.png" title="{$aLabels.upload_categories_tip}">
+			</td>
+		  </tr>
+		  
+		  <tr>
+			<td></td>
+			<td>
+			  <a href="javascript:void(0);" id="upload_button" onclick="ValidateUpload();"><div style="margin-right:30px;" class="rounded3 button_small right">{$aLabels.upload|capitalize}</div></a>
+			  <a href="javascript:void(0);" id="upload_button_disabled" style="display:none;"><div style="margin-right:30px;" class="rounded3 button_small disabled right">{$aLabels.upload|capitalize}</div></a>
+			  <img src="templates/{$template}/images/loading.gif" id="upload_loading"  class="right m3" style="display:none;">
+			  <br class="clear"><br class="break">
+			  <div id="upload_success" class="green" style="display:none;">{$aLabels.video_upload_success_message}</div>
+			  
+			  <input type="submit" style="display:none;">
+			</td>
+		  </tr>
+		</table>
+
+		<iframe id="upload_iframe" name="upload_iframe" style="display:none;"></iframe>  
+	  </form>
+  </div>
+</div>

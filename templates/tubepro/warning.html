@@ -1,0 +1,9 @@
+<div class="floating_layer" id="warning_layer" {if $smarty.cookies.ok18==1}style="display:none;"{/if}>
+  <table cellpadding="0" cellspacing="0" width="100%" height="100%" align="center">
+    <tr><td align="center" valign="middle">
+  		<a href="javascript:void(0);" onclick="$('warning_layer').hide(); document.cookie='ok18=1; expires=Wed, 14 Oct 2020 11:45:43 GMT';">
+  		  <img src="templates/{$template}/images/warning.jpg">
+  		</a>
+  	</td></tr>
+  </table>
+</div>

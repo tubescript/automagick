@@ -1,0 +1,24 @@
+<div style="text-align:left; padding-left:20px;">
+  <b class="title"><h1>{$aLabels.channels|capitalize}</h1></b>
+</div>
+<br>
+
+{foreach from=$array_channels item=channel name=ch}
+  {if $channel.status==1}
+	<table cellpadding="0" cellspacing="8" class="text left thumb_table m3">
+	  <tr><td colspan="2">
+		<a href="channel/{$channel.id}/{$channel.name|regex_replace:'/[ \/]/':'-'}/" class="link" title="{$channel.name}">
+		  {if $mb_available}
+			{$category.name|mb_truncate:24:"...":"UTF-8":true}
+		  {else}
+			{$category.name|truncate:16:"...":true}
+		  {/if}
+		</a>
+	  </td></tr>
+	  <tr><td colspan="2" align="center" class="thumb" style="width:{$aSettings.thumb_width}px; height:{$aSettings.thumb_height+4}px;"><a href="channel/{$channel.id}/{$channel.name|regex_replace:'/[ \/]/':'-'}/" title="{$channel.name}"><img src="{$channel.thumb}" width="{$aSettings.thumb_width}" height="{$aSettings.thumb_height}"></a></td></tr>
+	</table>
+  {/if}
+{/foreach}
+
+<br class="clear">
+<br>

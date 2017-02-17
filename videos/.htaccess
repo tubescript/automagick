@@ -1,0 +1,11 @@
+Options -Indexes
+RewriteEngine on
+
+# If you enabled the Secure-streaming option in the settings, uncomment these lines (remove the #)
+
+#RewriteRule ^$ - [F]
+#RewriteCond %{REQUEST_FILENAME} /.flv$
+#RewriteCond %{QUERY_STRING} ^start=([0-9]*\.?[0-9]*)?$
+#RewriteRule (.*)/(.*)/(.*)$ video.php?h=$1&t=$2&v=$3&start=%1 [L]
+#RewriteRule (.*)/(.*)/(.*)$ video.php?h=$1&t=$2&v=$3 [L]
+#RewriteRule ^[^/]+\.(flv|mp4|m4v|mpg|avi|wmv)$ - [F]

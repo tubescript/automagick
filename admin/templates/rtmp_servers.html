@@ -1,0 +1,66 @@
+<div style="display:none;" id="rtmp_instructions_contents">
+Configure here your RTMP and other Servers. These will be used to host the uploaded videos and offer a better delivery of contents and/or streaming method.<br>
+The RTMP servers needs to have a streaming server installed (like red5, FMS or wowza) in order to deliver contents (red5 is suggested).<br>
+Make sure you create the folder 'videos/' and assign there all the videos (Example: rtmp://rtmpserver.com/rtmp_root/videos/).<br><br>
+If you add more than one server, when a video is uploaded, a random server will be picked from the active ones, so the load is equitative.<br>
+If you deactivate a server, it won't stop working. It just won't be used to host the new videos that may be added.<br>
+If the server is not rtmp, it will automatically be recognized and pseudostreaming will be used instead.<br><br>
+
+<b>Important:</b> FTP Accounts will be used to upload the videos to the different servers within the tasks cron job.<br>
+You will need to make "videos/" the root folder of the accounts, so the cron job will upload the files directly there.<br><br>
+</div>
+
+<table cellpadding="5" cellspacing="1" width="900">
+  <tr>
+    <td width="200">
+      <a class="button" href="javascript:void(0);" onclick="AddRTMPServer();"><span><img src="images/icons/add.png" id="rtmp_servers_add_icon"> Add New Server</span></a>
+    </td>
+    <td></td>
+    <td width="150">
+      <a class="button" href="javascript:void(0);" onclick="RefreshRTMPServers();" style="margin-left:200px;"><span><img src="images/icons/refresh.png" id="rtmp_servers_refresh_icon"> Refresh</span></a>
+    </td>
+  </tr>
+</table>
+
+<table cellpadding="5" cellspacing="1" width="900" style="border:1px solid #AAAAAA; background:#EEEEEE;">
+  <tr bgcolor="#AAAAAA">
+    <td><b>Server</b> <a href="javascript:void(0);" rel="The RTMP Server as final usage.<br>Example: rtmp://streaming.server.com/" id="rtmp_server_tip" class="retip"><img src="images/icons/help.png"></a></td>
+    <td><b>FTP Host</b> <a href="javascript:void(0);" rel="Leave empty this and the next FTP fields<br>if your sreaming server is 'localhost'." id="rtmp_ftphost_tip" class="retip"><img src="images/icons/help.png"></a></td>
+    <td><b>FTP Port</b></td>
+    <td><b>FTP User</b></td>
+    <td><b>FTP Pass</b></td>
+    <td><b>Remove Ext.</b> <a href="javascript:void(0);" rel="Check this box to remove the extension of the file (.flv, .mp4, etc)<br>form the video filename. Some RTMP servers need to remove it." id="rtmp_removeext_tip" class="retip"><img src="images/icons/help.png"></a></td>
+    <td><b>Add mp4:</b> <a href="javascript:void(0);" rel="Check this box to add a mp4: preffix on the video filename (applied onlt if it is a mp4 file).<br>Some RTMP servers need to have it."  id="rtmp_addmp4_tip" class="retip"><img src="images/icons/help.png"></a></td>
+    <td><b>Options</b></td>
+  </tr>
+{foreach from=$aServers item=server}
+  <tr class="server_row" id="server_row_{$server.id}">
+    <td><input type="text" id="server_server_{$server.id}" class="edition_{$server.id}" value="{$server.server|replace:'"':'&quot;'}" tabindex="1" style="border:0px; margin:1px; background:transparent;" readonly></td>
+    <td><input type="text" id="server_host_{$server.id}" class="edition_{$server.id}" value="{$server.host|replace:'"':'&quot;'}" tabindex="1" style="border:0px; margin:1px; background:transparent;" readonly></td>
+    <td>
+	  <input type="text" id="server_port_{$server.id}" class="edition_{$server.id} respinner" value="{if $server.port}{$server.port|replace:'"':'&quot;'}{else}21{/if}" style="width:25px; height:14px; text-align:right; float:left; border:0px; margin:1px; background:transparent;" tabindex="1" readonly>
+      <div style="float:left; border:1px solid #999999; margin-left:-1px; display:none;" id="spinner_buttons_{$server.id}">
+        <div class="spinner_up" id="server_port_{$server.id}_up"></div>
+        <div class="spinner_down" id="server_port_{$server.id}_down"></div>
+      </div>
+    </td>
+    <td><input type="text" id="server_user_{$server.id}" class="edition_{$server.id}" value="{$server.user|replace:'"':'&quot;'}" tabindex="1" style="border:0px; margin:1px; background:transparent;" readonly></td>
+    <td><input type="text" id="server_pass_{$server.id}" class="edition_{$server.id}" value="{$server.pass|replace:'"':'&quot;'}" tabindex="1" style="border:0px; margin:1px; background:transparent;" readonly></td>
+    <td align="center"><input type="checkbox" id="server_remove_ext_{$server.id}" value="1" {if $server.remove_ext==1}checked{/if} class="edition_{$server.id} readonly_checkbox disabled"></td>
+    <td align="center"><input type="checkbox" id="server_add_mp4_{$server.id}" value="1"  {if $server.add_mp4==1}checked{/if}class="edition_{$server.id} readonly_checkbox disabled"></td>
+    <td>
+      <a href="javascript:void(0);" rel="{if $server.videos_count==0}0{else}{$server.videos_count}{/if} Videos using this server" class="option_button m5 retip" id="info_server_option_{$server.id}"><img src="images/icons/info.png"></a>
+      <a href="javascript:void(0);" rel="Change Server Status" class="option_button m5 retip" id="server_status_option_{$server.id}"><img id="status_server_icon_{$server.id}" {if $server.status==0}src="images/icons/inactive.png" onmouseover="this.src='images/icons/go.png';" onmouseout="this.src='images/icons/inactive.png';"{else}src="images/icons/active.png"  onmouseover="this.src='images/icons/stop.png';" onmouseout="this.src='images/icons/active.png';"{/if} onclick="SetServerStatus({$server.id},{if $server.status==0}1{else}0{/if});"></a>
+      <a href="javascript:void(0);" rel="Edit Server Info" class="option_button m5 retip" onclick="EnableServerEditMode({$server.id});" id="edit_server_option_{$server.id}"><img src="images/icons/edit.png"></a>
+      <a href="javascript:void(0);" rel="Save Info" class="option_button m5 retip" onclick="SaveServerInfo({$server.id});" id="save_server_option_{$server.id}" style="display:none;"><img src="images/icons/save.png" id="save_server_icon_{$server.id}"></a>
+      <a href="javascript:void(0);" rel="Exit Edit Mode<br><font size='1'>Changes will not saved</font>" class="option_button m5 retip" onclick="UndoServerEditMode({$server.id});" id="undo_server_option_{$server.id}" style="display:none;"><img src="images/icons/undo.png"></a>
+      
+      <a href="javascript:void(0);" rel="Delete Server" class="option_button m5 retip" onclick="DeleteRTMPServer({$server.id});" id="delete_server_option_{$server.id}"><img src="images/icons/delete.png" id="delete_server_icon_{$server.id}"></a>
+    </td>
+  </tr>
+{foreachelse}
+  <tr bgcolor="#D1D1D1">
+    <td colspan="8" align="center">No servers found (using pseudostreaming in localhost as default.)</td>
+  </tr>
+{/foreach}
+</table>

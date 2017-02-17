@@ -1,0 +1,56 @@
+<div class="border4 rounded10 bg_gray1" style="width:600px; height:350px; overflow-x:auto; line-height:18px;">
+
+  <div style="width:270px; text-align:right; padding:10px;" class="left">
+    <div style="text-align:left;"><b class="title">{$aLabels.login|capitalize}</b></div>
+    
+    <form id="login_form" action="javascript:UserLogin();">
+    <b>{$aLabels.username}:</b> <input type="text" name="user_login" class="input-text"><br>
+    <b>{$aLabels.password}:</b> <input type="password" name="pass_login" class="input-text"><br><br class="break">
+    <div class="left" style="margin-left:30px;"><a href="javascript:void(0);" onclick="$('forgot_form_div').toggle();">{$aLabels.forgot_password}</a></div>
+    <a href="javascript:void(0);" onclick="$('login_form').submit()"><div class="input-button">{$aLabels.login|capitalize}</div></a>
+    <br><br class="break">
+    <div id="login_error_msg" class="red" style="text-align:center; font-weight:bold;"></div>
+    <input type="submit" style="display:none;">
+    </form>
+    
+    <br>
+    <div id="forgot_form_div" class="border1 rounded5 bg_gray1" style="padding:10px; display:none;">
+      {$aLabels.forgot_instructions}
+      <br><br class="break">
+      <form id="forgot_form" action="javascript:SendRecoverEmail($('forgot_form').user_email.value);">
+        <b>{$aLabels.email}:</b> <input type="text" name="user_email" id="user_email" class="input-text">
+        <br><br class="break">
+        <a href="javascript:void(0);" onclick="$('forgot_form').submit();"><div class="input-button-long">{$aLabels.recover_password|capitalize}</div></a>
+        <br><br class="break">
+        <div id="forgot_error_msg" class="red" style="text-align:center; font-weight:bold; display:none;"></div>
+        <div id="forgot_success_msg" class="green" style="text-align:center; font-weight:bold; display:none;"></div>
+      </form>
+    </div>
+    
+  </div> 
+  
+  <div style="width:280px; text-align:right; padding:10px;" class="right">
+  	<div style="text-align:left;"><b class="title">{$aLabels.register|capitalize}</b></div>
+
+  	<form id="register_form" action="javascript:UserRegister();">
+    <b class="mandatory">*</b> <b>{$aLabels.username}:</b> <input type="text" name="user" class="input-text"><br>
+    <b class="mandatory">*</b> <b>{$aLabels.email}:</b> <input type="text" name="email" class="input-text"><br>
+    <b class="mandatory">*</b> <b>{$aLabels.password}:</b> <input type="password" name="pass" class="input-text">
+    <br class="break">
+    <br class="break">
+    <div class="right" style="width:150px;">
+      <a href="javascript:void(0);" onclick="$('register_form').submit();"><div class="input-button">{$aLabels.register|capitalize}</div></a>
+    </div>
+    <br><br class="break">
+    <div id="register_error_msg" class="red" style="text-align:center; font-weight:bold; display:none;"></div>
+    <div id="register_success_msg" class="green" style="text-align:center; font-weight:bold; display:none;">{$aLabels.register_success}</div>
+    </form>
+  </div>
+  <br>
+  <div style="width:3px; height:290px;" class="hr right">
+  </div>
+</div>
+
+<div  style="margin-top:-40px;">
+  <a href="javascript:void(0);" onclick="CloseLayer('login_register_layer');"><div class="input-button">{$aLabels.close|capitalize}</div></a>
+<div>
