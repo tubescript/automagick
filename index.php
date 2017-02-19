@@ -18,7 +18,7 @@ if(!preg_match("/[a-z_]/i",$module)) $module="home";
 
 if($_POST['tag']) $_GET['tag']=$_POST['tag'];
 $tag=strip_tags(stripslashes($_GET['tag']));
-if(!preg_match("/[a-zA-Z0-9_/s]/i",$tag)) $tag="";
+if(!preg_match("/[a-zA-Z0-9_\s]/i",$tag)) $tag="";
 
 // Inclusions
 if(file_exists("includes/config.php") and filesize("includes/config.php")>0){
