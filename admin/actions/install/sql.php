@@ -672,7 +672,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
 INSERT INTO `settings` (`id`, `type`, `name`, `value`, `parent`) VALUES(1, 'settings', 'aSettings', '', 0);
 INSERT INTO `settings` (`id`, `type`, `name`, `value`, `parent`) VALUES('', 'settings', 'template_name', 'tubepro', 1);
 INSERT INTO `settings` (`id`, `type`, `name`, `value`, `parent`) VALUES('', 'settings', 'style_name', 'styles', 1);
-INSERT INTO `settings` (`id`, `type`, `name`, `value`, `parent`) VALUES('', 'settings', 'license_number', '".mysql_real_escape_string($_POST['license_number'])."', 1);
+INSERT INTO `settings` (`id`, `type`, `name`, `value`, `parent`) VALUES('', 'settings', 'license_number', '".$_POST['license_number']."', 1);
 INSERT INTO `settings` (`id`, `type`, `name`, `value`, `parent`) VALUES('', 'settings', 'admin_user', 'admin', 1);
 INSERT INTO `settings` (`id`, `type`, `name`, `value`, `parent`) VALUES('', 'settings', 'admin_pass', 'admin', 1);
 INSERT INTO `settings` (`id`, `type`, `name`, `value`, `parent`) VALUES('', 'settings', 'admin_name', 'Webmaster Name', 1);
