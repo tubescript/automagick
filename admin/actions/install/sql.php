@@ -1069,7 +1069,7 @@ CREATE TABLE IF NOT EXISTS `zombaio_txns` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Zombaio Transactions' AUTO_INCREMENT=1;
 ";
 
-$aQueries=explode(";\r\n",$sql_contents);
+$aQueries=explode(";\n",$sql_contents);
 
 foreach($aQueries as $query){
 	if(trim($query)){
